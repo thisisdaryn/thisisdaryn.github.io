@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Commands for | A book for practicing R</title>
+  <meta name="description" content="T" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Commands for | A book for practicing R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="T" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Commands for | A book for practicing R" />
+  
+  <meta name="twitter:description" content="T" />
+  
+
+<meta name="author" content="Daryn Ramsden" />
+
+
+<meta name="date" content="2019-07-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="what-is-data-science.html">
+<link rel="next" href="data1.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Intro</a></li>
+<li class="chapter" data-level="2" data-path="software-installation.html"><a href="software-installation.html"><i class="fa fa-check"></i><b>2</b> Software Installation</a><ul>
+<li class="chapter" data-level="2.1" data-path="software-installation.html"><a href="software-installation.html#one-additional-r-package"><i class="fa fa-check"></i><b>2.1</b> One additional R package</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="statsbg.html"><a href="statsbg.html"><i class="fa fa-check"></i><b>3</b> Data in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="statsbg.html"><a href="statsbg.html#types-of-data"><i class="fa fa-check"></i><b>3.1</b> Types of data</a></li>
+<li class="chapter" data-level="3.2" data-path="statsbg.html"><a href="statsbg.html#common-data-structures-in-r"><i class="fa fa-check"></i><b>3.2</b> Common data structures in R</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="statsbg.html"><a href="statsbg.html#vectors"><i class="fa fa-check"></i><b>3.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.2.2" data-path="statsbg.html"><a href="statsbg.html#data-frames"><i class="fa fa-check"></i><b>3.2.2</b> Data frames</a></li>
+<li class="chapter" data-level="3.2.3" data-path="statsbg.html"><a href="statsbg.html#lists"><i class="fa fa-check"></i><b>3.2.3</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="statsbg.html"><a href="statsbg.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy Data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="what-is-data-science.html"><a href="what-is-data-science.html"><i class="fa fa-check"></i><b>4</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="4.1" data-path="what-is-data-science.html"><a href="what-is-data-science.html#section"><i class="fa fa-check"></i><b>4.1</b> $:</a></li>
+<li class="chapter" data-level="4.2" data-path="what-is-data-science.html"><a href="what-is-data-science.html#more-general-subsetting"><i class="fa fa-check"></i><b>4.2</b> [ ]: More general subsetting</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="what-is-data-science.html"><a href="what-is-data-science.html#using-with-vectors"><i class="fa fa-check"></i><b>4.2.1</b> Using [ ] with vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="commands-for.html"><a href="commands-for.html"><i class="fa fa-check"></i><b>5</b> Commands for</a><ul>
+<li class="chapter" data-level="5.1" data-path="commands-for.html"><a href="commands-for.html#section-1"><i class="fa fa-check"></i><b>5.1</b> $:</a></li>
+<li class="chapter" data-level="5.2" data-path="commands-for.html"><a href="commands-for.html#more-general-subsetting-1"><i class="fa fa-check"></i><b>5.2</b> [ ]: More general subsetting</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="commands-for.html"><a href="commands-for.html#using-with-vectors-1"><i class="fa fa-check"></i><b>5.2.1</b> Using [ ] with vectors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data1.html"><a href="data1.html"><i class="fa fa-check"></i><b>6</b> Data in R</a><ul>
+<li class="chapter" data-level="6.1" data-path="data1.html"><a href="data1.html#types-of-data-1"><i class="fa fa-check"></i><b>6.1</b> Types of data</a></li>
+<li class="chapter" data-level="6.2" data-path="data1.html"><a href="data1.html#common-data-structures-in-r-1"><i class="fa fa-check"></i><b>6.2</b> Common data structures in R</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="data1.html"><a href="data1.html#vectors-1"><i class="fa fa-check"></i><b>6.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data1.html"><a href="data1.html#data-frames-1"><i class="fa fa-check"></i><b>6.2.2</b> Data frames</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data1.html"><a href="data1.html#lists-1"><i class="fa fa-check"></i><b>6.2.3</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data1.html"><a href="data1.html#tidy-data-1"><i class="fa fa-check"></i><b>6.3</b> Tidy Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="subsetting-data-in-base-r.html"><a href="subsetting-data-in-base-r.html"><i class="fa fa-check"></i><b>7</b> Subsetting data in base R</a><ul>
+<li class="chapter" data-level="7.1" data-path="subsetting-data-in-base-r.html"><a href="subsetting-data-in-base-r.html#section-2"><i class="fa fa-check"></i><b>7.1</b> $:</a></li>
+<li class="chapter" data-level="7.2" data-path="subsetting-data-in-base-r.html"><a href="subsetting-data-in-base-r.html#more-general-subsetting-2"><i class="fa fa-check"></i><b>7.2</b> [ ]: More general subsetting</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="subsetting-data-in-base-r.html"><a href="subsetting-data-in-base-r.html#using-with-vectors-2"><i class="fa fa-check"></i><b>7.2.1</b> Using [ ] with vectors</a></li>
+<li class="chapter" data-level="7.2.2" data-path="subsetting-data-in-base-r.html"><a href="subsetting-data-in-base-r.html#using-with-data-frames"><i class="fa fa-check"></i><b>7.2.2</b> Using [ ] with data frames</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html"><i class="fa fa-check"></i><b>8</b> Simple Plotting in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html#plotting-commands-in-base-r"><i class="fa fa-check"></i><b>8.1</b> Plotting commands in base R</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html#plot"><i class="fa fa-check"></i><b>8.1.1</b> <strong>plot</strong></a></li>
+<li class="chapter" data-level="8.1.2" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html#hist"><i class="fa fa-check"></i><b>8.1.2</b> <strong>hist</strong></a></li>
+<li class="chapter" data-level="8.1.3" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html#barplot"><i class="fa fa-check"></i><b>8.1.3</b> <strong>barplot</strong></a></li>
+<li class="chapter" data-level="8.1.4" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html#boxplot"><i class="fa fa-check"></i><b>8.1.4</b> <strong>boxplot</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="simple-plotting-in-r.html"><a href="simple-plotting-in-r.html#plotting-with-qplot"><i class="fa fa-check"></i><b>8.2</b> Plotting with <strong>qplot</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A book for practicing R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="commands-for" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Commands for</h1>
+<div id="section-1" class="section level2">
+<h2><span class="header-section-number">5.1</span> $:</h2>
+</div>
+<div id="more-general-subsetting-1" class="section level2">
+<h2><span class="header-section-number">5.2</span> [ ]: More general subsetting</h2>
+<p>Using the</p>
+<div id="using-with-vectors-1" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Using [ ] with vectors</h3>
+<div id="using-positive-integer-indices-1" class="section level4">
+<h4><span class="header-section-number">5.2.1.1</span> Using positive integer indices</h4>
+<p>A single positive integer index</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(notitia)
+<span class="kw">head</span>(lara)</code></pre>
+<pre><code>##   Runs Inning Notout   DNB      Opp  Ground Start Date       Match
+## 1   11      1  FALSE FALSE Pakistan Karachi   9-Nov-90   ODI # 639
+## 2   44      1  FALSE FALSE Pakistan  Lahore   6-Dec-90 Test # 1158
+## 3    5      2  FALSE FALSE Pakistan  Lahore   6-Dec-90 Test # 1158
+## 4   23      1  FALSE FALSE  England  Lord&#39;s  27-May-91   ODI # 678
+## 5    5      1  FALSE FALSE Pakistan Sharjah  17-Oct-91   ODI # 679
+## 6   45      1  FALSE FALSE    India Sharjah  19-Oct-91   ODI # 681</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(lara, <span class="dv">8</span>)</code></pre>
+<pre><code>##   Runs Inning Notout   DNB      Opp  Ground Start Date       Match
+## 1   11      1  FALSE FALSE Pakistan Karachi   9-Nov-90   ODI # 639
+## 2   44      1  FALSE FALSE Pakistan  Lahore   6-Dec-90 Test # 1158
+## 3    5      2  FALSE FALSE Pakistan  Lahore   6-Dec-90 Test # 1158
+## 4   23      1  FALSE FALSE  England  Lord&#39;s  27-May-91   ODI # 678
+## 5    5      1  FALSE FALSE Pakistan Sharjah  17-Oct-91   ODI # 679
+## 6   45      1  FALSE FALSE    India Sharjah  19-Oct-91   ODI # 681
+## 7    0      1  FALSE FALSE Pakistan Sharjah  21-Oct-91   ODI # 682
+## 8   54      1  FALSE FALSE Pakistan Karachi  20-Nov-91   ODI # 689</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(lara)</code></pre>
+<pre><code>##     Runs Inning Notout   DNB          Opp      Ground Start Date
+## 556   77      1  FALSE FALSE    Australia North Sound  27-Mar-07
+## 557   37      1  FALSE FALSE  New Zealand North Sound  29-Mar-07
+## 558    2      1  FALSE FALSE    Sri Lanka  Providence   1-Apr-07
+## 559   21      1  FALSE FALSE South Africa St George&#39;s  10-Apr-07
+## 560   33      1  FALSE FALSE   Bangladesh  Bridgetown  19-Apr-07
+## 561   18      1  FALSE FALSE      England  Bridgetown  21-Apr-07
+##          Match
+## 556 ODI # 2555
+## 557 ODI # 2557
+## 558 ODI # 2560
+## 559 ODI # 2567
+## 560 ODI # 2576
+## 561 ODI # 2578</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(lara)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    561 obs. of  8 variables:
+##  $ Runs      : int  11 44 5 23 5 45 0 54 18 45 ...
+##  $ Inning    : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 1 1 2 1 1 1 1 1 1 1 ...
+##  $ Notout    : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ DNB       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ Opp       : chr  &quot;Pakistan&quot; &quot;Pakistan&quot; &quot;Pakistan&quot; &quot;England&quot; ...
+##  $ Ground    : chr  &quot;Karachi&quot; &quot;Lahore&quot; &quot;Lahore&quot; &quot;Lord&#39;s&quot; ...
+##  $ Start Date: chr  &quot;9-Nov-90&quot; &quot;6-Dec-90&quot; &quot;6-Dec-90&quot; &quot;27-May-91&quot; ...
+##  $ Match     : chr  &quot;ODI # 639&quot; &quot;Test # 1158&quot; &quot;Test # 1158&quot; &quot;ODI # 678&quot; ...</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lara)</code></pre>
+<pre><code>##       Runs        Inning    Notout           DNB         
+##  Min.   :  0.00   1:430   Mode :logical   Mode :logical  
+##  1st Qu.:  9.00   2:131   FALSE:501       FALSE:543      
+##  Median : 29.00           TRUE :38        TRUE :18       
+##  Mean   : 42.91           NA&#39;s :22                       
+##  3rd Qu.: 60.00                                          
+##  Max.   :400.00                                          
+##  NA&#39;s   :40                                              
+##      Opp               Ground           Start Date       
+##  Length:561         Length:561         Length:561        
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##                                                          
+##     Match          
+##  Length:561        
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(lara<span class="op">$</span>Opp)</code></pre>
+<pre><code>## 
+##      Asia XI    Australia   Bangladesh       Canada      England 
+##            1          113           11            1           89 
+##        India      Ireland        Kenya  New Zealand     Pakistan 
+##           76            1            3           50           72 
+##     Scotland South Africa    Sri Lanka     Zimbabwe 
+##            1           73           41           29</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
+lara &lt;-<span class="st"> </span><span class="kw">separate</span>(lara, Match, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;Format&quot;</span>, <span class="st">&quot;MatchNum&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; # &quot;</span>)
+<span class="kw">head</span>(lara)</code></pre>
+<pre><code>##   Runs Inning Notout   DNB      Opp  Ground Start Date Format MatchNum
+## 1   11      1  FALSE FALSE Pakistan Karachi   9-Nov-90    ODI      639
+## 2   44      1  FALSE FALSE Pakistan  Lahore   6-Dec-90   Test     1158
+## 3    5      2  FALSE FALSE Pakistan  Lahore   6-Dec-90   Test     1158
+## 4   23      1  FALSE FALSE  England  Lord&#39;s  27-May-91    ODI      678
+## 5    5      1  FALSE FALSE Pakistan Sharjah  17-Oct-91    ODI      679
+## 6   45      1  FALSE FALSE    India Sharjah  19-Oct-91    ODI      681</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(lara<span class="op">$</span>Opp, lara<span class="op">$</span>Format)</code></pre>
+<pre><code>##               
+##                ODI Test
+##   Asia XI        1    0
+##   Australia     51   62
+##   Bangladesh     7    4
+##   Canada         1    0
+##   England       29   60
+##   India         42   34
+##   Ireland        1    0
+##   Kenya          3    0
+##   New Zealand   28   22
+##   Pakistan      48   24
+##   Scotland       1    0
+##   South Africa  37   36
+##   Sri Lanka     25   16
+##   Zimbabwe      25    4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(lara<span class="op">$</span>Format, lara<span class="op">$</span>Opp)</code></pre>
+<pre><code>##       
+##        Asia XI Australia Bangladesh Canada England India Ireland Kenya
+##   ODI        1        51          7      1      29    42       1     3
+##   Test       0        62          4      0      60    34       0     0
+##       
+##        New Zealand Pakistan Scotland South Africa Sri Lanka Zimbabwe
+##   ODI           28       48        1           37        25       25
+##   Test          22       24        0           36        16        4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">opp_counts &lt;-<span class="st"> </span><span class="kw">table</span>(lara<span class="op">$</span>Opp, lara<span class="op">$</span>Format)
+opp_counts</code></pre>
+<pre><code>##               
+##                ODI Test
+##   Asia XI        1    0
+##   Australia     51   62
+##   Bangladesh     7    4
+##   Canada         1    0
+##   England       29   60
+##   India         42   34
+##   Ireland        1    0
+##   Kenya          3    0
+##   New Zealand   28   22
+##   Pakistan      48   24
+##   Scotland       1    0
+##   South Africa  37   36
+##   Sri Lanka     25   16
+##   Zimbabwe      25    4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">opp_counts[<span class="st">&quot;Australia&quot;</span>, <span class="st">&quot;ODI&quot;</span>]</code></pre>
+<pre><code>## [1] 51</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">opp_counts[<span class="st">&quot;Australia&quot;</span>, ]</code></pre>
+<pre><code>##  ODI Test 
+##   51   62</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">opp_counts[, <span class="st">&quot;Test&quot;</span>]</code></pre>
+<pre><code>##      Asia XI    Australia   Bangladesh       Canada      England 
+##            0           62            4            0           60 
+##        India      Ireland        Kenya  New Zealand     Pakistan 
+##           34            0            0           22           24 
+##     Scotland South Africa    Sri Lanka     Zimbabwe 
+##            0           36           16            4</code></pre>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="what-is-data-science.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["texts.pdf", "texts.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
