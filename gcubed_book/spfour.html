@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="sp.html">
-<link rel="next" href="lifeexcountries.html">
+<link rel="next" href="tfwr.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -146,6 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="wta.html"><a href="wta.html"><i class="fa fa-check"></i>2 Year History of Top-ranked WTA Players</a></li>
 <li class="chapter" data-level="" data-path="sp.html"><a href="sp.html"><i class="fa fa-check"></i>S&amp;P 500 daily returns in 2018</a></li>
 <li class="chapter" data-level="" data-path="spfour.html"><a href="spfour.html"><i class="fa fa-check"></i>S&amp;P 500 daily returns 2015 - 2018</a></li>
+<li class="chapter" data-level="" data-path="tfwr.html"><a href="tfwr.html"><i class="fa fa-check"></i>World Record Progression</a></li>
 <li class="chapter" data-level="" data-path="lifeexcountries.html"><a href="lifeexcountries.html"><i class="fa fa-check"></i>Life Expectancy for Selected Countries</a></li>
 <li class="chapter" data-level="" data-path="metsbar.html"><a href="metsbar.html"><i class="fa fa-check"></i>NY Mets 2019 Season</a></li>
 <li class="chapter" data-level="" data-path="nleastbars.html"><a href="nleastbars.html"><i class="fa fa-check"></i>NL East 2019 Season Records</a></li>
@@ -275,45 +276,6 @@ sp_plt</code></pre>
 sp_plt</code></pre>
 <p><img src="gggallery_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 
-<p>#World Record Progression {-#tfwr}</p>
-</div>
-<div id="tfwrdata" class="section level4 unnumbered">
-<h4>Data</h4>
-<p>This plot uses the <em>wr</em> data frame of the <em>gcubed</em> package.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(wr)</code></pre>
-<pre><code>## # A tibble: 6 x 6
-##   Event    WR      Athlete                Location         Date       MF   
-##   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;            &lt;date&gt;     &lt;chr&gt;
-## 1 100 M    9.58    Usain Bolt (Jamaica)   Berlin, Germany  2009-08-16 M    
-## 2 200 M    19.19   Usain Bolt (Jamaica)   Berlin, Germany  2009-08-20 M    
-## 3 400 M    43.03   Wayde van Niekerk (So… Rio de Janeiro,… 2016-08-14 M    
-## 4 800 M    01:40.9 David Rudisha (Kenya)  London, England  2012-08-09 M    
-## 5 1500 M   03:26.0 Hicham El Guerrouj (M… Rome, Italy      1998-07-14 M    
-## 6 Steeple… 07:53.6 Saïf Shaheen (Qatar)   Brussels, Belgi… 2004-09-03 M</code></pre>
-</div>
-<div id="tfwrcode" class="section level4 unnumbered">
-<h4>Code for plot</h4>
-<p>This plot uses <em>geom_segment</em> geometry.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(dplyr) <span class="co"># used for arrange which sorts data by date</span>
-
-today &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2019-08-08&quot;</span>)
-wr &lt;-<span class="st"> </span><span class="kw">arrange</span>(wr, <span class="kw">desc</span>(Date)) 
-wr<span class="op">$</span>Event &lt;-<span class="st"> </span><span class="kw">factor</span>(wr<span class="op">$</span>Event, <span class="dt">levels =</span> wr<span class="op">$</span>Event)
-wr<span class="op">$</span>MF2 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(wr<span class="op">$</span>MF <span class="op">==</span><span class="st"> &quot;M&quot;</span>, <span class="st">&quot;Men&quot;</span>, <span class="st">&quot;Women&quot;</span>)
-
-wr_plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(wr, <span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Event)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">xend =</span> today, <span class="dt">y =</span> Event, <span class="dt">yend =</span> Event, <span class="dt">colour =</span> MF2), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Longevity of Current Track &amp; Field World Records&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Date Record Set&quot;</span>)
-
-wr_plt </code></pre>
-<p><img src="gggallery_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
-
 </div>
 </div>
             </section>
@@ -322,7 +284,7 @@ wr_plt </code></pre>
         </div>
       </div>
 <a href="sp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lifeexcountries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tfwr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

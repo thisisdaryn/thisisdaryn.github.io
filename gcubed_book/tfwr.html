@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>NL East 2019 Season Records | ggg</title>
+  <title>World Record Progression | ggg</title>
   <meta name="description" content="A gallery of plots made using the ggplot2 R package" />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="NL East 2019 Season Records | ggg" />
+  <meta property="og:title" content="World Record Progression | ggg" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="NL East 2019 Season Records | ggg" />
+  <meta name="twitter:title" content="World Record Progression | ggg" />
   
   <meta name="twitter:description" content="A gallery of plots made using the ggplot2 R package" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="metsbar.html">
-<link rel="next" href="nleastgamesabove.html">
+<link rel="prev" href="spfour.html">
+<link rel="next" href="lifeexcountries.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -176,38 +176,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="nleastbars" class="section level1 unnumbered">
-<h1>NL East 2019 Season Records</h1>
-<div class="topfigure">
-<p><img src = "images/NLEastSeasonBars.png"/></p>
-</div>
-<div id="nleastbarsdata" class="section level4 unnumbered">
+<div id="tfwr" class="section level1 unnumbered">
+<h1>World Record Progression</h1>
+<div id="tfwrdata" class="section level4 unnumbered">
 <h4>Data</h4>
-<p>This plot uses the <em>atl</em>, <em>phi</em>, <em>was</em>, <em>nym</em> and <em>mia</em> data frames of the <em>gcubed</em> package.</p>
-<pre class="sourceCode r"><code class="sourceCode r">nleast &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(atl, phi, was, nym, mia)</code></pre>
+<p>This plot uses the <em>wr</em> data frame of the <em>gcubed</em> package.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(wr)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   Event    WR      Athlete                Location         Date       MF   
+##   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;            &lt;date&gt;     &lt;chr&gt;
+## 1 100 M    9.58    Usain Bolt (Jamaica)   Berlin, Germany  2009-08-16 M    
+## 2 200 M    19.19   Usain Bolt (Jamaica)   Berlin, Germany  2009-08-20 M    
+## 3 400 M    43.03   Wayde van Niekerk (So… Rio de Janeiro,… 2016-08-14 M    
+## 4 800 M    01:40.9 David Rudisha (Kenya)  London, England  2012-08-09 M    
+## 5 1500 M   03:26.0 Hicham El Guerrouj (M… Rome, Italy      1998-07-14 M    
+## 6 Steeple… 07:53.6 Saïf Shaheen (Qatar)   Brussels, Belgi… 2004-09-03 M</code></pre>
 </div>
-<div id="nleastbarscode" class="section level4 unnumbered">
-<h4>Code</h4>
-<pre class="sourceCode r"><code class="sourceCode r">nleast<span class="op">$</span>Tm &lt;-<span class="st"> </span><span class="kw">factor</span>(nleast<span class="op">$</span>Tm, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ATL&quot;</span>, <span class="st">&quot;WSN&quot;</span>, <span class="st">&quot;PHI&quot;</span>, <span class="st">&quot;NYM&quot;</span>, <span class="st">&quot;MIA&quot;</span>))
-nlplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> nleast, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">Gm#</span><span class="st">`</span>, <span class="dt">y =</span> win_updown,
-                          <span class="dt">fill =</span> <span class="kw">factor</span>(WL, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;L&quot;</span>)))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Tm, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;royalblue&quot;</span>, <span class="st">&quot;peachpuff&quot;</span>), <span class="dt">name =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;NL East 2019&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Game #&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),
-        <span class="co">#axis.text.x=element_blank(),</span>
-        <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),
-        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>))
+<div id="tfwrcode" class="section level4 unnumbered">
+<h4>Code for plot</h4>
+<p>This plot uses <em>geom_segment</em> geometry.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr) <span class="co"># used for arrange which sorts data by date</span>
 
-nlplot</code></pre>
-<p><img src="gggallery_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+today &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2019-08-08&quot;</span>)
+wr &lt;-<span class="st"> </span><span class="kw">arrange</span>(wr, <span class="kw">desc</span>(Date)) 
+wr<span class="op">$</span>Event &lt;-<span class="st"> </span><span class="kw">factor</span>(wr<span class="op">$</span>Event, <span class="dt">levels =</span> wr<span class="op">$</span>Event)
+wr<span class="op">$</span>MF2 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(wr<span class="op">$</span>MF <span class="op">==</span><span class="st"> &quot;M&quot;</span>, <span class="st">&quot;Men&quot;</span>, <span class="st">&quot;Women&quot;</span>)
+
+wr_plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(wr, <span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Event)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">xend =</span> today, <span class="dt">y =</span> Event, <span class="dt">yend =</span> Event, <span class="dt">colour =</span> MF2), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Longevity of Current Track &amp; Field World Records&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Date Record Set&quot;</span>)
+
+wr_plt </code></pre>
+<p><img src="gggallery_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -216,8 +222,8 @@ nlplot</code></pre>
           </div>
         </div>
       </div>
-<a href="metsbar.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="nleastgamesabove.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spfour.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lifeexcountries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
