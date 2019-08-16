@@ -1,0 +1,64 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.tncontainer{
+  background:#fff;
+  border:solid #fff 1px;
+  border-radius:5px;
+  box-shadow:none;
+  float:left;
+  margin:5px;
+  min-height:230px;
+  padding-top:5px;
+  position:relative
+}
+
+.containercontainer{
+  background:#fff;
+  border:solid #fff 1px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  box-shadow:none;
+  float:left;
+  margin:5px;
+  min-height:230px;
+  padding-top:5px;
+  position:relative
+}
+
+.tncontainer .figure{
+  margin:10px;
+  width:220px;
+  height:220px
+  
+}
+
+.tncontainer .widefigure{
+  margin:5px;
+  width:440px;
+  height:220px;
+  
+}
+
+.figure{
+  margin:5px;
+  width:220px;
+  height:220px;
+}
+
+.topfigure{
+  width:500px;
+}
