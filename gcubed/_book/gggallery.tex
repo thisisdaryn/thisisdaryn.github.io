@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-08-16}
+    \date{2019-08-22}
 
 \usepackage{booktabs}
 
@@ -717,7 +717,7 @@ This plot uses \emph{geom\_line} to create a line chart.
 
 \NormalTok{unemp_plt <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(us_unemp, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Date, }\DataTypeTok{y =}\NormalTok{ Rate)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"10 Year History of US Unemployment Rates (2004 - 2019)"}\NormalTok{)}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"10 Year History of US Unemployment Rates (2009 - 2019)"}\NormalTok{)}
 
 \NormalTok{unemp_plt}
 \end{Highlighting}
@@ -769,7 +769,7 @@ points simultaneously.
 
 \NormalTok{unemp_ptline_plt <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(us_unemp, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Date, }\DataTypeTok{y =}\NormalTok{ Rate)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"10 Year History of US Unemployment Rates (2004 - 2019)"}\NormalTok{)  }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"10 Year History of US Unemployment Rates (2009 - 2019)"}\NormalTok{)  }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme_bw}\NormalTok{()}
 
 \NormalTok{unemp_ptline_plt}
@@ -879,7 +879,7 @@ This plot uses the \emph{geom\_step} geometry to get a step function appearance 
 \KeywordTok{library}\NormalTok{(ggplot2)}
 
 \NormalTok{unemp_step_plt <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(us_unemp, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Date, }\DataTypeTok{y =}\NormalTok{ Rate)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_step}\NormalTok{() }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"10 Year History of US Unemployment Rates (2004 - 2019)"}\NormalTok{)}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"10 Year History of US Unemployment Rates (2009 - 2019)"}\NormalTok{)}
   
   
 \NormalTok{unemp_step_plt}
@@ -1209,6 +1209,8 @@ Also, we create a variable \emph{Change} to be used later to identify the points
 \subsubsection*{Code for plot}\label{atpcode}}
 \addcontentsline{toc}{subsubsection}{Code for plot}
 
+The following is mostly a copy of \href{https://www.r-bloggers.com/bump-chart/}{this blog post} that was very helpful to me.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(ggplot2)}
@@ -1366,6 +1368,8 @@ Also, we create a variable \emph{Change} to be used later to identify the points
 \hypertarget{wtacode}{%
 \subsubsection*{Code for plot}\label{wtacode}}
 \addcontentsline{toc}{subsubsection}{Code for plot}
+
+The following is mostly a copy of \href{https://www.r-bloggers.com/bump-chart/}{this blog post} that was very helpful to me.
 
 \begin{Shaded}
 \begin{Highlighting}[]
