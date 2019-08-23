@@ -1,0 +1,426 @@
+
+<html>
+<title>k-means clustering</title>
+<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="thecssfile.css">
+
+<body>
+<H2>Visualizing k-means clustering</H2>
+
+I've recently come across <a href="http://shabal.in/visuals/kmeans/4.html">this visualization</a> of <a href="https://en.wikipedia.org/wiki/K-means_clustering">k-means clustering</a>, via a co-worker. It's a good illustration of the influence the starting points have on the final clusterings.<p>
+
+I thought it would be interesting to build something interactive with datasets created on the fly and giving the user the ability to choose k.<p>
+
+# of data points: <input type="text" id="numPoints" value ="80">  &nbsp
+<button type="button" onclick = newData()>New Data</button> &nbsp 
+k: <input type="text" id="numClusters" value ="4">  &nbsp
+<button type="button" onclick = newRun()>Run k-means algorithm</button> &nbsp <p>
+<svg id = "Panel"></svg>
+<script>
+
+
+ var colours = ["blue", "pink", "yellow", "chartreuse","magenta","khaki",
+                "SaddleBrown","SpringGreen" ,"#7f7f7f" ,"#FF99FF", "#99CCFF", "#663366","#993300", "#999900", "#FF8C00", "#556B2F",
+                "#008B8B", "#d62728", "#FFFF00", "#000066", "#CC3333", "#00CC00", "#2ca02c", "#660000", "#6600FF" , "#FFCC66", 
+                "#B9264F", "#FFE920", "#FF800D", "#D1A0A0", "#93EEAA"]; 
+
+var maxX, maxY;
+var points;
+
+maxY = 0.75*window.innerHeight;
+maxX = 0.75*window.innerWidth;
+var intervalFlag;
+
+
+var panel = document.getElementById('Panel');
+panel.setAttribute("width",maxX);
+panel.setAttribute("height",maxY);
+
+var Circle = function(x, y){    
+    var NS = "http://www.w3.org/2000/svg";
+    var circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute("cx", x);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 4);
+    circle.style.fill = "#FFEBCD";
+    circle.style.stroke = "#000000";
+    return circle;
+}
+
+
+var centroidX = function(x,y, clusterNum){
+    var NS = "http://www.w3.org/2000/svg";
+    var circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute("cx", x);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 25);
+    circle.style.fill = colours[clusterNum%numClusters];
+    circle.style.opacity = 0.1;
+    circle.style.stroke = "#000000";
+    return circle;
+}
+
+var Line = function(x1, y1, x2, y2){    
+    var NS = "http://www.w3.org/2000/svg";
+    var line = document.createElementNS(NS, 'line');
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("width",1);
+    line.style.stroke = "#000000";
+    line.style["stroke-dasharray"] = "4, 4";
+    return line;
+}
+
+
+var ChangeEndPoint = function(line, x, y){    
+    line.setAttribute("x2", x);
+    line.setAttribute("y2", y);
+    console.log(panel);
+}
+
+var MakeShort = function(line){    
+    line.setAttribute("x2", line.getAttribute("x1"));
+    line.setAttribute("y2", line.getAttribute("y1"));
+    console.log(panel);
+}
+
+
+
+
+var Point = function(inX,inY){
+    this.x = inX;
+    this.y = inY;
+}
+
+
+var BoxMullerRand = function(meanX, stdevX, meanY, stdevY){
+    var devs = genFunction();
+    var x,y;
+    x = meanX + devs[0]*stdevX;
+    if(x < 4){ x = 5 + 2*Math.random();}
+    else if( x > (maxX - 4)) { x = maxX - 5 - 2*Math.random();}
+    
+    y = meanY + devs[1]*stdevY;
+    if(y < 4) { y = 5 + 2*Math.random();}
+    else if (y > (maxY - 4)) { y = maxY - 5 - 2*Math.random();}
+    
+    var retPoint = new Point(x, y);
+    return retPoint;    
+}
+
+var genFunction = function(){
+
+    var u, v; 
+    var s = 0;
+    
+    while(s == 0 || s > 1){
+        u = 2*Math.random() - 1;
+        v = 2*Math.random() - 1;
+        s = u*u + v*v;
+    }
+    var x = Math.sqrt(-2*Math.log(s)/s);
+
+    var devs = [];
+    devs.push(u*x);
+    devs.push(v*x);
+    
+    return devs;
+
+}
+var numPoints = 50;
+var numClusters = 4;
+var plotPoints = [];
+var plotLines = [];
+var iterCentroidsX = [];
+var iterCentroidsY = [];
+var clusterLookup;
+var plotCentroids = [];
+
+var clusterCount = [];
+var clusterXSum = [];
+var clusterYSum = [];
+var phase;
+
+
+var newData = function(){
+
+    clearInterval(intervalFlag);
+    for (var j = 0; j < plotPoints.length; ++j){
+        panel.removeChild(plotPoints[j]);
+        panel.removeChild(plotLines[j]);
+    }
+    plotPoints =[];
+    plotLines = [];
+    
+    for(var j = 0; j < plotCentroids.length; ++j){
+        panel.removeChild(plotCentroids[j]);
+    }
+    plotCentroids = [];
+    
+    numPoints = parseFloat(document.getElementById('numPoints').value);
+    
+    if(isNaN(numPoints)){ 
+        numPoints = 50;
+        document.getElementById('numPoints').value = "4";
+    }
+    
+    var dataClusters = 3 + Math.floor(Math.random()*3);
+    
+
+    centroidsX = [];
+    centroidsY = [];
+    
+    for (var j = 0; j < dataClusters; ++j){
+        centroidsX.push(Math.random()*maxX);
+        centroidsY.push(Math.random()*maxY);
+    }
+    
+    var genCluster;
+    var tempPoint;
+    points = [];
+    plotPoints = [];
+    clusterLookup = [];
+    for (var j = 0; j < numPoints; ++j){
+        genCluster = Math.floor(Math.random()*dataClusters);
+        tempPoint = BoxMullerRand(centroidsX[genCluster], maxX/(3.5*numClusters), centroidsY[genCluster], maxY/(3.5*numClusters));
+        points.push(tempPoint);
+        
+        var tempPlotLine = Line(tempPoint.x, tempPoint.y, tempPoint.x, tempPoint.y);    
+        plotLines.push(tempPlotLine);
+        panel.appendChild(plotLines[plotLines.length-1]);  
+        console.log(panel);
+        var tempPlotPoint = Circle(tempPoint.x, tempPoint.y);
+        plotPoints.push(tempPlotPoint);
+        panel.appendChild(plotPoints[plotPoints.length-1]);
+        clusterLookup.push(-1);
+        
+    }
+
+
+}
+
+var newRun = function(){
+
+
+    clearInterval(intervalFlag);
+
+    
+    var windowPoints = parseFloat(document.getElementById('numPoints').value);
+    if(isNaN(windowPoints)){
+        windowPoints = 80;
+        document.getElementById('numPoints').value = windowPoints;
+
+    }
+    
+    if(windowPoints!=numPoints){
+        newData();
+    }
+    
+    
+    for(var j = 0; j < plotLines.length; ++j){
+        MakeShort(plotLines[j]);
+    }
+
+    for(var j = 0; j < plotCentroids.length; ++j){
+        panel.removeChild(plotCentroids[j]);
+    }
+    
+    plotCentroids = [];
+    
+    for (var j = 0; j < plotPoints.length; ++j){
+        clusterLookup[j] = -1;
+        recolour(j, -1);
+    }
+    numClusters = parseFloat(document.getElementById('numClusters').value);
+    
+
+    
+    if(isNaN(numClusters)){
+        numClusters = 4;
+        document.getElementById('numClusters').value = "4";
+
+    }
+    if(numClusters>numPoints){
+        numClusters = numPoints;
+        document.getElementById('numClusters').value = numClusters;
+        
+    }
+    
+    getInitialCentroids();
+    phase = 0;
+    intervalFlag = setInterval(animationLoop, 1000);
+
+}
+
+var memberOf = function(needle, haystack){
+
+    var found = false;
+    
+    for(var j = 0; j < haystack.length; ++j){
+        if(haystack[j]==needle){
+            found = true;
+            break;
+        }
+    }
+    
+    return found;
+
+}
+
+var getInitialCentroids = function(){
+
+    var centroidCount = 0;
+    iterCentroidsX = [];
+    iterCentroidsY = [];
+    var centroids = [];
+    var tempC;
+    while (centroidCount < numClusters){
+        cand = Math.floor(Math.random()*numPoints);
+        if(!memberOf(cand,centroids))
+        {
+            tempC =  centroidX(points[cand].x, points[cand].y, centroidCount)
+            ++centroidCount;
+            centroids.push(cand);
+            iterCentroidsX.push(points[cand].x);
+            iterCentroidsY.push(points[cand].y);
+            plotCentroids.push(tempC);
+            panel.appendChild(plotCentroids[plotCentroids.length-1]);
+            
+        }       
+    }
+}
+
+
+
+
+
+
+
+var recalculateCentroid = function(){
+
+    clusterCount = [];
+    clusterXSum = [];
+    clusterYSum = [];
+    
+    for(j = 0; j < numClusters; ++j){
+        clusterCount.push(0);
+        clusterXSum.push(0);
+        clusterYSum.push(0);
+    }
+    
+    var cluster;
+    for(j = 0; j < numPoints; ++j){
+        cluster = clusterLookup[j];
+        clusterCount[cluster]+=1;
+        clusterXSum[cluster]+=points[j].x;
+        clusterYSum[cluster]+=points[j].y;    
+    }
+    
+    for(j = 0; j < numClusters; ++j){
+        iterCentroidsX[j] =  clusterXSum[j]/clusterCount[j];
+        iterCentroidsY[j] =  clusterYSum[j]/clusterCount[j];
+        plotCentroids[j].setAttribute("cx", iterCentroidsX[j]);
+        plotCentroids[j].setAttribute("cy", iterCentroidsY[j]);
+    }
+    
+    for (var j = 0; j < numPoints; ++j){
+        ChangeEndPoint(plotLines[j], iterCentroidsX[clusterLookup[j]], iterCentroidsY[clusterLookup[j] ]  );
+    }
+    
+    
+    
+
+}
+
+var infDist = Math.sqrt(maxX*maxX + maxY*maxY) + 200
+
+var recolour = function(pointID, clusterID){
+    if(clusterID > -1){
+        plotPoints[pointID].style.fill = colours[clusterID%numClusters];
+    }
+    else{
+        plotPoints[pointID].style.fill = "#FFEBCD";
+    }
+}
+
+var dist = function(x1, y1, x2, y2){
+    var xd = x1 - x2;
+    var yd = y1 - y2;
+    return Math.sqrt(xd*xd + yd*yd);
+}
+
+var reassignCluster = function(){
+
+    var changes = false;
+    var minDist = infDist;
+    var newCluster;
+    for(var j = 0; j < numPoints; ++j){
+        newCluster = 0;
+        var minDist = infDist;
+        for(var k = 0; k < numClusters; ++k){
+            tempDist = dist(points[j].x, points[j].y, iterCentroidsX[k], iterCentroidsY[k]);
+            //console.log(points[j].x, points[j].y, iterCentroidsX[k], iterCentroidsY[k],"****", tempDist);
+            if(tempDist < minDist)
+            {
+                minDist = tempDist;
+                newCluster = k; 
+            }
+        }
+        //console.log(newCluster, minDist);
+        if(clusterLookup[j]!=newCluster){
+            changes = true;
+            clusterLookup[j]=newCluster;
+            recolour(j,newCluster);
+            ChangeEndPoint(plotLines[j], iterCentroidsX[newCluster], iterCentroidsY[newCluster]);
+        }
+    }
+
+
+    return changes;
+
+}
+
+
+var animationLoop = function(){
+
+    if(phase == 0){
+    //updateClusters
+        var converged = !reassignCluster();
+        if (converged){
+            clearInterval(intervalFlag);
+            for(var j = 0; j < plotLines.length; ++j){
+                MakeShort(plotLines[j]);
+            }
+            console.log("Complete!");
+        }
+        phase = 1;
+    }
+    else if(phase == 1){
+    //updateCentroids
+        recalculateCentroid();
+        phase = 0;
+    }
+
+
+}
+
+
+
+newData();
+
+
+
+//getInitialCentroids();
+
+//reassignCluster();
+//recalculateCentroid();
+
+
+</script>
+
+
+
+</body>
+</html>
