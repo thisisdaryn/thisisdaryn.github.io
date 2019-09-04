@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>MBIDA 6001: Data Analytic Methods using R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Daryn Ramsden" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# MBIDA 6001: Data Analytic Methods using R
+## Getting data for OpenIntro Statistics
+### Daryn Ramsden
+### Arthur Lok Jack Global School of Business
+### (updated: 2019-09-04)
+
+---
+
+
+
+
+
+### What is the goal?
+
+--
+
+To be able to use the data sets referenced in the text.
+
+--
+
+### What is the plan?
+
+--
+
+We have two options:
+--
+  
+  1. Install the development version if possible. This has all the data sets used in the book.
+--
+  
+  2. Install the official version. This is missing the &lt;tt&gt;loan50&lt;/tt&gt; data frame (and perhaps others), but has almost all of the data as far as I can tell. 
+
+---
+
+# Option 1: Installing the development version
+
+You can try to install the development version by running the following commands in your console.
+--
+
+```r
+install.packages("devtools")
+library(devtools)
+install_github("OpenIntroStat/openintro-r-package")
+```
+
+--
+## What did that do (or attempt)?
+
+--
+  - the 1st line installed the &lt;font color="purple"&gt;&lt;tt&gt;devtools&lt;/tt&gt;&lt;/font&gt; package
+--
+
+  - the 2nd told R you want to access the functions in the &lt;font color="purple"&gt;&lt;tt&gt;devtools&lt;/tt&gt;&lt;/font&gt; package
+--
+
+  - the 3rd line used &lt;tt&gt;install_github&lt;/tt&gt; which is in the &lt;font color="purple"&gt;&lt;tt&gt;devtools&lt;/tt&gt;&lt;/font&gt; package to install from the author's repository
+
+
+---
+
+## Did it work?
+
+--
+
+If it worked, you should be able to view the first few rows of the &lt;tt&gt;loan50&lt;/tt&gt; data frame:
+
+--
+
+
+```r
+library(openintro)
+head(loan50)
+```
+
+```
+##   state emp_length term homeownership annual_income verified_income
+## 1    NJ          3   60          rent         59000    Not Verified
+## 2    CA         10   36          rent         60000    Not Verified
+## 3    SC         NA   36      mortgage         75000        Verified
+## 4    CA          0   36          rent         75000    Not Verified
+## 5    OH          4   60      mortgage        254000    Not Verified
+## 6    IN          6   36      mortgage         67000 Source Verified
+##   debt_to_income total_credit_limit total_credit_utilized
+## 1      0.5575254              95131                 32894
+## 2      1.3056833              51929                 78341
+## 3      1.0562800             301373                 79221
+## 4      0.5743467              59890                 43076
+## 5      0.2381496             422619                 60490
+## 6      1.0770448             349825                 72162
+##   num_cc_carrying_balance       loan_purpose loan_amount grade
+## 1                       8 debt_consolidation       22000     B
+## 2                       2        credit_card        6000     B
+## 3                      14 debt_consolidation       25000     E
+## 4                      10        credit_card        6000     B
+## 5                       2   home_improvement       25000     B
+## 6                       4   home_improvement        6400     B
+##   interest_rate public_record_bankrupt loan_status has_second_income
+## 1         10.90                      0     Current             FALSE
+## 2          9.92                      1     Current             FALSE
+## 3         26.30                      0     Current             FALSE
+## 4          9.92                      0     Current             FALSE
+## 5          9.43                      0     Current             FALSE
+## 6          9.92                      0     Current             FALSE
+##   total_income
+## 1        59000
+## 2        60000
+## 3        75000
+## 4        75000
+## 5       254000
+## 6        67000
+```
+
+
+If it did not work, we can use the official version of the package for now. 
+
+
+---
+## Option 2: Installing the official version
+
+You can install the official version of the package by running the following in your console.
+--
+
+```r
+install.packages("openintro")
+```
+--
+### If that worked
+
+you should be able to run the 2 commands below and get the displayed output.
+
+--
+
+
+```r
+library(openintro)
+head(cia_factbook)
+```
+
+```
+## # A tibble: 6 x 11
+##   country   area birth_rate death_rate infant_mortalit… internet_users
+##   &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+## 1 Russia  1.71e7       11.9      13.8              7.08       40853000
+## 2 Canada  9.98e6       10.3       8.31             4.71       26960000
+## 3 United… 9.83e6       13.4       8.15             6.17      245000000
+## 4 China   9.60e6       12.2       7.44            14.8       389000000
+## 5 Brazil  8.51e6       14.7       6.54            19.2        75982000
+## 6 Austra… 7.74e6       12.2       7.07             4.43       15810000
+## # … with 5 more variables: life_exp_at_birth &lt;dbl&gt;,
+## #   maternal_mortality_rate &lt;int&gt;, net_migration_rate &lt;dbl&gt;,
+## #   population &lt;int&gt;, population_growth_rate &lt;dbl&gt;
+```
+
+---
+
+### What did that do?
+
+  1. you told R that you want to use the data in the &lt;font color="purple"&gt;&lt;tt&gt;openintro&lt;/tt&gt;&lt;/font&gt; package
+--
+  
+  2. you asked to see the first few rows of the &lt;tt&gt;cia_factbook&lt;/tt&gt; data frame (which is part of the &lt;font color="purple"&gt;&lt;tt&gt;openintro&lt;/tt&gt;&lt;/font&gt; package) using the &lt;tt&gt;head&lt;/tt&gt; function.
+
+
+---
+### If neither Option 1 nor Option 2 worked
+
+
+--
+  
+  1. We can install it from a zip or tar.gz file in class on Tuesday, or:
+
+--
+  2. You can try installing manually:
+--
+
+    - You can download a zip or tar.gz file from &lt;a href = "https://cran.r-project.org/web/packages/openintro/index.html"&gt;https://cran.r-project.org/web/packages/openintro/index.html&lt;/a&gt;.
+--
+    - The zip files are near the bottom of the page, listed as binaries.
+--
+    - In RStudio, go to Tools -&gt; Install Packages.
+--
+    - In the *Install from* dropdown change to *Package archive file*
+--
+    - Browse to where you have saved the binary and choose it.
+--
+    - Press the *Install* button.
+
+
+
+---
+### Any other packages?
+
+--
+
+The most convenient package I can recommend you install right now is the &lt;font color="purple"&gt;&lt;tt&gt;tidyverse&lt;/tt&gt;&lt;/font&gt;. You can install it by running the following command.
+
+--
+
+```r
+install.packages("tidyverse")
+```
+--
+  - You should see many packages being installed.
+
+--
+  
+  - &lt;font color="purple"&gt;&lt;tt&gt;tidyverse&lt;/tt&gt;&lt;/font&gt; is actually a collective name for a large number of packages that are designed to work well with each other. 
+
+---
+### What's in  tidyverse?
+
+We will use multiple packages tidyverse packages in this class, including:
+  - &lt;font color="purple"&gt;&lt;tt&gt;readr&lt;/tt&gt;&lt;/font&gt;: functions for reading in data --- from csv or other text formats --- that are more intelligent than the built-in R functions
+  - &lt;font color="purple"&gt;&lt;tt&gt;dplyr&lt;/tt&gt;&lt;/font&gt;: for filtering, subsetting, sorting and aggregating data
+  - &lt;font color="purple"&gt;&lt;tt&gt;tidyr&lt;/tt&gt;&lt;/font&gt;: for changing the shape of data or for splitting columns or uniting columns
+  - &lt;font color="purple"&gt;&lt;tt&gt;readxl&lt;/tt&gt;&lt;/font&gt;: reads data from Excel spreadsheets
+  - &lt;font color="purple"&gt;&lt;tt&gt;ggplot2&lt;/tt&gt;&lt;/font&gt;: graphics package that allows for publication-ready plots/charts
+  - &lt;font color="purple"&gt;&lt;tt&gt;lubridate&lt;/tt&gt;&lt;/font&gt;: functions that make it easier to work with dates
+
+---
+### A general note
+
+You only need to use &lt;tt&gt;install.packages&lt;/tt&gt;:
+  - to install a package for the first time on a particular computer. 
+  - to upgrade to a new version of a package if necessary
+  
+
+Because of this, I don't stress the need to do it in a script. Your scripts should consist of code that you expect to execute repeatedly.  
+
+--
+
+By contrast, you will be using &lt;tt&gt;library&lt;/tt&gt; every time that you want to use the functions or data in the package.
+
+
+--
+
+Until next time - DR
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
