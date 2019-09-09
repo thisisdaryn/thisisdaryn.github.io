@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Subsetting data using R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Daryn Ramsden" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Subsetting data using R
+## 📈📊📉
+### Daryn Ramsden
+### last updated: 2019-09-09
+
+---
+
+
+### A note 
+
+These slides assume your working directory contains the *data* folder that contains the following files:
+  - *Loans.csv*
+  - *ChicagoEmployees.csv*
+
+One way to ensure that you are in that directory is to open the *week2.Rproj* file. (After downloading the project folder *week2* from elearning.)
+
+You can do this in RStudio by File --&gt; Open Project and then navigating to it at the location you downloaded it to.
+
+
+---
+### Reading in data
+
+We will use the **read_csv** function of the &lt;tt&gt;readr&lt;package&gt;&lt;/tt&gt;. 
+
+**read_csv** is an alternative to the built-in function **read.csv**. 
+
+It has some smarter default settings than read.csv
+
+Also, it gives info about the names and data types of columns in the data set (which can sometimes be annoying) 
+
+---
+#### Using **read_csv** 
+
+
+
+```r
+#install.packages("readr") # you may need to run this first if you ha
+library(readr)
+loans &lt;- read_csv("data/Loans.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   state = col_character(),
+##   emp_length = col_double(),
+##   term = col_double(),
+##   homeownership = col_character(),
+##   annual_income = col_double(),
+##   verified_income = col_character(),
+##   debt_to_income = col_double(),
+##   total_credit_limit = col_double(),
+##   total_credit_utilized = col_double(),
+##   num_cc_carrying_balance = col_double(),
+##   loan_purpose = col_character(),
+##   loan_amount = col_double(),
+##   grade = col_character(),
+##   interest_rate = col_double(),
+##   public_record_bankrupt = col_double(),
+##   loan_status = col_character(),
+##   app_type = col_character()
+## )
+```
+
+
+---
+### Getting summary information
+
+How big is the loans data set? 
+--
+
+```r
+dim(loans)
+```
+
+```
+## [1] 10000    17
+```
+--
+What are the names of the columns?
+
+```r
+names(loans)
+```
+
+```
+##  [1] "state"                   "emp_length"             
+##  [3] "term"                    "homeownership"          
+##  [5] "annual_income"           "verified_income"        
+##  [7] "debt_to_income"          "total_credit_limit"     
+##  [9] "total_credit_utilized"   "num_cc_carrying_balance"
+## [11] "loan_purpose"            "loan_amount"            
+## [13] "grade"                   "interest_rate"          
+## [15] "public_record_bankrupt"  "loan_status"            
+## [17] "app_type"
+```
+--
+You can use **summary** or **View** as well to get more info. 
+
+
+
+---
+### Selecting only some columns
+
+In base R, **[]** is used to subset data. For a 2d data structure, we have row conditions and column conditions separated by a comma inside the **[]**.
+--
+
+
+For example, we can select the first 5 rows and the first 4 columns of the *loans* data frame:
+
+--
+
+```r
+loans[c(1:5),c(1:4)]
+```
+
+```
+## # A tibble: 5 x 4
+##   state emp_length  term homeownership
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        
+## 1 NJ             3    60 MORTGAGE     
+## 2 HI            10    36 RENT         
+## 3 WI             3    36 RENT         
+## 4 PA             1    36 RENT         
+## 5 CA            10    36 RENT
+```
+
+
+
+---
+### Selecting columns by name
+
+It's often more practical to select columns by name however. The following code:
+  - keeps only the *homeownership*, *loan_amount*, *loan_purpose*, and *interest_rate* columns
+  - displays the dimensions of the smaller data set
+--
+
+```r
+loans2 &lt;- loans[, c("homeownership", "loan_amount", 
+                    "loan_purpose", "interest_rate")]
+dim(loans2)
+```
+
+```
+## [1] 10000     4
+```
+--
+Note that there was no row constraint in the first line as we were intending to keep all rows of the data.
+
+---
+### Rows can also be selected using logical operators
+
+How do we select all the rows where the interest rate is lower than 7%?
+--
+
+
+The code below:
+  - keeps only the rows where the interest rate is lower than 7% 
+  - displays the first few rows
+--
+
+```r
+low_interest &lt;- loans2[loans2$interest_rate &lt; 7, ]
+head(low_interest)
+```
+
+```
+## # A tibble: 6 x 4
+##   homeownership loan_amount loan_purpose       interest_rate
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;
+## 1 RENT                21600 debt_consolidation          6.72
+## 2 OWN                  5000 other                       6.72
+## 3 RENT                 6400 credit_card                 6.71
+## 4 MORTGAGE             7000 credit_card                 6.08
+## 5 MORTGAGE             3500 home_improvement            6.71
+## 6 RENT                10000 debt_consolidation          5.32
+```
+--
+Note that there is no column constraint as we are keeping all the columns.
+
+
+---
+### What are the other logical operators that can be used in filtering rows?
+
+The previous slide made use of **&lt;**, multiple other operators are available for filtering: 
+--
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Operator &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; == &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; equal &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; != &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; not equal &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; less than &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt;= &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; less than or equal to &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; greater than &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;gt;= &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; greater than or equal to &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; | &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Or: at least one of the expressions is true &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; And: Both expressions are true &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ! &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Not: the expression is not true &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+
+---
+### Some examples 
+
+How would we get loans that meet both of the following:
+  - have a loan amount &gt; $20,000
+  - interest rate &gt; 12% 
+--
+
+
+```r
+df &lt;- loans2[(loans2$loan_amount &gt; 20000) &amp; 
+               (loans2$interest_rate &gt; 12), ]
+head(df)
+```
+
+```
+## # A tibble: 6 x 4
+##   homeownership loan_amount loan_purpose       interest_rate
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;
+## 1 MORTGAGE            28000 moving                      14.1
+## 2 RENT                23000 credit_card                 14.1
+## 3 MORTGAGE            24000 credit_card                 13.6
+## 4 MORTGAGE            25000 debt_consolidation          15.0
+## 5 RENT                30000 debt_consolidation          28.7
+## 6 MORTGAGE            21050 debt_consolidation          13.6
+```
+
+
+---
+### Another example
+
+How would we get loans that meet either of the following:
+  - the purpose is *credit_card* 
+  - the home ownership status is *RENT* 
+  
+--
+
+```r
+df2 &lt;- loans2[loans2$loan_purpose == "credit_card" | 
+                loans2$homeownership == "RENT", ] 
+head(df2)
+```
+
+```
+## # A tibble: 6 x 4
+##   homeownership loan_amount loan_purpose       interest_rate
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;
+## 1 RENT                 5000 debt_consolidation         12.6 
+## 2 RENT                 2000 other                      17.1 
+## 3 RENT                21600 debt_consolidation          6.72
+## 4 RENT                23000 credit_card                14.1 
+## 5 MORTGAGE            24000 credit_card                13.6 
+## 6 RENT                 6400 credit_card                 6.71
+```
+
+  
+
+---
+### Using **$** to reference columns 
+
+Another means of subsetting data that we would have seen before is the **$** 
+--
+
+```r
+hist(loans$interest_rate)
+```
+
+![](Subsetting_Data_With_R_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+
+
+--
+
+
+We have been using it to extract single columns from the data
+
+
+---
+### **$** can be used to create new columns
+
+We can also create new columns in the data set. 
+
+
+For example, here's a new column that says whether or not the interest rate on a loan is greater than 10%:
+--
+
+```r
+loans2$ir_gt10 &lt;- ifelse(loans2$interest_rate &gt; 10, TRUE, FALSE)
+head(loans2)
+```
+
+```
+## # A tibble: 6 x 5
+##   homeownership loan_amount loan_purpose       interest_rate ir_gt10
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;  
+## 1 MORTGAGE            28000 moving                     14.1  TRUE   
+## 2 RENT                 5000 debt_consolidation         12.6  TRUE   
+## 3 RENT                 2000 other                      17.1  TRUE   
+## 4 RENT                21600 debt_consolidation          6.72 FALSE  
+## 5 RENT                23000 credit_card                14.1  TRUE   
+## 6 OWN                  5000 other                       6.72 FALSE
+```
+
+
+---
+### Explaining **ifelse**
+
+The **ifelse** function is very handy and has three arguments:
+
+- an expression to evaluate
+- a result if the expression is TRUE
+- a result if the expression is FALSE
+
+---
+### dplyr: An alternative means for subsetting data 
+
+Subsetting in base R can involve a lot of typing.
+
+--
+
+The *dplyr* package contains useful data manipulation functions to addresss this. 
+
+--
+
+Installing **dplyr** 
+
+--
+
+```r
+install.packages("dplyr")
+```
+--
+
+Now getting access to the functions:
+
+```r
+library(dplyr)
+```
+
+
+
+---
+### 5 main dplyr functions
+
+There are 2 main functions we will use for subsetting data:
+- **filter**: to choose rows
+- **select**: to choose columns
+
+Other functions, we will introduce: 
+- **arrange**: to sort
+- **mutate**: to create new columns
+- **summarise** and **group_by**: to aggregate data 
+
+
+---
+### General rules about usage 
+
+Key things to remember: 
+- **the first argument/input to any function in dplyr, is the data frame** 
+
+
+- the other inputs depend on the task you're carrying out  
+
+---
+### Example: Using dplyr::filter to select rows
+
+
+How would we get loans that meet either of the following:
+  - the purpose is *credit_card* 
+  - the home ownership status is *RENT* 
+--
+
+```r
+library(dplyr)
+df4 &lt;- filter(loans2, loan_purpose == "credit_card" | 
+                homeownership == "RENT")
+head(df4)
+```
+
+```
+## # A tibble: 6 x 5
+##   homeownership loan_amount loan_purpose       interest_rate ir_gt10
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;  
+## 1 RENT                 5000 debt_consolidation         12.6  TRUE   
+## 2 RENT                 2000 other                      17.1  TRUE   
+## 3 RENT                21600 debt_consolidation          6.72 FALSE  
+## 4 RENT                23000 credit_card                14.1  TRUE   
+## 5 MORTGAGE            24000 credit_card                13.6  TRUE   
+## 6 RENT                 6400 credit_card                 6.71 FALSE
+```
+
+---
+### Example 2: Using dplyr::filter to select rows
+
+How would we get loans that meet both of the following:
+  - have a loan amount &gt; $20,000
+  - interest rate &gt; 12% 
+
+--
+
+```r
+library(dplyr)
+df5 &lt;- filter(loans2, loan_amount &gt; 20000, interest_rate &gt; 12)
+head(df5)
+```
+
+```
+## # A tibble: 6 x 5
+##   homeownership loan_amount loan_purpose       interest_rate ir_gt10
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;  
+## 1 MORTGAGE            28000 moving                      14.1 TRUE   
+## 2 RENT                23000 credit_card                 14.1 TRUE   
+## 3 MORTGAGE            24000 credit_card                 13.6 TRUE   
+## 4 MORTGAGE            25000 debt_consolidation          15.0 TRUE   
+## 5 RENT                30000 debt_consolidation          28.7 TRUE   
+## 6 MORTGAGE            21050 debt_consolidation          13.6 TRUE
+```
+
+
+---
+### Example 3: Using dplyr::select to select certain columns
+
+Going back to the original *loans* data set, we will select only the following columns:
+- *homeownership*
+- *loan_amount*
+- *loan_purpose*
+- *interest_rate*
+--
+
+```r
+df6 &lt;- select(loans, homeownership, loan_amount, 
+                    loan_purpose, interest_rate)
+head(df6)
+```
+
+```
+## # A tibble: 6 x 4
+##   homeownership loan_amount loan_purpose       interest_rate
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;
+## 1 MORTGAGE            28000 moving                     14.1 
+## 2 RENT                 5000 debt_consolidation         12.6 
+## 3 RENT                 2000 other                      17.1 
+## 4 RENT                21600 debt_consolidation          6.72
+## 5 RENT                23000 credit_card                14.1 
+## 6 OWN                  5000 other                       6.72
+```
+
+
+---
+### Example 4: Using dplyr::mutate to add columns
+
+Now to add a column indicating if the interest rate is greater than 10% using **mutate**
+--
+
+```r
+df7 &lt;- mutate(df6, ir_gt10 = ifelse(interest_rate &gt; 10, 
+                                    TRUE, FALSE))
+head(df7)
+```
+
+```
+## # A tibble: 6 x 5
+##   homeownership loan_amount loan_purpose       interest_rate ir_gt10
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;  
+## 1 MORTGAGE            28000 moving                     14.1  TRUE   
+## 2 RENT                 5000 debt_consolidation         12.6  TRUE   
+## 3 RENT                 2000 other                      17.1  TRUE   
+## 4 RENT                21600 debt_consolidation          6.72 FALSE  
+## 5 RENT                23000 credit_card                14.1  TRUE   
+## 6 OWN                  5000 other                       6.72 FALSE
+```
+
+
+
+---
+### Example 5: Using dplyr::arrange to sort the data
+
+If we want to sort by *loan_amount*
+--
+
+```r
+df8 &lt;- arrange(df7, loan_amount)
+head(df8)
+```
+
+```
+## # A tibble: 6 x 5
+##   homeownership loan_amount loan_purpose       interest_rate ir_gt10
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;  
+## 1 RENT                 1000 other                      22.9  TRUE   
+## 2 MORTGAGE             1000 other                       9.92 FALSE  
+## 3 RENT                 1000 credit_card                12.0  TRUE   
+## 4 RENT                 1000 debt_consolidation          6.72 FALSE  
+## 5 MORTGAGE             1000 debt_consolidation          7.97 FALSE  
+## 6 OWN                  1000 major_purchase             20.4  TRUE
+```
+
+--
+
+
+The default sort is in ascending order 
+
+
+---
+### Example 6: sorting data in descending order
+
+We can set multiple columns to sort by (and sort in descending order as well):
+--
+
+```r
+df9 &lt;- arrange(df7, desc(loan_amount), desc(interest_rate))
+```
+
+
+---
+### Aggregating data 
+
+Data aggregation in *dplyr* typically involves using the **group_by** and **summarise** functions.
+--
+- First use group_by to specify how you want to group the data 
+
+
+- apply summarise to aggregate the data
+
+---
+### Example 7: Using summarise and group_by
+
+First, we group the data
+--
+
+```r
+grouped_data &lt;- group_by(df7, loan_purpose)
+head(grouped_data)
+```
+
+```
+## # A tibble: 6 x 5
+## # Groups:   loan_purpose [4]
+##   homeownership loan_amount loan_purpose       interest_rate ir_gt10
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;  
+## 1 MORTGAGE            28000 moving                     14.1  TRUE   
+## 2 RENT                 5000 debt_consolidation         12.6  TRUE   
+## 3 RENT                 2000 other                      17.1  TRUE   
+## 4 RENT                21600 debt_consolidation          6.72 FALSE  
+## 5 RENT                23000 credit_card                14.1  TRUE   
+## 6 OWN                  5000 other                       6.72 FALSE
+```
+--
+The grouped data frame looks the same but R has added extra information that will be used by **summarise** (or other functions)
+
+
+---
+### Example 7 continued: summarising grouped data
+
+Now we can use **summarise** with the grouped data:
+--
+
+```r
+agg_data &lt;- summarise(grouped_data, total_amt = sum(loan_amount), 
+                      num_loans = n(),
+                      high_int_pct = mean(ir_gt10)*100)
+
+agg_data
+```
+
+```
+## # A tibble: 12 x 4
+##    loan_purpose       total_amt num_loans high_int_pct
+##    &lt;chr&gt;                  &lt;dbl&gt;     &lt;int&gt;        &lt;dbl&gt;
+##  1 car                  1361250       131         61.8
+##  2 credit_card         34951225      2249         56.1
+##  3 debt_consolidation  90767925      5144         67.0
+##  4 home_improvement    11719225       680         54.0
+##  5 house                2689275       151         53.0
+##  6 major_purchase       4752425       303         58.4
+##  7 medical              1836800       162         56.8
+##  8 moving                682675        69         62.3
+##  9 other               11819025       914         62.3
+## 10 renewable_energy      140000        10         70  
+## 11 small_business       2477500       125         68  
+## 12 vacation              421900        62         69.4
+```
+
+---
+### Example 7 continued: sorting the aggregated data 
+
+
+And what if we wanted to order the loan types by the total loan amount for each? 
+
+--
+
+```r
+sorted_data &lt;- arrange(agg_data, desc(total_amt))
+sorted_data
+```
+
+```
+## # A tibble: 12 x 4
+##    loan_purpose       total_amt num_loans high_int_pct
+##    &lt;chr&gt;                  &lt;dbl&gt;     &lt;int&gt;        &lt;dbl&gt;
+##  1 debt_consolidation  90767925      5144         67.0
+##  2 credit_card         34951225      2249         56.1
+##  3 other               11819025       914         62.3
+##  4 home_improvement    11719225       680         54.0
+##  5 major_purchase       4752425       303         58.4
+##  6 house                2689275       151         53.0
+##  7 small_business       2477500       125         68  
+##  8 medical              1836800       162         56.8
+##  9 car                  1361250       131         61.8
+## 10 moving                682675        69         62.3
+## 11 vacation              421900        62         69.4
+## 12 renewable_energy      140000        10         70
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
