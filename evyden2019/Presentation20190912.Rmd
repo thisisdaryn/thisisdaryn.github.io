@@ -1,0 +1,337 @@
+---
+title: "Building Analytics Capacity in Trinidad and Tobago"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "September 12, 2019"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(tidyverse)
+library(sf)
+
+knitr::opts_chunk$set(fig.align="center", fig.width=5, fig.height=5, warning = FALSE, message = FALSE)
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+duo_accent(
+  primary_color = "ivory",
+  secondary_color = "#310A31",
+  header_font_google = google_font("Roboto", "400"),
+  text_font_google   = google_font("Lato", "300"),
+  code_font_family = "Fira Code",
+  code_font_url = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css",
+  header_color = "#f54278",
+  title_slide_text_color = "#354a66"
+)
+```
+
+class: center, middle
+
+
+```{r echo=FALSE}
+knitr::include_graphics("images/Evyden.png")
+```
+
+
+---
+### Daryn Ramsden
+
+
+- Formally trained in:
+  - Mathematics (PhD)
+  
+  - Public Health - Biostatistics and Epidemiology (MPH)
+  
+  - Computer Science (BSc)
+
+--
+
+- Experience with large data sets:
+  - 6 Years in Investment Banking
+    
+      * Macroeconomic data and data pertaining to large internal portfolios 
+  
+  - Health-related contexts:
+  
+      * Bioinformatics Research
+  
+      * Epidemiological Surveillance data
+--
+- Teaching experience:
+  - Secondary, undergraduate and graduate level
+
+---
+class: center, middle
+### Interest in Data Analytics/Data Science
+
+
+
+```{r echo=FALSE}
+knitr::include_graphics("images/googleTrends.png")
+```
+
+
+---
+### What are Data Analytics/Data Science?
+
+####Some questions:
+--
+
+* **Are they the same as Statistics?**
+
+--
+
+  * Short Answer: **No**
+--
+
+
+
+* **Is Data Science the same as Data Analytics?**
+
+--
+
+  * Short Answer: **I think the connotations are slightly different.**
+  
+  
+
+  
+  
+---
+### Data Analytics: 
+--
+
+* Requires a grasp of statistical concetpts. 
+
+--
+
+* More broad than traditional Statistics.
+
+--
+
+* Particularly concerned with the realities of working with data
+
+--
+
+* Requires a cadence to handle the speed of business
+
+
+--
+### Data Science
+--
+
+* Implies the use of computer programming
+
+
+
+
+
+---
+### Key realities
+
+
+--
+
+- Data analytics is a skill that requires a lot of work to develop and practice to maintain.
+
+--
+
+- Very few organisations have big data in a technical sense, but most have data that is large enough to be uncomfortable.
+
+--
+
+- Most data gathered is under-utilised.
+
+--
+
+- Successful analytics requires an appropriate organisational culture.
+
+--
+
+- Analytics can be used both:
+    - internally
+    - as product e.g. Netflix recommendations to users, AirBnB corrective advice on listings 
+--
+
+- Data Science/Analytics is a complement to subject matter expertise. Not a replacement.
+
+
+
+---
+### The landscape for analytics training in Trinidad and Tobago
+
+ * MBIDA Programme (Arthur Lok Jack Global School of Business, UWI)
+ 
+ * MSc Data Science (Dept of Computing, UWI St. Augustine)
+ 
+ * UWI Undergraduate programmes starting to introduce R language in Statistics classes
+ 
+ * Short courses (UWI STA and ALGSB)
+ 
+ * Self-Study. Resources include:
+    * Coursera, edX, DataCamp, Udemy, Udacity
+
+
+---
+### The landscape of analytics usage in Trinidad and Tobago
+
+  * This is very opaque
+  
+  * My belief is that analytics are under-utilised. This is informed by:
+--
+   
+    * Lack of related job postings
+   
+    * Personal and professional communication
+
+
+
+---
+### Evyden Services
+
+* Training: capacity-building seems to be the most acute problem
+ 
+* Analysis: addressing the last mile of analytics problem where it exists
+
+* Data Visualisation: important in exploratory analysis as well as in effective communication of findings
+
+
+--
+In all of these, I utilise either the R or Python programming languages and standard complementary software.
+
+
+
+---
+### Why use R or Python?
+--
+
+
+- Reproducibility
+
+- Transparency
+
+- Bespoke analyses 
+
+- Great communities for learning and improvement
+
+- Free 
+
+- If they are good enough for analytics leaders, they are probably good enough for you. At least for now.
+--
+
+
+### Are there drawbacks?
+
+--
+Yes. 
+
+  - Steeper learning curve than menu-driven analytics solutions. 
+
+  - Org IT has to make key decisions re: support  
+
+
+---
+### Survey of alternatives
+
+Proprietary software solutions:
+- SPSS: traditionally popular analytics software. Mostly menu-driven. Little-used coding language available.
+
+- SAS: popular in some industries e.g. investment banking. Really good with extremely large data sets.
+
+- Stata: popular in some academic disciplines and related industries.
+
+
+---
+### What about Excel?
+
+Yes. Excel is probably the most popular software used to do analytical work.
+
+  - Easy to prototype models
+  
+  - What-if scenarios are natural
+  
+  - Built-in data visualisations suffice for most situations
+  
+--
+  
+  - Can ultimately be dangerous
+  
+      - Limited functionality
+      
+      - hard to find errors
+      
+      - limits to the size of data 
+  
+--
+
+**I do think good Excel hygiene is extremely important. And certainly not to be neglected.** 
+
+
+---
+### Training Offered
+
+Intensive Workshops
+  - 2-day or 5-day. Covering areas including:
+      - Data wrangling and data cleaning
+      - Reproducing common spreadsheet tasks
+      - Data visualisation
+      - Basic statistical functionality
+      - Introductory mathematical modelling
+      - Introductory time series analysis
+      
+  - Class size: groups of up to 15
+  
+  - Flat rate
+
+--
+
+These classes will not make one a Data Scientist. They will provide a platform for ongoing development. Some skills will be immediately applicable. 
+
+Those who are already versed in proprietary software alternatives should be able to migrate in the immediate or very short term.
+  
+  
+---
+### Data visualisation
+
+Proficiency in data visualisation:
+  - Sytematic approach informed by theory and current best practices 
+  
+  - examples of previous work are available
+
+
+---
+### Analytics Services
+
+Prerequisites:
+  - well-defined problems
+  
+  - Under-utilised data
+  
+  - access to relevant subject matter expertise 
+
+
+
+---
+class: center, middle
+
+
+```{r echo=FALSE}
+knitr::include_graphics("images/businessCard.jpg")
+```
+
+
+
+
