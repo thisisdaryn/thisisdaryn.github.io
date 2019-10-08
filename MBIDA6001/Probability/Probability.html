@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Intro to Probability</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Intro to Probability
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2019-10-08
+
+---
+
+
+
+
+
+
+
+&lt;script src="//yihui.name/js/math-code.js"&gt;&lt;/script&gt;
+&lt;!-- Just one possible MathJax CDN below. You may use others. --&gt;
+&lt;script async
+  src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"&gt;
+&lt;/script&gt;
+### Random processes
+
+A random process:
+  * an experiment with more than one possible outcome
+  * the set of possible **outcomes** is known
+  
+An outcome the observed result of the experiment 
+
+An event is a subset of the outcome space. 
+
+
+---
+### Example of Random Process
+
+Experiment: throwing a die
+
+Outcome: the number on the top-facing side of the die
+
+Examples of events:
+  * number rolled is 3
+  * number rolled is even
+  * number rolled is not 5
+  * number rolled is less than 4
+  
+Note: the event can be comprised of more than one element of the outcome space.
+
+
+---
+### Defining probability 
+
+
+The probability of an outcome is the proportion of times the outcome would occur if we observed the random process an infinite number of times.
+
+
+
+
+---
+### Notation
+
+Probability of A
+--
+
+
+`$$P(\mbox{A})$$`
+
+
+--
+
+
+Probability of at least one of A and B
+
+
+--
+
+
+`$$P(A\ \mbox{or}\ B)$$` 
+
+
+--
+
+
+Probability of both events, A and B, happening
+
+--
+
+
+`$$P(A\ \mbox{and}\ B)$$` 
+
+
+
+---
+### Rule of Probability
+
+
+
+`$$0 \leq P(A) \leq 1$$`
+
+
+
+---
+### Disjoint outcomes or events
+
+
+Disjoint outcomes or events are events that cannot take place simultaneously, e.g:
+
+  * 2 dice are thrown:
+    * **A**: the sum is less than or equal to 3
+    * **B**: the sum is greater than 5 
+
+--
+  
+  * A card is drawn from a pack of playing cards:
+    * A face card is selected 
+    * A non face card is selected
+  
+--
+
+Disjoint events are also said to be **mutually exclusive** 
+
+---
+### Addition rule for disjoint events
+
+`$$P (A\ \mbox{or}\ B) = P (A) + P (B)$$` 
+
+
+
+---
+### Example: using the addition rule for disjoint events
+
+In the loans data set (10,000 rows), the \textit{homeownership} variable had 3 values:
+  
+  * &lt;tt&gt;rent&lt;/tt&gt;: 3,858 applicants
+  * &lt;tt&gt;mortgage&lt;/tt&gt;: 4,789 applicants
+  * &lt;tt&gt;own&lt;/tt&gt;: 1,353 applicants
+  
+--
+
+What is the probability that the applicant either rents or owns their home?
+
+--
+
+Answer: 
+`$$\frac{3858 + 1353}{1000} = 0.5211 $$`
+
+
+---
+### General Addition Rule
+
+A more general addition rule is necessary if events are not disjoint:
+--
+
+`$$P (A\ \mbox{or}\ B) = P (A) + P (B) − P (A\ \mbox{and}\ B)$$`
+
+
+
+
+---
+### Example: Loans
+
+What is the probability that an application from the loans data set was either:
+  * a joint application
+  * for a mortgage
+  
+A: joint application
+B: loan purpose is the purchase of a house
+
+`$$P (A\ \mbox{or}\ B) = P (A) + P (B) − P (A\ \mbox{and}\  B)$$`
+
+
+---
+
+
+```r
+library(readr)
+loans &lt;- read_csv("data/Loans.csv")
+addmargins(table(loans$loan_purpose, loans$app_type))
+```
+
+```
+##                     
+##                      individual joint   Sum
+##   car                       116    15   131
+##   credit_card              1971   278  2249
+##   debt_consolidation       4289   855  5144
+##   home_improvement          566   114   680
+##   house                     146     5   151
+##   major_purchase            273    30   303
+##   medical                   128    34   162
+##   moving                     59    10    69
+##   other                     793   121   914
+##   renewable_energy            9     1    10
+##   small_business            101    24   125
+##   vacation                   54     8    62
+##   Sum                      8505  1495 10000
+```
+
+
+
+
+---
+
+`$$P(A) = \frac{1495}{10000}$$`
+
+--
+
+`$$P(B) = \frac{151}{10000}$$`
+
+
+--
+`$$P(A\ \mbox{and}\ B) = \frac{5}{10000}$$` 
+
+--
+
+`$$P(A\ \mbox{or}\ B) = \frac{1495 + 151 + 5}{10000} = .1641$$`
+
+
+
+---
+### Independent Events
+
+* Events are said to be independ   ent when the outcome of one does not affect the outcome of the other. 
+
+* E.g. when two dice are thrown the result of one does not affect the probability of the other
+
+* Independent and disjoint do not mean the same thing. 
+
+
+---
+### Multiplication Rule for Independent Events
+
+`$$P(A\  \mbox{and}\ B) = P(A) × P(B)$$` 
+
+--
+
+A fair die is thrown twice. Find the probability that two fives are thrown.
+
+
+---
+### Multiplication rule: Example 2
+
+The probability that a certain type of machine will break down in the first month of operation is 0.1. If a firm has installed two such machines:
+
+  * What is the probability that just one has broken down?
+  
+  * What is the probability that both have broken down?
+  
+  * What is the probability that neither has broken down?
+
+
+
+
+---
+### Conditional Probability 
+
+When events are not independent, the occurrence of one changes the probability of the other.
+
+`$$P(A\  \mbox{and}\ B) \neq P(A) × P(B)$$` 
+
+`$$P(A  \mbox{and}\ B) = P(A|B) × P(B)$$`
+
+
+---
+### Marginal and Joint Probability
+
+  * **marginal** probability: based on a single variable
+  
+--
+
+
+  * **joint** probability: based on outcomes for two or more variables or processes 
+
+
+---
+### Conditional Probability: Example
+
+Photo predictor results:
+
+&lt;img src="images/photocontingency.png" width="3720" style="display: block; margin: auto;" /&gt;
+
+  * What is the probability the algorithm is incorrect if it is known that the photo is about fashion?
+  
+  * What is the probability that the photo is about fashion if the algorithm says it is?
+  
+  * What is the probability that the photo is about fashion if the algorithm says it is not?
+
+
+
+
+---
+## Multiplication rule for conditional probability 
+
+
+`$$P(A|B) = \frac{P(A\ \mbox{and}\ B)} {P(B)}$$`
+
+
+
+---
+### Probability Distributions
+
+  * A function that gives the probability of an outcome for each possible outcome of a random process.
+  
+--
+
+  * For a discrete random variable, the distribution may be in the form of a list/table:
+    * each possible value is associated with the probability of occurrence
+    
+--
+  
+  * For a continuous random variable, the distribution typically is expressed as a mathematical function
+  
+
+---
+### Example of a distribution of a discrete random variable
+
+Consider the sum of two scores of two thrown dice:
+  * possible values between 2 and 12 
+  * 36 possible combinations:
+    * 1 combination sums to 2
+    * 2 combinations sum to 3
+    * 3 combinations sum to 4
+    * 4 combinations sum to 5
+    * 5 combinations sum to 6
+    * 6 combinations sum to 7
+    * 5 combinations sum to 8
+    * 4 combinations sum to 9 
+    * 3 combinations sum to 10
+    * 2 combinations sum to 11
+    * 1 combination sums to 12
+
+
+---
+### 
+
+
+X | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+--|--|--|--|--|--|--|--|--|--|--|--|--|
+P(X) | `$$\frac{1}{12}$$` | `$$\frac{2}{12}$$` | `$$\frac{3}{12}$$` | `$$\frac{4}{12}$$` | `$$\frac{5}{12}$$` | `$$\frac{6}{12}$$` | `$$\frac{5}{12}$$` | `$$\frac{4}{12}$$` | `$$\frac{3}{12}$$` | `$$\frac{2}{12}$$` | `$$\frac{1}{12}$$`
+
+
+---
+### Common Discrete Probability Distributions
+
+  * Geometric Distribution: time until first success with independent trials
+  
+--
+
+  * Binomial Distribution: probability of *k* successes from independent trials
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
