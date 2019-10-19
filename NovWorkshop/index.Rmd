@@ -1,0 +1,244 @@
+---
+title: "Intro to R Workshop"
+subtitle: "📈📊📉"
+author: "Daryn Ramsden"
+institute: ""
+date: |
+  | November 23rd and 24th 2019 
+    | Naparima College, San Fernando
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+### What is R?
+
+--
+  - A programming language
+
+--
+
+  - A software application
+
+--
+
+  - Used to analyse data 
+
+---
+### What topics will the workshop cover?
+--
+
+* **R programming basics**: 
+--
+foundational concepts
+
+--
+
+* **Exploratory data analysis**: 
+--
+what do you do when you first get data? 
+
+--
+
+* **Data aggregation**: 
+--
+summarising your data
+
+--
+
+* **Data visualisation**: 
+--
+using R to make nice charts
+
+
+---
+### Why should I do an R workshop?
+
+--
+R is:
+--
+
+  * widely used for doing data science and analytics
+
+--
+  
+  * powerful, with a lot of statistical and Data Science functionality
+
+--
+
+  * a great environment for doing reproducible analyses
+  
+--
+
+  * free 
+
+
+---
+### What will the workshop be like?
+
+--
+  
+  * you will be programming (typing) a lot
+
+--
+  
+  * we will be working with real data sets
+  
+--
+  
+  * we will take a break for lunch (provided)
+  
+--
+
+  * then we will do some more programming
+
+
+---
+### What if I have never programmed before?
+
+--
+  * That's why we have this intro
+
+--
+  
+  * You can learn to program while doing analysis
+
+--
+
+  * Will it be frustrating?
+
+--
+
+    * Possibly. 
+--
+At points. 
+--
+But we will make progress.
+
+---
+### Any particular tools we will be using?
+
+--
+**Rstudio**: 
+
+  * this is the standard environment for working with R 
+  
+  * many features that boost productivity
+
+  * This is the main software we will work with.
+
+
+--
+
+**Jupyter Notebooks**: 
+  * this is a popular tool that allows analysts to work collaboratively
+    * can be used with other programming languages btw (Python, Julia ...)
+    
+  * We will use this a little and go over the basics 
+
+
+---
+### Who is teaching this workshop?
+--
+
+**Name**: Daryn Ramsden
+
+--
+
+
+**Background**: 
+
+  * Formally trained in Mathematics, Epidemiology and Biostatistics. 
+  
+  * Also, I've done a lot of programming. 
+
+--
+
+**Experience**: 
+
+  * I have used R on a daily basis for several years. 
+  
+  * I also have a fair amount of teaching/lecturing experience.
+
+
+
+
+---
+### What skill level will I have after this workshop?
+
+--
+  * you will have a good idea of how R can be used. 
+  
+--
+ 
+  * you will know the basics of the R language.
+
+--
+  * you will be able to make some common types of charts:
+    scatter plots, line graphs, bar charts, histograms, box plots (maybe more)
+--
+  
+  * experienced programmers may be able to use R more extensively after this workshop.
+
+--
+  
+  * becoming truly good at R will take practice. But this will be a good start.
+  
+
+---
+### Logistics and other details
+
+**When**: November 23rd and 24th, 2019 (Saturday and Sunday)
+
+**Where**: Naparima College (Naps Boys), San Fernando
+
+**How much**: $1100
+
+**Class size**: 12 students max
+
+
+---
+### How do I register?
+
+Send your name and contact info either via email/text/whatsapp. I'll get back to you.
+
+
+--
+✉️: evyden.tt@gmail.com
+
+--
+
+☎️: 754-4260  
+
+
+---
+### What if I want more info?
+
+Feel free to get in touch.
+
+
+--
+✉️: evyden.tt@gmail.com
+
+--
+
+☎️: 754-4260  
+
+
+
+---
+### Anything else?
+
+--
+Nothing really from me. I look forward to hearing from you.
+
+-Daryn
+
