@@ -1,0 +1,10 @@
+\documentclass{article}
+\usepackage{stubs} 
+\begin{document}
+
+
+\stubs[15]{{{\tt stubs} R Programming Workshop}\\by N. Stuhrmann}
+
+
+
+\end{document}
