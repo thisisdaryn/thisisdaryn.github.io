@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 # Geometric, Binomial and Normal Distributions
 ## Daryn Ramsden
 ### thisisdaryn at gmail dot com
-### last updated: 2019-10-15
+### last updated: 2019-10-21
 
 ---
 
@@ -83,7 +83,7 @@ A continuous distribution we will look at:
 ### Geometric Distribution
 
 Consider:
-  * A machine makes a part with a 3% defective rate
+  * A machine makes a part with a 2% defective rate
   * Each part produced is independent of the other
   
 How long until the first defective part is manufactured?
@@ -227,8 +227,8 @@ We say
 ### Trying to arrive at the formula
 
 To start: only 1 way to get 0 successes from 4 trials:
-<div id="htmlwidget-0c30f1c1f5692c35d1a3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0c30f1c1f5692c35d1a3">{"x":{"filter":"none","data":[["1"],["❌"],["❌"],["❌"],["❌"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trial 1<\/th>\n      <th>Trial 2<\/th>\n      <th>Trial 3<\/th>\n      <th>Trial 4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-25566b6dc44777089ef0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-25566b6dc44777089ef0">{"x":{"filter":"none","data":[["1"],["❌"],["❌"],["❌"],["❌"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trial 1<\/th>\n      <th>Trial 2<\/th>\n      <th>Trial 3<\/th>\n      <th>Trial 4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
 
 
 And what is the probability of this event?
@@ -241,8 +241,8 @@ And what is the probability of this event?
 
 Similarly, only one way to have 4 successes from 4 trials:
 --
-<div id="htmlwidget-f74f4361c7ac4528713a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f74f4361c7ac4528713a">{"x":{"filter":"none","data":[["1"],["✅"],["✅"],["✅"],["✅"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trial 1<\/th>\n      <th>Trial 2<\/th>\n      <th>Trial 3<\/th>\n      <th>Trial 4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f9b32872be455b4e4aba" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f9b32872be455b4e4aba">{"x":{"filter":"none","data":[["1"],["✅"],["✅"],["✅"],["✅"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trial 1<\/th>\n      <th>Trial 2<\/th>\n      <th>Trial 3<\/th>\n      <th>Trial 4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
 --
 
 And the probability of this event is: 
@@ -312,8 +312,8 @@ Does this work for X = 3?
 ---
 ### How many ways to have 3 successes in 4 trials?
 
-<div id="htmlwidget-a0736b329982dc8096c9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a0736b329982dc8096c9">{"x":{"filter":"none","data":[["1","2","3","4"],["✅","✅","✅","❌"],["✅","✅","❌","✅"],["✅","❌","✅","✅"],["❌","✅","✅","✅"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trial 1<\/th>\n      <th>Trial 2<\/th>\n      <th>Trial 3<\/th>\n      <th>Trial 4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-29bcf1ab92b5f249cb2c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-29bcf1ab92b5f249cb2c">{"x":{"filter":"none","data":[["1","2","3","4"],["✅","✅","✅","❌"],["✅","✅","❌","✅"],["✅","❌","✅","✅"],["❌","✅","✅","✅"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trial 1<\/th>\n      <th>Trial 2<\/th>\n      <th>Trial 3<\/th>\n      <th>Trial 4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
 
 
 **Will our previous formula work?**
@@ -381,7 +381,7 @@ What shape would you expect if:
 
 When a random variable X is generated from a normal distribution we use the notation:
 
-`$$ X \sim N(\mu. \sigma) $$`
+`$$ X \sim N(\mu, \sigma) $$`
 
 ---
 ### Standard normal distribution

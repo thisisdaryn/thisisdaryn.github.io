@@ -90,7 +90,7 @@ A continuous distribution we will look at:
 ### Geometric Distribution
 
 Consider:
-  * A machine makes a part with a 3% defective rate
+  * A machine makes a part with a 2% defective rate
   * Each part produced is independent of the other
   
 How long until the first defective part is manufactured?
@@ -413,7 +413,7 @@ knitr::include_graphics("images/NormalRule.png")
 
 When a random variable X is generated from a normal distribution we use the notation:
 
-`$$ X \sim N(\mu. \sigma) $$`
+`$$ X \sim N(\mu, \sigma) $$`
 
 ---
 ### Standard normal distribution
