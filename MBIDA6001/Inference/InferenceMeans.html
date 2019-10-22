@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Intro to Statistical Inference</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Intro to Statistical Inference
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2019-10-22
+
+---
+
+
+
+
+
+
+
+
+### Statistical Inference
+
+#### inference: reasoning about the population based on data collected from a sample 
+
+---
+### Relationship between sample and population
+
+
+&lt;img src="images/sampling/Sampling.png" width="1813" style="display: block; margin: auto;" /&gt;
+
+
+
+
+---
+### Parameters and sample statistics
+
+  * parameters are characteristics of the population that we want in ideally
+    * e.g. mean, proportion with a specified characteristic
+    
+  * sample statistics are things we can measure or calculate in the sample population
+  
+  * typically, for each parameter there's an accompanying sample statistic
+
+
+
+---
+### How do population parameters and sample statistics differ?
+
+Consider a population: 
+
+`$$\mu \mbox{, the mean of the entire population (parameter)}$$`
+
+
+`$$\bar{x} \mbox{, the mean of a sample (sample statistic)}$$`
+
+
+How do the two quantities compare?
+  
+  * What effect does sample size have?
+  
+  * What effect does the variability in the population have?
+
+
+---
+### First type of inference: Point Estimate for the mean
+
+
+For the mean of a single population:
+  * the sample mean is the best estimate we can come up with
+  
+  * there is a question of how confident we can be in this estimate
+
+
+
+---
+### Central Limit Theorem
+
+Under a large variety of circumstances: 
+
+`$$ X \sim N(\mu, \sigma) $$`
+
+`$$ \implies \bar{X} \sim N\left(\mu, \frac{\sigma}{\sqrt{n}}\right) $$`
+
+
+
+---
+### Brief pause for some terminology
+
+
+  * The distribution of the sample statistic is known as the **sampling distribution**
+  
+  * the standard deviation of the sampling distribution is known as the **standard error**
+
+
+---
+### When can we use the CLT?
+
+Conditions necessary for the Central Limit theorem to hold:
+
+  * the sample must be random
+  
+  * the sample should be less than 10% of the population 
+  
+  * either:
+  
+    * the underlying distribution is normal
+  
+    * the sample size is sufficiently large (typically &gt; 30)
+  
+
+---
+### How does that actually help us?
+
+
+  * the sample mean is the best estimate we can come up with for the population mean
+  
+--
+
+  * the sample mean is almost certainly wrong though
+  
+--
+
+  * Can the CLT help us out?
+
+
+
+---
+### Confidence Interval for mean 
+
+  
+  * We can use the CLT to form a confidence interval
+  
+--
+
+  * What is a confidence interval?
+
+--
+  
+    * a plausible range of values for the mean
+    
+  
+---
+### CI if CLT holds
+
+
+
+  * if the CLT holds, we know that the sample mean will be within 1.96 standard errors of the true mean 95% of the time
+
+--
+  
+  * conversely, the true (population) mean will be within 1.96 standard errors of the sample mean, 95% of the time.
+  
+  
+--
+
+  * therefore we can construct an interval centered around the sample mean that would plausibly contain the true (population) mean
+  
+  
+  
+---
+### But we have a problem
+
+  * to form the interval we need the standard error
+  
+--
+
+  * so we have to use our best estimate: we use the sample sd, _s_ in lieu of the population standard deviation 
+  
+--
+
+  `$$ \mbox{95% CI:    }  \bar{x} \pm 1.96 \frac{s}{\sqrt{n}}$$`
+  
+
+
+---
+### What about other confidence intervals?
+
+  * what multiplier should we use for a 90% confidence interval?
+  
+--
+
+  * a multiplier of 1.5 corresponds to what confidence interval? 
+
+
+---
+### And what if the CLT does not hold?
+
+Well ... there's the t-distribution(s).
+
+
+&lt;img src="images/Normalvstdist.png" width="2952" style="display: block; margin: auto;" /&gt;
+
+  * confidence intervals will be wider than those that we get using multipliers from the normal distribution.
+
+---
+### Using the t-distribution
+
+If conditions are not met for using the multipliers from the normal distribution
+
+`$$ CI = \bar{x} \pm {t^{*}}_{df} $$`
+`$$ df = n - 1 $$`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
