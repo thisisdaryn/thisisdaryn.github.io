@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 # Intro to Statistical Inference
 ## Daryn Ramsden
 ### thisisdaryn at gmail dot com
-### last updated: 2019-10-22
+### last updated: 2019-10-29
 
 ---
 
@@ -199,12 +199,211 @@ Well ... there's the t-distribution(s).
   * confidence intervals will be wider than those that we get using multipliers from the normal distribution.
 
 ---
+### There isn't a single t-distribution
+
+
+&lt;img src="images/DifferentTdistsCompNormal.png" width="3115" style="display: block; margin: auto;" /&gt;
+
+Each value of df (degrees of freedom) specifies a different t-distribution
+
+As df gets larger, the t-distribution gets closer to the normal distribution
+
+t-distributions have more of the distribution in the tails (as compared to the normal)
+
+confidence intervals will be wider i.e. more conservative estimates
+
+
+
+---
+### What do the degrees of freedom represent?
+
+Number of values in a sample that are free to vary if a sample statistic is known.
+
+If the sample mean is known, how many of the sample values are free to vary before the remaining sample values are fixed?
+
+df = n-1
+
+
+
+
+---
 ### Using the t-distribution
 
 If conditions are not met for using the multipliers from the normal distribution
 
 `$$ CI = \bar{x} \pm {t^{*}}_{df} $$`
 `$$ df = n - 1 $$`
+
+
+
+---
+### Working with the t-distribution in R 
+
+  * &lt;tt&gt;pt&lt;/tt&gt;: 
+  
+  * &lt;tt&gt;qt&lt;/tt&gt;
+  
+  
+In fact, for any well-known distribution, R probably has analogous functions, Example
+  * pbinom, qbinom: binomial distribution
+  * punif, qunif: uniform distribution
+  * pgeom, qgeom: geometric distribution  
+  * ppois, qpois: Poisson distribution
+  
+  
+  
+---
+### Inference type 2: Is the true mean a particular value?
+
+Question: is the population mean equal to a specified value?
+
+* We don't necessarily ask this question explicitly, but it is the building block in other types of inferential questions.
+  * e.g. if we want to know if two groups have the same mean, we can ask if the difference of their means is 0
+  
+  
+---
+### Two different approaches
+
+a. Using confidence intervals
+  1. Use previous methods to form confidence interval for the population mean
+  2. If the value is not in the confidence interval, we reject the assumption that 
+  
+  
+b. Using p-values
+  1. Assume that the mean is the value of interest
+  2. Evaluate how likely/unlikely the collected data are under the assumption
+  3. Reject the assumption 
+  
+  
+---
+### A few things to note
+
+  * Both these problems are framed in terms of rejecting an assumption if the observed data turns out to be very unlikely given the assumptions
+  
+  * These approaches should be correct most of the time in the long run, but may be wrong for any individual scenario.
+    * in fact, at a 95% confidence level we expect that we would incorrectly reject the hypothesis 5% of the time i.e. 1 out of every 20 occasions
+
+
+---
+### An example problem
+
+A survey of 204 residents of the New York City metropolitan area, found that the average commuting time for the respondents was 36.94 minutes with a standard deviation of 30.1 minutes. Is there evidence to support a theory that the average commuting time for all residents of the NYC-metro area is 20 minutes?
+
+---
+### Back to using p-values for the first time
+
+  * Two essential ingredients:
+    * null hypothesis: the theory we would like to reject
+    * an alternative hypothesis
+
+In this case:
+
+`$$ H_{0}: \mbox{the mean commuting time in NYC (and environs is 20 minutes)}$$`
+`$$ H_{1}: \mbox{the mean commuting time in NYC (and environs not 20 minutes)}$$`
+
+
+---
+### Now to calculate a p-value
+
+Under the null hypothesis (and the CLT):
+
+`$$ \bar{X} \sim N\left(20, \frac{31.1}{\sqrt{204}}\right) $$`
+
+--
+
+So, we can calculate a Z-score for the observed sample mean:
+
+--
+
+`$$ z = \frac{36.94 - 20}{\frac{30.1}{\sqrt{204}} } $$`
+--
+`$$ z = 8.04$$`
+--
+
+`$$\mbox{p: } P(Z &gt; |z| )$$`
+
+`$$ \mbox{p} &lt; .001 $$`
+
+
+---
+### What does the p-value represent
+
+**p-value**: the probability of the observation if the null hypothesis is true
+
+--
+
+So what do we do with the p-value?
+--
+  Compare it to a pre-chosen level of significance. 
+  
+  Most common: 
+  
+`$$ \alpha = 0.05 $$`
+
+--
+
+In this case we reject the null hypothesis because the observation from the survey is very unlikely if the null hypothesis is true.
+
+
+
+
+
+
+
+
+
+
+---
+### Inference type 2: CI of mean based on differences in paired data
+  
+Background: What is paired data?
+
+  * Two samples and there is a correspondence between the items in each
+    * each individual in a sample corresponds to a single individual in the other sample
+    * Examples:
+        * twin studies: one twin in a treatment group; the other in the control group
+        * before and after: the same people are measured at the beginning and then again at the end of a experiment
+        * wives in one sample; their husbands in the other
+        * other pairings based on similarities chosen by researchers
+
+
+---
+
+  * For each pair calculate the difference in values
+  
+  * The differences now become sample values
+  
+  * We can now calculate CIs for the average difference
+  
+
+
+---
+### Confidence Interval for the mean difference in paired data
+
+`$$\mbox{CI:} {\bar{x}_{diff}}\pm t^{*}\frac{s_{diff}}{\sqrt{n_{diff}}} $$` 
+
+
+---
+### Example: UCLA Bookstore vs Amazon Prices
+
+Question 1: Construct a confidence interval for the average difference in price between Amazon and the UCLA bookstore
+
+Question 2: Does Amazon offer books at prices equal to the UCLA bookstore on average?
+
+
+
+---
+### Standard errors for other types of inference problems
+
+  * difference of means (unpaired data)
+
+`$$ SE  = \sqrt{\frac{\sigma^{2}_{1}}{n_1} + \frac{\sigma^{2}_{2}}{n_2}} $$`      
+  
+--
+
+  * difference of proportions between two groups
+  
+  `$$ SE = \sqrt{\frac{p(1-p)}{n}} $$`
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark.js"></script>
