@@ -3,7 +3,7 @@
   <head>
     <title>More inference</title>
     <meta charset="utf-8" />
-    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <meta name="author" content="BIDA 6001: Data Analytic Methods Using R" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -11,13 +11,10 @@
 class: center, middle, inverse, title-slide
 
 # More inference
-## Daryn Ramsden
-### thisisdaryn at gmail dot com
-### last updated: 2019-11-05
+### BIDA 6001: Data Analytic Methods Using R
+### last updated: 2019-11-12
 
 ---
-
-
 
 
 
@@ -39,7 +36,7 @@ class: center, middle, inverse, title-slide
 ---
 ### What about one-sided test?
 
-* Sometimes we choose to do a **one-sided** test. 
+* Sometimes we choose to do a one-sided test. 
 
 * Strong reason to believe that the effect is in one particular direction
 
@@ -90,10 +87,10 @@ Case 1:
 
 Case 2: 
 `\({\sigma_{1}}^2\)` and `\({\sigma_{2}}^2\)` unknown, but assumed to be unequal, `\(n_{1} &lt; 30\)` and `\(n_{2} &lt; 30\)`
-`$$t = \frac{\bar{X_{1}} - \bar{X_{2}}}{\sqrt{ \frac{s}{n_{1}} + \frac{s}{n_{2}}   }} $$`
+`$$t = \frac{\bar{X_{1}} - \bar{X_{2}}}{\sqrt{ \frac{{s_1^2}}{n_{1}} + \frac{{s_2^2}}{n_{2}}   }} $$`
 
 
-`$$ \mbox{CI:} \left( \bar{X_{1}} - \bar{X_{2}}\right) \pm t_{1 - {(\frac{\alpha}{2})}} \sqrt{\frac{{s_1}^2}{n_1} + \frac{{s_2}^2}{n_2} }$$`
+`$$ \mbox{CI:} \left( \bar{X_{1}} - \bar{X_{2}}\right) \pm t_{1 - {(\frac{\alpha}{2})}} \sqrt{\frac{{s_1^2}}{n_1} + \frac{{s_2^2}}{n_2} }$$`
 
 
 
@@ -159,7 +156,7 @@ Case 2: `\(n &lt; 30\)`
 ---
 ### General idea
 
-#### If the variability between the groups is large (their means are relatively widely dispersed) and the variability between the groups is small then we reject the null hypothesis that the groups have the same mean.
+#### If the variability between the groups is large (their means are relatively widely dispersed) and the variability within the groups is small then we reject the null hypothesis that the groups have the same mean.
 
 
 ---
@@ -257,6 +254,16 @@ Several different cases:
 
 
 ---
+### Question (openintro Page 216)
+
+ Some people claim that they can tell the difference between a diet soda and a regular soda in the first sip. A researcher wanting to test this claim randomly sampled 80 such people. He then filled 80 plain white cups with soda, half diet and half regular through random assignment, and asked each person to take one sip from their cup and identify the soda as diet or regular. 53 participants correctly identified the soda.
+
+* Do these data provide strong evidence that these people are any better or worse than random guessing at telling the difference between diet and regular soda?
+
+* Interpret the p-value in this context
+
+
+---
 ### Inference for the difference of two populations
 
 
@@ -274,6 +281,25 @@ Several different cases:
 
 
 
+---
+### Question (openintro Page 226)
+A survey asked 827 randomly sampled registered voters in California “Do you support? Or do you oppose? Drilling for oil and natural gas off the Coast of California? Or do you not know enough to say?” Below is the distribution of responses, separated based on whether or not the respondent graduated from college.
+
+
+.center[
+
+  | not a college grad | college grad
+------------- | -------------
+Support |    154  | 132 
+Oppose  |     180 | 126  
+Do not know |  104    | 131
+]
+
+* What percent of college graduates and what percent of the non-college graduates in this sample do not know enough to have an opinion on drilling for oil and natural gas off the Coast of California?
+
+
+* Conduct a hypothesis test to determine if the data provide strong evidence that the proportion of college graduates who do not have an opinion on this issue is different than that of non-college graduates.
+
 
 ---
 ### `\(\chi^2\)` Tests
@@ -288,6 +314,183 @@ Several different cases:
   * General calculation of `\(\chi^{2}\)` test statistic:
     
 `$$ \chi^2 = \sum \frac{(O - E) ^2 }{E} $$`
+
+
+
+---
+### `\(\chi^2\)` Goodness of fit tests
+
+In this scenario:
+  * there is one variable with multiple levels
+  * we are testing an observed frequency table against a postulated distribution
+  
+
+
+---
+### Example: 
+
+
+Testing whether there is discrimination in jury selection among a given population (from openintro)
+
+
+.center[
+
+  | White | Black | Hispanic | Other | Total|
+------------- | -------------
+Jurors  | 205 | 26| 25 | 19 | 275 | 
+Registered voters  | 0.72 | 0.07 | 0.12 | 0.09 | 1.00 |
+]
+
+
+#### Is there evidence that the jury selection process is biased?
+
+We will test at the `\(\alpha=.05\)` level
+
+
+---
+### Null and alternative hypotheses
+
+  * Null and alternative hypotheses: 
+    * `\(H_{0}\)`: The jury selection process selects members of the population proportional to their race in the general population
+    * `\(H_{1}\)`: The jury selection process does not select members of the population proportional to their race in the general population
+    
+
+---
+### Working for problem
+
+  * Calculating expected values based on population characteristics:
+--
+
+.center[
+
+ Expected | White | Black | Hispanic | Other 
+------------- | -------------
+Jurors  | 0.72x275 = 198 | .07x275 = 19.25 | .12x275 = 33 | .09x275 = 24.75
+]
+
+--
+
+  * Compare expected to observed
+--
+
+.center[
+
+Jurors | White | Black | Hispanic | Other 
+------------- | -------------
+Expected  | 198 |  19.25 | 33 | 24.75
+Observed  | 205 | 26| 25 | 19  
+]
+
+--
+
+`$$ \chi^{2} = \frac{(198 - 205)^2}{198} + \frac{(26 - 19.25)^2}{19.25} + \frac{(25 - 33 )^2}{33} + \frac{(19 - 24.75)^2}{24.75} = 5.89 $$`
+
+
+`$$ df = 4 - 1 = 3 $$` 
+--
+
+#### Critical value: 7.81, thus we do not reject the null hypothesis
+
+
+---
+### Assumptions for doing `\(\chi^{2}\)` tests:
+
+  * the expected counts in each cell should be at least 5
+  
+  * the sample should be independent
+  
+
+
+
+---
+### Working with 2 categorical variables
+
+  *  Sometimes we want to determine if two categorical variables are independent of each other
+    * Do they have any effect on each other?
+    
+  * We can use a `\(\chi^2\)` test of independence 
+  
+  * We form a contingency table of `\(R\)` rows and `\(C\)` columns corresponding to the levels of the variables
+  
+  * We calculate the test statistic similarly to before:
+  
+  `$$ \chi^2 = \sum \frac{(O - E) ^2 }{E} $$`
+  
+  `$$ df = (R - 1)\cdot(C - 1)$$`
+  
+    
+---
+### Openintro example (Page 241)
+
+  * Individuals were asked to sell an item known to have malfunctioned in the past
+  
+  * Prospective buyers were randomized into groups to ask 3 different questions:
+    * General: What can you tell me about it?
+    * Positive: It doesn't have any problems, does it?
+    * Negative: What problems does it have? 
+
+  * Hypothesis
+    * `\(H_{0}\)` the choice of question has no influence on whether the seller disclosed the problem
+    * `\(H_{1}\)` the choice of question has a relationship
+
+---
+### Problem data
+
+.center[
+
+Observed | General | Positive Assumption | Negative Assumption | Total 
+------------- | -------------
+Disclose Problem  | 2 |  23 | 36 | 61
+Hide Problem  | 71 | 50| 37 | 158
+Total | 73 | 73 | 73 | 219
+]
+
+Calculating expected values:
+
+`$$ \mbox{Expected count}_{\mbox{row i}, \mbox{column j}} = \frac{\mbox{row i total} \cdot \mbox{column j total}  } {\mbox{table total}} $$` 
+
+---
+### Working for problem
+
+Expected Counts:
+.center[
+
+Expected counts | General | Positive Assumption | Negative Assumption | Total 
+------------- | -------------
+Disclose Problem  | `\(\frac{73\cdot 61}{219} = 20.33\)` |  `\(\frac{73\cdot 61}{219}= 20.33\)`  | `\(\frac{73\cdot 61}{219}= 20.33\)`  | 61
+Hide Problem  | `\(\frac{73\cdot 158}{219} = 52.67\)`  | `\(\frac{73\cdot 158}{219}= 52.67\)`   | `\(\frac{73\cdot 158}{219}= 52.67\)`   | 158
+Total | 73 | 73 | 73 | 219
+]
+
+
+Observed counts:
+
+
+
+Observed | General | Positive Assumption | Negative Assumption | Total 
+------------- | -------------
+Disclose Problem  | 2 |  23 | 36 | 61
+Hide Problem  | 71 | 50| 37 | 158
+Total | 73 | 73 | 73 | 219
+
+
+
+---
+### Working continued
+
+
+`$$ \chi^{2} = \frac{(2 - 20.33)^2}{20.33} + \frac{(23 - 20.33)^2}{20.33} + \frac{(36-20.33)^2}{20.33} $$`
+`$$ + $$`
+`$$ \frac{(71 - 52.67)^2}{52.67} + \frac{(50 - 52.67)^2}{52.67} + \frac{(37 - 52.67)^2}{52.67} 
+ $$`
+ 
+ 
+`$$ \chi^{2} = 40.13 $$`
+`$$ df = (2 - 1)\cdot (3 - 1) = 2$$`
+
+Critical value at `\(\alpha = 0.05\)`: 5.99
+
+#### Therefore we reject the null hypothesis
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark.js"></script>
