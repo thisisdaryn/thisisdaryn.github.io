@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Linear Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Regression
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2019-11-19
+
+---
+
+
+
+
+
+
+
+
+
+
+
+---
+### 
+
+
+
+---
+### Residuals
+
+
+
+
+
+
+---
+### Least squares line 
+
+
+
+---
+### Slope for univariate least squares
+
+`$$ b_1 = \frac{s_y}{s_x}\cdot{R} $$`
+
+  * `\(s_y\)`: standard deviation of y
+  * `\(s_x\)`: standard deviation of x
+  * `\(R\)`: correlation
+  
+  
+
+---
+
+### Interpeting the slope
+
+The slope tells you how many units you expect your response variable to change **on average** in response to a single unit increase in the
+explanatory variable 
+
+
+
+---
+### Calculating the intercept
+
+``$$ b_0 = \bar{y} - b_{1}\cdot\bar{x}$$`` 
+
+
+
+
+---
+### Interpreting the y-intercept
+
+
+
+---
+### Using the model to predict for new data
+
+
+
+
+---
+### Extrapolation 
+
+
+---
+### Conditions for linear regression 
+
+  * linearity 
+
+  * nearly-normal residuals
+
+  * constant variability
+
+  * independent observations
+
+
+---
+### Linearity
+
+  * The relationship between explanatory and response should be linear
+  
+  * This can be inspected via a scatter plot and/or a residuals plot
+  
+
+---
+### Nearly normal residuals 
+
+  * The least squares method is based on the assumption that the response variable is distributed normally about the mean 
+
+  * So we can check the residuals via a histogram (or Q-Q plot) to see if this assumption holds up 
+  
+  
+
+---
+### Constant variability 
+
+The variability of points around the least squares plot should be constant 
+
+
+---
+### Strength of the 
+
+Common measure of the strength of a linear model, `\(R^2\)`:
+  * square of the correlation
+  
+  * always between 0 and 1
+  
+  * How much of the variability in the response variable explained by the model 
+
+
+
+---
+### Linear Regression with categorical explanatory variable
+
+  * For a categorical variable with `\(n\)` levels, the model is specified by `\(n-1\)` coefficients
+  
+  
+  * one level is the reference level and the predicted value for this level is incorporated into the intercept
+  
+  * all other levels have corresponding coefficients
+  
+
+
+
+  
+  
+
+
+
+---
+### Multiple linear regression 
+
+Sometimes we have more than 1 explanatory variable available. In this case we are looking for a more general relationship.
+
+`$$ y = b_0 + b_1\cdot{x_1} + b_2\cdot{x_2} + \ldots b_n\cdot{x_n} $$`
+
+
+Each coefficient is to be interpreted as the change in the response for a unit change in the particular explanatory variable provided all other variables held constant.
+
+
+
+
+---
+### Collinearity
+
+* Predictor variables may be strongly correlated with each other
+
+* Having correlated variables in your model may not add substantial explanatory power to the model
+
+* Raises the possibility of overfitting
+
+
+
+---
+### Model Selection: parsimony is valued
+
+**Parsimonious model**: a relatively simple model (fewer variables) with substantial explanatory power
+
+**model selection**: a process of formulating a parsimonious model 
+
+
+---
+### Stepwise selection
+
+We will look at two types of selection:
+
+--
+
+  * backward selection: 
+    * start with a full model (all available variables)
+    * remove variables until we get to a parsimonious model
+  
+--
+
+  * forward selection:
+    * start with no explanatory variables
+    * add explanatory variables one at a time until we get to a parsimonious model
+    
+
+--
+
+** Both backward selection require a metric to appraise and compare models.
+
+---
+### Model selection metrics 
+
+Common model selection metrics:
+  * AIC 
+  
+  * Adjusted `\(R^2\)`
+  
+  * p-values
+  
+
+---
+### AIC: Akaike information criterion
+
+AIC is a measure that:
+  * rewards model fit
+  * penalises using many variables
+  
+``$$ {\displaystyle \mathrm {AIC} \,=\,2k-2\ln({\hat {L}})} $$`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
