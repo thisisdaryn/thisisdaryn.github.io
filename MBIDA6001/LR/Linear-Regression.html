@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Linear Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear Regression
+## BIDA 6001: Data Analytic Methods using R
+### last updated: 2019-11-19
+
+---
+
+
+
+
+
+
+
+### Simple Linear Regression 
+
+Simple case: 
+  * 1 explanatory variable
+  * 1 output variable 
+  
+We seek a relationship of the form:
+
+`$$ y = b_0 + b_1\cdot x$$`
+
+
+
+---
+### Interpeting the model parameters
+
+
+  * intercept, `\(b_0\)`:
+    * The intercept tells us what the model would predict if the explanatory variable was set to 0
+    
+
+--
+
+  * slope, `\(b_1\)`:
+    The slope tells you how many units you expect your response variable to change **on average** in response to a single unit increase in the explanatory variable 
+
+
+
+
+---
+### Least squares line 
+
+* There are many possible lines that we can find to fit to data
+
+* Standard method is to minimize the sum of squared residuals
+
+
+
+
+---
+### Residuals
+
+Residuals: difference between model prediction and observed value in the training data
+
+  `$$ \mbox{Data} = \mbox{Fit} +  \mbox{Residual} $$`
+  
+* If the model value is greater than the observed: negative residual
+
+* If the model value is lower than the observed: positive residual
+  
+
+---
+### Example of residuals plots
+
+
+&lt;img src="images/residualsPlots.png" width="1747" style="display: block; margin: auto;" /&gt;
+
+  
+---
+### Linear regression in R 
+
+To do linear regression in R, we use the &lt;tt&gt;lm&lt;/tt&gt; command
+
+Example: Using the &lt;tt&gt;starbucks&lt;/tt&gt; data set, fit a linear model to predict calories using grams of carbs as an explanatory variable 
+
+```r
+library(openintro)
+lm(calories~carb, data = starbucks)
+```
+
+```
+## 
+## Call:
+## lm(formula = calories ~ carb, data = starbucks)
+## 
+## Coefficients:
+## (Intercept)         carb  
+##     146.020        4.297
+```
+
+---
+### How do we interpret these results?
+
+
+  * For an item with 70 grams of carbs, how many calories does the model predict?
+  
+  * For an item with 80 grams of carbs, how many calories does the model predict?
+
+---
+### Linear models can be saved in R 
+
+
+
+
+```r
+model1 &lt;- lm(calories~carb, data = starbucks)
+summary(model1)
+```
+
+```
+## 
+## Call:
+## lm(formula = calories ~ carb, data = starbucks)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -151.962  -70.556   -0.636   54.908  179.444 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 146.0204    25.9186   5.634 2.93e-07 ***
+## carb          4.2971     0.5424   7.923 1.67e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 78.26 on 75 degrees of freedom
+## Multiple R-squared:  0.4556,	Adjusted R-squared:  0.4484 
+## F-statistic: 62.77 on 1 and 75 DF,  p-value: 1.673e-11
+```
+
+
+  
+  
+
+---
+### Calculating slope and intercept manually
+
+**Slope**
+
+`$$ b_1 = \frac{s_y}{s_x}\cdot{R} $$`
+
+Where:
+  * `\(s_y\)`: standard deviation of y
+  * `\(s_x\)`: standard deviation of x
+  * `\(R\)`: correlation
+  
+--
+
+**Intercept** 
+  
+`$$ b_0 = \bar{y} - b_{1}\cdot\bar{x} $$`
+  
+
+
+
+
+
+
+
+
+
+
+
+
+---
+### Conditions for linear regression 
+
+  * linearity 
+
+  * nearly-normal residuals
+
+  * constant variability
+
+  * independent observations
+
+
+---
+### Linearity
+
+  * The relationship between explanatory and response should be linear
+  
+  * This can be inspected via a scatter plot and/or a residuals plot
+  
+
+---
+### Nearly normal residuals 
+
+  * The least squares method is based on the assumption that the response variable is distributed normally about the mean at each level of the explanatory variable
+
+  * So we can check the residuals via a histogram (or Q-Q plot) to see if this assumption holds up 
+  
+  
+
+---
+### Constant variability 
+
+  * The variability of points around the least squares plot should be constant 
+  
+  * If you see that the size of the residuals is related to the explanatory variable that may be problematic
+
+--
+
+### Independent observations
+
+  * observations should independent
+  
+  * time series values, observing the same quantity repeatedly, are not independent for example
+
+
+
+
+
+
+---
+### Examples of assumptions being violated
+
+&lt;img src="images/assumptionsViolated.png" width="2435" style="display: block; margin: auto;" /&gt;
+
+---
+### Strength of the association
+
+Common measure of the strength of a linear model, `\(R^2\)`:
+  * square of the correlation
+  
+  * always between 0 and 1
+  
+  * How much of the variability in the response variable explained by the model 
+
+
+---
+### Linear Regression with categorical explanatory variable
+
+  * For a categorical variable with `\(n\)` levels, the model is specified by `\(n-1\)` coefficients
+  
+  * one level is the reference level and the predicted value for this level is incorporated into the intercept
+  
+  * all other levels have corresponding coefficients
+
+
+---
+### Example using R
+
+
+
+```r
+model2 &lt;- lm(calories~type, data = starbucks)
+model2
+```
+
+```
+## 
+## Call:
+## lm(formula = calories ~ type, data = starbucks)
+## 
+## Coefficients:
+##       (Intercept)     typebistro box  typehot breakfast  
+##            368.78               8.72             -43.78  
+##       typeparfait         typepetite          typesalad  
+##            -68.78            -191.00            -288.78  
+##      typesandwich  
+##             26.93
+```
+
+
+---
+### How do we interpret the model?
+
+
+  * What does the model preduct for a bistro box item?
+  
+  * What does the model predict for a hot breakfast item?
+  
+  * What does the model predict for a bakery item? 
+  
+  
+
+---
+### Multiple linear regression 
+
+Sometimes we have more than 1 explanatory variable available. In this case we are looking for a more general relationship.
+
+`$$ y = b_0 + b_1\cdot{x_1} + b_2\cdot{x_2} + \ldots b_n\cdot{x_n} $$`
+
+
+Each coefficient is to be interpreted as the change in the response for a unit change in the particular explanatory variable provided all other variables held constant.
+
+
+
+
+---
+### Collinearity
+
+* Predictor variables may be strongly correlated with each other
+
+* Having correlated variables in your model may not add substantial explanatory power to the model
+
+* Raises the possibility of **overfitting**: the model fits the peculiarities of the training data too well and don't apply as well to more general populations.
+
+
+
+---
+### Model Selection: parsimony is valued
+
+**Parsimonious model**: a relatively simple model (fewer variables) with substantial explanatory power
+
+**model selection**: a process of formulating a parsimonious model 
+
+
+---
+### Stepwise selection
+
+We will contemplate two types of selection:
+
+
+--
+
+  * backward selection: 
+  
+    * start with a full model (all available variables)
+    * remove variables until we get to a parsimonious model
+  
+--
+
+  * forward selection:
+    * start with no explanatory variables
+    * add explanatory variables one at a time until we get to a parsimonious model
+    
+
+--
+
+** Both backward selection require a metric to appraise and compare models.**
+
+---
+### Model selection metrics 
+
+Common model selection metrics:
+  * AIC 
+  
+  * Adjusted `\(R^2\)`
+  
+  * p-values
+  
+
+---
+### AIC: Akaike information criterion
+
+AIC is a measure that:
+  * rewards model fit
+  * penalises using many variables
+  * lower AIC is better 
+  
+`$$ AIC = -2\cdot \mbox{log}(L) +  2k $$`
+
+
+---
+### Stepwise selection with AIC
+
+  * Create a full model 
+
+
+```r
+full_model &lt;- lm(calories~fat+carb+fiber+protein+type, data = starbucks)
+```
+
+
+
+```r
+model3 &lt;- step(full_model)
+```
+
+```
+## Start:  AIC=371.07
+## calories ~ fat + carb + fiber + protein + type
+## 
+##           Df Sum of Sq    RSS    AIC
+## - type     6       860   8027 367.80
+## - fiber    1        68   7234 369.79
+## &lt;none&gt;                   7166 371.07
+## - protein  1     14014  21181 452.51
+## - carb     1    120889 128055 591.06
+## - fat      1    209528 216694 631.57
+## 
+## Step:  AIC=367.8
+## calories ~ fat + carb + fiber + protein
+## 
+##           Df Sum of Sq    RSS    AIC
+## - fiber    1         0   8027 365.80
+## &lt;none&gt;                   8027 367.80
+## - protein  1     52802  60828 521.74
+## - carb     1    270564 278590 638.91
+## - fat      1    270626 278652 638.93
+## 
+## Step:  AIC=365.8
+## calories ~ fat + carb + protein
+## 
+##           Df Sum of Sq    RSS    AIC
+## &lt;none&gt;                   8027 365.80
+## - protein  1     74647  82673 543.37
+## - fat      1    284031 292058 640.55
+## - carb     1    298558 306585 644.29
+```
+
+
+---
+### Viewing the steps of the stepwise selection
+
+We can view the steps of the stepwise selection by using the &lt;tt&gt;step&lt;/tt&gt; function without saving to a variable:
+
+
+```r
+step(full_model)
+```
+
+```
+## Start:  AIC=371.07
+## calories ~ fat + carb + fiber + protein + type
+## 
+##           Df Sum of Sq    RSS    AIC
+## - type     6       860   8027 367.80
+## - fiber    1        68   7234 369.79
+## &lt;none&gt;                   7166 371.07
+## - protein  1     14014  21181 452.51
+## - carb     1    120889 128055 591.06
+## - fat      1    209528 216694 631.57
+## 
+## Step:  AIC=367.8
+## calories ~ fat + carb + fiber + protein
+## 
+##           Df Sum of Sq    RSS    AIC
+## - fiber    1         0   8027 365.80
+## &lt;none&gt;                   8027 367.80
+## - protein  1     52802  60828 521.74
+## - carb     1    270564 278590 638.91
+## - fat      1    270626 278652 638.93
+## 
+## Step:  AIC=365.8
+## calories ~ fat + carb + protein
+## 
+##           Df Sum of Sq    RSS    AIC
+## &lt;none&gt;                   8027 365.80
+## - protein  1     74647  82673 543.37
+## - fat      1    284031 292058 640.55
+## - carb     1    298558 306585 644.29
+```
+
+```
+## 
+## Call:
+## lm(formula = calories ~ fat + carb + protein, data = starbucks)
+## 
+## Coefficients:
+## (Intercept)          fat         carb      protein  
+##       5.331        8.955        3.841        3.994
+```
+
+
+---
+### Training and test data sets 
+
+To avoid overfitting, best practice is that we segregate available data into test and training sets
+
+  * training set: used to build model
+  
+  * test set: used to appraise model and ensure the model is generalisable 
+
+
+
+---
+### Using the predict function in R 
+
+We can use the predict function to run a model on a newdata set
+
+Example using the &lt;tt&gt;starbucks&lt;/tt&gt; data:
+
+  * create test and training data:
+
+
+```r
+set.seed(1729)
+sample_indices &lt;- sample(77, 40, replace = FALSE)
+training_data &lt;- starbucks[sample_indices, ]
+test_data &lt;- starbucks[-sample_indices, ]
+```
+
+---
+### Example continued
+
+  * train model
+  
+
+```r
+training_model &lt;- lm(calories~fat+carb+fiber+protein+type, data = starbucks)
+```
+
+
+  * Now to make model predictions
+  
+
+```r
+predict(training_model, newdata = test_data)
+```
+
+```
+##        1        2        3        4        5        6        7        8 
+## 353.9363 489.7934 129.3991 333.9790 463.7494 367.8973 407.0023 370.2412 
+##        9       10       11       12       13       14       15       16 
+## 340.6921 432.1787 297.5100 350.6822 489.4440 418.5160 423.9395 355.2593 
+##       17       18       19       20       21       22       23       24 
+## 345.8327 481.2833 342.0567 442.6013 482.0094 369.6043 378.0167 423.1455 
+##       25       26       27       28       29       30       31       32 
+## 359.5800 381.9533 174.6137 171.9001 179.3680 355.1702 355.1702 471.3139 
+##       33       34       35       36       37 
+## 360.1244 394.2973 348.7859 419.1046 390.7167
+```
+
+
+
+---
+### Reminder: Other metrics can be used for stepwise selection
+
+The general framework of stepwise selection can be carried out using other measures 
+  * p-values
+  
+  * adjusted `\(R^2\)`
+    * this is analogous to `\(R^2\)` in the one-dimensional case however there is an adjustment to account for the number of variables used
+  
+  * many other information criteria
+
+
+---
+### Other notes:
+
+  * forward and backward selection are not guaranteed to converge on the same model
+  
+  * different training data sets will result in different model coefficients
+  
+  * different training data sets may even result in different models resulting from stepwise selection
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

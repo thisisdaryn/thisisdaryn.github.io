@@ -1,0 +1,102 @@
+<html>
+<head>
+<link href='libs/mycss.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+
+<svg id = "panel6">
+<text x="620" y="345" font-family="Arvo" font-size="390" fill="rgb(100,30,255)">Evyden</text>
+<text x="620" y="655" font-family="Arvo" font-size="390" fill="rgb(100,30,255)">Analytics</text>
+</svg>
+
+<script>
+
+
+var col = function(r, g, b){
+  return "#"+(r).toString(16)+(g).toString(16)+(b).toString(16);
+}
+
+function RGB2HTML(red, green, blue)
+{
+    var decColor =0x1000000+ blue + 0x100 * green + 0x10000 *red ;
+    return '#'+decColor.toString(16).substr(1);
+}
+
+var newBlock = function(r, cx, cy, colour, opacity)
+{
+    var NS = "http://www.w3.org/2000/svg";
+    var circ = document.createElementNS(NS, "circle");
+    circ.setAttribute("cx",cx);
+    circ.setAttribute("cy",cy);
+    circ.setAttribute("r",r);
+    circ.style.fill = "none";
+    circ.style.stroke = colour;
+    circ.style["stroke-width"] = 25;
+    circ.style.opacity = opacity; //0.55 originally  
+    //console.log(circ);
+    return circ;    
+}
+
+var newBlocksq = function(x, y, side, colour, opacity)
+{
+    var NS = "http://www.w3.org/2000/svg";
+    var outer = document.createElementNS(NS, "rect");
+    outer.setAttribute("x",x);
+    outer.setAttribute("y",y);
+    outer.setAttribute("width", side);
+    outer.setAttribute("height", side);
+    outer.style.fill = colour;
+    //block.style.stroke = "black";
+    outer.style.opacity = opacity; //0.55 originally  
+    outer.style.stroke = "white";
+
+    return outer;    
+}
+
+
+
+
+
+var rbegin = 112;
+var gbegin = 128;
+var bbegin = 144;
+
+
+var rend = 100;
+var gend = 30;
+var bend = 255; 
+
+var panel6 = document.getElementById('panel6');
+panel6.setAttribute("width",2430);
+panel6.setAttribute("height", 800);
+
+
+
+
+for(var j = 0; j < 6; ++j){
+  for(var k = 0; k <= j; ++k){
+    var cx = 70 + 100*j;
+    var cy = 105 + 100*k
+    
+    var r = Math.floor((1-j*0.2)*rbegin + (j*0.2)*rend);
+    var g = Math.floor((1-j*0.2)*gbegin + (j*0.2)*gend);
+    var b = Math.floor((1-j*0.2)*bbegin + (j*0.2)*bend);
+    
+    var mycol = RGB2HTML(r,g,b);
+    console.log(mycol);
+    var c1 = newBlock(36.5, cx, cy, mycol, 1.0)
+    panel6.appendChild(c1);
+    //var c2 = newBlock(24, cx, cy, "white", 1.0)
+    //panel6.appendChild(c2);
+  }
+}
+
+
+
+
+
+</script>
+
+</body>
+</html>
