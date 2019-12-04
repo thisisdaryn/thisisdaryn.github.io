@@ -1,0 +1,245 @@
+---
+title: "Linear Regression"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.align="center", fig.width=5, fig.height=5, warning = FALSE, message = FALSE)
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+duo_accent(
+  primary_color = "ivory",
+  secondary_color = "#310A31",
+  header_font_google = google_font("Roboto", "400"),
+  text_font_google   = google_font("Lato", "300"),
+  code_font_family = "Fira Code",
+  code_font_url = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css",
+  header_color = "#f54278",
+  title_slide_text_color = "#354a66"
+)
+```
+
+
+
+
+---
+### 
+
+
+
+---
+### Residuals
+
+
+
+
+
+
+---
+### Least squares line 
+
+
+
+---
+### Slope for univariate least squares
+
+`$$ b_1 = \frac{s_y}{s_x}\cdot{R} $$`
+
+  * $s_y$: standard deviation of y
+  * $s_x$: standard deviation of x
+  * $R$: correlation
+  
+  
+
+---
+
+### Interpeting the slope
+
+The slope tells you how many units you expect your response variable to change **on average** in response to a single unit increase in the
+explanatory variable 
+
+
+
+---
+### Calculating the intercept
+
+``$$ b_0 = \bar{y} - b_{1}\cdot\bar{x}$$`` 
+
+
+
+
+---
+### Interpreting the y-intercept
+
+
+
+---
+### Using the model to predict for new data
+
+
+
+
+---
+### Extrapolation 
+
+
+---
+### Conditions for linear regression 
+
+  * linearity 
+
+  * nearly-normal residuals
+
+  * constant variability
+
+  * independent observations
+
+
+---
+### Linearity
+
+  * The relationship between explanatory and response should be linear
+  
+  * This can be inspected via a scatter plot and/or a residuals plot
+  
+
+---
+### Nearly normal residuals 
+
+  * The least squares method is based on the assumption that the response variable is distributed normally about the mean 
+
+  * So we can check the residuals via a histogram (or Q-Q plot) to see if this assumption holds up 
+  
+  
+
+---
+### Constant variability 
+
+The variability of points around the least squares plot should be constant 
+
+
+---
+### Strength of the 
+
+Common measure of the strength of a linear model, $R^2$:
+  * square of the correlation
+  
+  * always between 0 and 1
+  
+  * How much of the variability in the response variable explained by the model 
+
+
+
+---
+### Linear Regression with categorical explanatory variable
+
+  * For a categorical variable with $n$ levels, the model is specified by $n-1$ coefficients
+  
+  
+  * one level is the reference level and the predicted value for this level is incorporated into the intercept
+  
+  * all other levels have corresponding coefficients
+  
+
+
+
+  
+  
+
+
+
+---
+### Multiple linear regression 
+
+Sometimes we have more than 1 explanatory variable available. In this case we are looking for a more general relationship.
+
+`$$ y = b_0 + b_1\cdot{x_1} + b_2\cdot{x_2} + \ldots b_n\cdot{x_n} $$`
+
+
+Each coefficient is to be interpreted as the change in the response for a unit change in the particular explanatory variable provided all other variables held constant.
+
+
+
+
+---
+### Collinearity
+
+* Predictor variables may be strongly correlated with each other
+
+* Having correlated variables in your model may not add substantial explanatory power to the model
+
+* Raises the possibility of overfitting
+
+
+
+---
+### Model Selection: parsimony is valued
+
+**Parsimonious model**: a relatively simple model (fewer variables) with substantial explanatory power
+
+**model selection**: a process of formulating a parsimonious model 
+
+
+---
+### Stepwise selection
+
+We will look at two types of selection:
+
+--
+
+  * backward selection: 
+    * start with a full model (all available variables)
+    * remove variables until we get to a parsimonious model
+  
+--
+
+  * forward selection:
+    * start with no explanatory variables
+    * add explanatory variables one at a time until we get to a parsimonious model
+    
+
+--
+
+** Both backward selection require a metric to appraise and compare models.
+
+---
+### Model selection metrics 
+
+Common model selection metrics:
+  * AIC 
+  
+  * Adjusted $R^2$
+  
+  * p-values
+  
+
+---
+### AIC: Akaike information criterion
+
+AIC is a measure that:
+  * rewards model fit
+  * penalises using many variables
+  
+``$$ {\displaystyle \mathrm {AIC} \,=\,2k-2\ln({\hat {L}})} $$`
+    
+
+
+
+
