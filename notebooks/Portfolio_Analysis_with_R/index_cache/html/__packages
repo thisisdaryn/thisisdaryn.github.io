@@ -1,0 +1,17 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
+zoo
+xts
+PerformanceAnalytics
+TTR
+quantmod
+ggplot2
+highcharter
+purrr
+tidyr
+dplyr
