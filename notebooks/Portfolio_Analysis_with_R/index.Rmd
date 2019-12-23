@@ -5,6 +5,7 @@ date: "Last updated: `r format(Sys.time(), '%Y-%m-%d')`"
 output: 
   html_document:
     css: article.css
+    toc: true
     
 ---
 
@@ -330,8 +331,8 @@ Now that the data has been reshaped, I can plot the returns by portfolio compone
 bg_df <- filter(df_narrow, Component == "portfolio.returns") %>% 
   select(-Component)
 ggplot(data = filter(df_narrow, Component != "portfolio.returns")) +
-  geom_line(data = bg_df, aes(x = date, y = Return), colour = "black") + 
-  geom_line(alpha = 0.5, aes(x = date, y = Return, group = Component, colour = Component)) + 
+  geom_line(data = bg_df, aes(x = date, y = Return), colour = "#484848") + 
+  geom_line(alpha = 0.6, aes(x = date, y = Return, group = Component, colour = Component)) + 
   facet_wrap(~Component) + theme_bw() + 
   theme(legend.position = "none") 
 ```
