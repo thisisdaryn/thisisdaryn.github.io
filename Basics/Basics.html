@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Some R/RStudio Basics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Some R/RStudio Basics
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2020-01-25
+
+---
+
+
+
+
+
+
+
+
+
+### What does R look like?
+
+&lt;img src="../images/RScreen.png" width="3648" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### What does RStudio look like?
+
+&lt;img src="../images/RStudioScreen.png" width="3840" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Key panels in RStudio
+
+  - Console pane: 
+  
+    - interactive window to enter commands 
+  
+  - Source pane:
+    
+    - You can write programs here to be saved 
+  
+  - Environment (and history and connections):
+     
+     - data objects will show up here 
+  
+  - Files/Plots/Packages/Help/Viewer
+  
+  
+
+---
+### A first R command
+
+
+```r
+plot(iris$Sepal.Length, iris$Petal.Length)
+```
+
+
+---
+### A first R command
+
+
+```r
+plot(iris$Sepal.Length, iris$Petal.Length)
+```
+
+&lt;img src="Basics_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### What just happened?
+
+What do each of the following mean/represent?
+
+  - &lt;tt&gt;plot&lt;/tt&gt;
+  
+  - &lt;tt&gt;()&lt;/tt&gt;
+  
+  - &lt;tt&gt;iris&lt;/tt&gt;
+  
+  - &lt;tt&gt;$&lt;/tt&gt; 
+  
+  - &lt;tt&gt;Sepal.Length&lt;/tt&gt;, &lt;tt&gt;Petal.Length&lt;/tt&gt;
+
+---
+### Ok, same command with one more thing
+
+
+```r
+plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species)
+```
+
+---
+### Ok, same command with one more thing
+
+
+```r
+plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species)
+```
+
+&lt;img src="Basics_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Ok, same command with one more thing
+
+
+```r
+plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species)
+```
+
+
+
+---
+### Ok, same command with a different syntax
+
+
+```r
+plot(Petal.Length~Sepal.Length, data = iris, col = Species)
+```
+
+&lt;img src="Basics_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+  
+
+---
+### Some terminology
+
+What do we mean by the following terms?
+
+  
+  - unit of analysis
+  
+  - variable 
+  
+  - numerical variable
+  
+  - categorical variable
+  
+  - ordinal (ordered) variable
+  
+  - record/observation
+  
+  
+  
+
+---
+### Answers
+
+
+  - &lt;b&gt;unit of analysis&lt;/b&gt;: the type of entity we are interested in 
+    - e.g. a customer, a country
+  
+  - &lt;b&gt;variable&lt;/b&gt;: characteristic of an entity that may change from one individual to another
+    - e.g. money spent, GDP/unemployment rate
+    
+  - &lt;b&gt;numerical variable&lt;/b&gt;: variable where the possible values take the form of numbers.
+    - e.g. money spent, average age, number of people in a household 
+    - it makes sense to do maths with these
+    
+  - &lt;b&gt;categorical variables&lt;/b&gt;: possible values come from a limited set of possible values
+    - e.g. male or female; small, medium or large; high income or low income
+    
+  - &lt;b&gt;ordinal variable&lt;/b&gt;: categorical variable with an ordering 
+    - e.g. small, medium, or large
+    
+  - &lt;b&gt;record/observation&lt;/b&gt;: all the values of variables collected about the unit of analysis at one time
+
+
+
+---
+## Weekend checklist: R basics
+
+  - functions, vectors, data frames, packages, types of data
+    
+  - functions: 
+    - &lt;tt&gt;c&lt;/tt&gt;
+    
+    - &lt;tt&gt;&lt;-&lt;/tt&gt; 
+    
+    - &lt;tt&gt;[]&lt;/tt&gt;
+    
+    - &lt;tt&gt;$&lt;/tt&gt;
+    
+    - &lt;tt&gt;library&lt;/tt&gt; and &lt;tt&gt;install.packages&lt;/tt&gt;
+
+  - relational operators:
+    
+    - &lt;tt&gt;==&lt;/tt&gt;, &lt;tt&gt;%in%&lt;/tt&gt;, &lt;tt&gt;!=&lt;/tt&gt;, &lt;tt&gt;|&lt;/tt&gt;, &lt;tt&gt;&amp;&lt;/tt&gt; 
+    
+  - maths/stats functions
+    
+    - &lt;tt&gt;max&lt;/tt&gt;, &lt;tt&gt;min&lt;/tt&gt;, &lt;tt&gt;sum&lt;/tt&gt;, &lt;tt&gt;mean&lt;/tt&gt;, &lt;tt&gt;median&lt;/tt&gt;, &lt;tt&gt;sort&lt;/tt&gt; etc
+    
+  - &lt;tt&gt;paste&lt;/tt&gt;/&lt;tt&gt;paste0&lt;/tt&gt;
+  
+  - &lt;tt&gt;read.csv&lt;/tt&gt;
+
+      
+      
+---
+### Checklist continued
+
+### Exploratory data analysis
+
+  - &lt;tt&gt;summary&lt;/tt&gt;
+  - &lt;tt&gt;str&lt;/tt&gt;
+  - &lt;tt&gt;table&lt;/tt&gt;
+  - plotting in base R:
+    - &lt;tt&gt;plot&lt;/tt&gt;
+    - &lt;tt&gt;hist&lt;/tt&gt;
+    - &lt;tt&gt;boxplot&lt;/tt&gt;
+    - &lt;tt&gt;barplot&lt;/tt&gt;
+
+
+---
+### Checklist continued: tidyverse functions
+
+  - dplyr 
+    - &lt;tt&gt;filter&lt;/tt&gt;
+    - &lt;tt&gt;arrange&lt;/tt&gt;
+    - &lt;tt&gt;mutate&lt;/tt&gt;
+    - &lt;tt&gt;group_by&lt;/tt&gt;
+    - &lt;tt&gt;summarise&lt;/tt&gt;
+    - &lt;tt&gt;left_join&lt;/tt&gt;, &lt;tt&gt;inner_join&lt;/tt&gt;, &lt;tt&gt;right_join&lt;/tt&gt;
+    
+    
+  - ggplot2
+    - &lt;tt&gt;ggplot&lt;/tt&gt;
+    
+  - tidyr
+    - &lt;tt&gt;separate&lt;/tt&gt;
+    - &lt;tt&gt;unite&lt;/tt&gt;
+    - &lt;tt&gt;gather&lt;/tt&gt; 
+    - &lt;tt&gt;spread&lt;/tt&gt;
+    
+  - readr
+    - &lt;tt&gt;read_csv&lt;/tt&gt;, &lt;tt&gt;write_csv&lt;/tt&gt;
+    
+    
+
+---
+## 4 types of plots
+
+### When do we use each of these types of plots
+
+  - scatter plots:
+    
+--
+    
+    - to show the relationship between two variables
+
+--
+
+  - bar charts/plots:
+
+--
+  
+    - to show quantities of two categorical variables
+
+--
+
+  - histograms:
+
+--
+    - to show the distribution of a numerical variable
+    
+  - box plots:
+
+--
+    - to show the distribution of a numerical variable 
+
+--
+    - to compare distributions of a numerical variable across different levels of a categorical variable
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
