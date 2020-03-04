@@ -1,0 +1,791 @@
+---
+title: "dplyr 1: key verbs"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.align="center", fig.width=5, fig.height=5, warning = FALSE, message = FALSE)
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+duo_accent(
+  primary_color = "ivory",
+  secondary_color = "#310A31",
+  header_font_google = google_font("Roboto", "400"),
+  text_font_google   = google_font("Lato", "300"),
+  code_font_family = "Fira Code",
+  code_font_url = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css",
+  header_color = "#f54278",
+  title_slide_text_color = "#354a66",
+  padding = "15px 15px 25px 15px"
+)
+```
+
+
+## dplyr: a package for data manipulation
+
+The data you get is almost in the form you want
+
+--
+
+<tt>dplyr</tt> is an R package that encapsulates many common data manipulation tasks
+
+--
+
+Sometimes you want to: 
+--
+
+  * keep only some of the rows
+
+--
+
+  * keep only some of the columns
+
+--
+
+  * adds new columns
+
+--
+
+  * sort data
+  
+--
+
+  * provide summary statistics
+
+--
+
+<tt>dplyr</tt> has a function for each of these
+
+  
+---
+## 5 Key tasks/verbs/functions
+
+  * <tt>filter</tt>: keep only some of the rows 
+
+
+  * <tt>select</tt>: keep only some of the columns 
+
+  * <tt>mutate</tt> adds new columns
+
+
+
+  * <tt>arrange</tt>: sort data
+  
+
+
+  * <tt>summarise</tt> (and <tt>group_by</tt>): provide summary statistics 
+  
+---
+## First, let's get some data
+
+```{r message = FALSE, warning = FALSE, eval = FALSE}
+library(readr)
+
+chi_emps <- read_csv("data/ChicagoEmployees.csv")
+```
+
+---
+## First, let's get some data
+
+```{r message = FALSE, warning = FALSE, eval = FALSE}
+library(readr)
+
+chi_emps <- read_csv("data/ChicagoEmployees.csv")
+chi_emps
+```
+
+
+---
+## First, let's get some data
+
+```{r message = FALSE, warning = FALSE}
+library(readr)
+
+chi_emps <- read_csv("data/ChicagoEmployees.csv")
+chi_emps
+```
+
+
+
+---
+### What is this data?
+
+
+--
+A list of all employees of the City of Chicago (Jan 2020)
+--
+
+#### What do the fields represent?
+
+  * Name: employee's last name and first initial
+
+--
+
+  * Title: job title
+
+--
+
+  * Dept: Department of city government
+
+--
+
+  * SalHr: Whether the employee is salaried (<i>S</i>) or hourly-paid (<i>H</i>)
+  
+--
+  
+  * Hrs: Typical hours per week for an hourly-paid employee
+  
+--
+
+  * Salary: Annual Salary for salaried employee
+
+--
+
+  * Rate: Hourly rate for hourly-paid employee
+  
+
+
+---
+## How do we use dplyr?
+
+--
+
+```{r eval = TRUE}
+library(dplyr)
+```
+--
+
+
+### Or ...
+
+--
+you can load the entire <tt>tidyverse</tt> 
+
+```{r eval = FALSE}
+library(tidyverse)
+```
+
+
+
+---
+### If you've never installed it before 
+
+--
+
+You will need to install the package first 
+
+```{r eval = FALSE}
+install.packages("dplyr")
+```
+
+--
+or 
+
+```{r eval = FALSE}
+install.packages("tidyverse")
+```
+
+
+
+
+---
+### Key thing to remember
+
+--
+
+All of these functions have these in common:
+
+--
+
+  * the first input is a data frame 
+  
+--
+
+  * there are a variable number of following inputs specifying the manipulation you want to do
+
+
+---
+## filter
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all employees that are salaried?
+--
+```{r message = FALSE, eval = FALSE}
+salaried <- filter(chi_emps, SalHr == "S")
+```
+
+---
+## filter
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all employees that are salaried?
+
+```{r message = FALSE, eval = FALSE}
+salaried <- filter(chi_emps, SalHr == "S")
+salaried
+```
+
+  
+---
+## filter
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all employees that are salaried?
+
+```{r message = FALSE}
+salaried <- filter(chi_emps, SalHr == "S")
+salaried
+```
+
+
+---
+## filter
+
+#### 
+
+
+Example 2: How do we get all employees of the Police Department?
+--
+```{r}
+police <- filter(chi_emps, Dept == "POLICE")
+head(police)
+```
+
+
+---
+## filter
+
+#### 
+
+Example 3: How do we get all salaried employees of the Police Department?
+--
+```{r}
+sal_police <- filter(chi_emps, SalHr == "S", 
+                     Dept == "POLICE")
+
+sal_police
+```
+
+---
+### Assessment
+
+How many hourly-paid employees are there in the Aviation department (<i>AVIATION</i>)?
+
+
+--
+
+```{r}
+aviation_hr <- filter(chi_emps, Dept == "AVIATION",
+                      SalHr == "H")
+dim(aviation_hr)
+```
+
+
+
+
+
+---
+## select
+
+
+#### a function for specifying which columns to keep
+
+Example: How do we keep only the names, titles, departments and salaries of the salaried employees?  
+
+```{r eval = FALSE}
+salaried2 <- select(salaried, Name, Title, Dept, Salary)
+```
+
+---
+## select
+
+
+#### a function for specifying which columns to keep
+
+Example: How do we keep only the names, titles, departments and salaries of the salaried employees?  
+
+```{r eval = FALSE}
+salaried2 <- select(salaried, Name, Title, Dept, Salary)
+salaried2
+```
+
+
+---
+## select
+
+
+#### a function for specifying which columns to keep
+
+Example: How do we keep only the names, titles, departments and salaries of the salaried employees?  
+
+```{r}
+salaried2 <- select(salaried, Name, Title, Dept, Salary)
+salaried2
+```
+
+
+---
+## select
+
+#### Alternative: we can use the <tt>-</tt> to specify columns we don't want to keep:
+
+--
+
+```{r eval = FALSE}
+salaried3 <- select(salaried, -SalHr, -Hrs, -Rate)
+```
+
+
+---
+## select
+
+#### Alternative: we can use the <tt>-</tt> to specify columns we don't want to keep:
+
+
+```{r eval = FALSE}
+salaried3 <- select(salaried, -SalHr, -Hrs, -Rate)
+salaried3
+```
+---
+## select
+
+#### Alternative: we can use the <tt>-</tt> to specify columns we don't want to keep:
+
+
+```{r}
+salaried3 <- select(salaried, -SalHr, -Hrs, -Rate)
+salaried3
+```
+
+
+
+---
+## arrange 
+
+### a function to sort your data
+
+Example: How do we sort the data so that employees are ordered by salary?
+
+```{r}
+salary_ord <- arrange(salaried, Salary)
+```
+
+
+
+---
+## arrange
+
+Example: How do we sort the data so that employees are ordered by salary in descending order?
+
+```{r}
+salary_desc <- arrange(salaried, desc(Salary))
+```
+
+
+---
+## arrange
+
+You can also sort by more than one variable
+
+Example: How do we sort the salaried employees by Department (alphabetically) with each department sorted by salary (descending)?
+
+
+```{r}
+dept_sal <- arrange(salaried, Dept, desc(Salary))
+```
+
+
+
+--
+
+Question: How can you check that this works?
+
+--
+
+  * One way: Try the <tt>View</tt> function with the data frame you created as input.
+
+
+
+---
+### Assessment
+
+Fill in the code below to do the following tasks:
+
+  * start with the original data set (all employees)
+  * restrict to hourly-paid employees
+  * remove the <i>SalHr</i>, and <i>Salary</i> columns
+  * order the data in descending order of hourly rate
+    * if employees earn the same hourly rate order them by typical hours (descending) 
+  
+  
+```{r eval = FALSE}
+____ <- filter(____, ____ == ____)
+____ <- select(____, -____, -_____)
+____ <- arrange(____, ____, ____)
+```
+
+
+
+
+---
+### Assessment solution
+
+
+
+
+
+```{r}
+df <- filter(chi_emps, SalHr == "H")
+df2 <- select(df, -SalHr, -Salary)
+df3 <- arrange(df2, desc(Rate), desc(Hrs))
+
+df3
+```
+
+(You don't have to use the same data frame names.)
+
+
+---
+### Assessment solution: alternative
+
+
+  * You could also have overwritten the data frame at each step.
+    * your environment is less cluttered
+    * but seeing the intermediate data may help with troubleshooting/debugging your code
+
+```{r}
+df <- filter(chi_emps, SalHr == "H")
+df <- select(df, -SalHr, -Salary)
+df <- arrange(df, desc(Rate), desc(Hrs))
+
+df
+```
+
+
+
+---
+## mutate
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether an individual has an annual salary greater than 
+$100,000 to the salaried data set
+
+```{r eval = FALSE}
+sal100 <- mutate(salaried, above100 = if_else(Salary > 100000, TRUE, FALSE))
+```
+
+---
+## mutate
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether an individual has an annual salary greater than 
+$100,000 to the salaried data set
+
+```{r eval = FALSE}
+sal100 <- mutate(salaried, above100 = if_else(Salary > 100000, TRUE, FALSE))
+sal100
+```
+
+
+---
+## mutate
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether an individual has an annual salary greater than 
+$100,000 to the salaried data set
+
+```{r}
+sal100 <- mutate(salaried, above100 = if_else(Salary > 100000, TRUE, FALSE))
+sal100
+```
+
+
+
+
+---
+## summarise
+
+#### a function for summary statistics
+
+
+Example: Provide the following summary statistics for the City of Chicago:
+
+  * the total number of employees
+  * the total salaries paid to salaried employees
+  * the mean rate paid to hourly-paid employees
+
+```{r eval = FALSE}
+report <- summarise(chi_emps, NumEmps = n(),
+                    TotalSalaries = sum(Salary, na.rm = TRUE),
+                    MeanRate = mean(Rate, na.rm = TRUE))
+```
+
+---
+## summarise
+
+#### a function for summary statistics
+
+
+Example: Provide the following summary statistics for the City of Chicago:
+
+  * the total number of employees
+  * the total salaries paid to salaried employees
+  * the mean rate paid to hourly-paid employees
+
+```{r eval = FALSE} 
+report <- summarise(chi_emps, NumEmps = n(),
+                    TotalSalaries = sum(Salary, na.rm = TRUE),
+                    MeanRate = mean(Rate, na.rm = TRUE))
+report
+```
+
+---
+## summarise
+
+#### a function for summary statistics
+
+
+Example: Provide the following summary statistics for the City of Chicago:
+
+  * the total number of employees
+  * the total salaries paid to salaried employees
+  * the mean rate paid to hourly-paid employees
+
+```{r} 
+report <- summarise(chi_emps, NumEmps = n(),
+                    TotalSalaries = sum(Salary, na.rm = TRUE),
+                    MeanRate = mean(Rate, na.rm = TRUE))
+report
+```
+
+
+
+---
+
+## summarise
+
+#### How can we find the following for the Police Department?
+
+  * the total number of employees
+  * the median salary
+
+--
+
+```{r}
+police_report <- summarise(police, NumEmps = n(),
+                           MedSal = median(Salary, na.rm = TRUE))
+```
+
+---
+
+## summarise
+
+#### How can we find the following for the Police Department?
+
+  * the total number of employees
+  * the median salary
+
+
+
+```{r eval = FALSE}
+police_report <- summarise(police, NumEmps = n(),
+                           MedSal = median(Salary, na.rm = TRUE))
+police_report
+```
+
+
+---
+
+## summarise
+
+#### How can we find the following for the Police Department?
+
+  * the total number of employees
+  * the median salary
+
+
+
+```{r}
+police_report <- summarise(police, NumEmps = n(),
+                           MedSal = median(Salary, na.rm = TRUE))
+police_report
+```
+
+
+
+---
+
+
+## group_by
+
+#### A function to put the data into groups (before you summarise)
+
+
+```{r}
+grouped_chi <- group_by(chi_emps, Dept)
+grouped_chi
+```
+
+
+---
+
+#### How is the grouped data frame different from the original?
+--
+
+```{r}
+grouped_chi
+```
+
+
+  * Notice the information about groups above the data
+
+  * Rows have been put into 36 different groups based on their department
+  
+
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each department, what are:
+  * the number of employees
+  * the median salary of salaried employees?
+  
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each department, what are:
+  * the number of employees
+  * the median salary of salaried employees?
+  
+```{r}
+grouped_chi <- group_by(chi_emps, Dept)
+```
+ 
+ 
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each department, what are:
+  * the number of employees
+  * the median salary of salaried employees?
+  
+```{r eval = FALSE}
+grouped_chi <- group_by(chi_emps, Dept)
+report <- summarise(grouped_chi, NumEmps = n(), 
+                    MedSal = median(Salary, na.rm = TRUE))
+``` 
+
+
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each department, what are:
+  * the number of employees
+  * the median salary of salaried employees?
+  
+```{r eval = FALSE}
+grouped_chi <- group_by(chi_emps, Dept)
+report <- summarise(grouped_chi, NumEmps = n(), 
+                    MedSal = median(Salary, na.rm = TRUE))
+
+head(report)
+```
+
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each department, what are:
+  * the number of employees
+  * the median salary of salaried employees?
+  
+```{r}
+grouped_chi <- group_by(chi_emps, Dept)
+report <- summarise(grouped_chi, NumEmps = n(), 
+                    MedSal = median(Salary, na.rm = TRUE))
+
+head(report)
+```
+
+---
+### Assessment
+
+#### Create a data frame that:
+  * contains the number of employees in each department that earn more than $120,000/yr
+  * is ordered by the number of employees meeting the criterion (descending)
+
+Reorder the following lines of code and fill in the blanks where necessary
+
+
+```{r eval = FALSE}
+____ <- arrange(____, desc(____))
+____ <- summarise(____, ____ = n())
+____ <- filter(____, ____ > ____)
+____ <- group_by(____, ____)
+```
+
+
+
+---
+### Assessment 
+
+#### How would you change your previous answer to show the departments in alphabetical order?
+
