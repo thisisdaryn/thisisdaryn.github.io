@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data visualisation with ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data visualisation with ggplot2
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2020-03-23
+
+---
+
+
+
+
+
+
+
+
+## ggplot2
+
+  * popular data visualisation package
+  
+  * based on the **grammar** of **graphics** 
+  
+
+--
+
+How do you access it? 
+
+--
+
+
+```r
+library(ggplot2)
+```
+
+--
+
+or
+
+--
+
+
+```r
+library(tidyverse)
+```
+
+
+---
+
+## Underlying idea
+
+Each graph/chart consists of three main components:
+
+  * **data** 
+  
+--
+
+  * an **aesthetic**: how are the variables in the data related to characteristics of the graph? E.g.:
+  
+--
+    * x - variable determining values along a horizontal axis
+
+    * y - variable determining values along a vertical axis
+  
+    * color/colour - variable determining the (external) colour of objects in the graph
+--
+
+  * a **geometry**: how is the mapping implemented geometrically i.e. what type of graph?
+  
+  
+---
+## Simplest ggplot2 graphs
+
+The simplest ggplot2 graphs can be built with two objects:
+  
+  * a base ggplot object, using &lt;tt&gt;ggplot&lt;/tt&gt;
+  
+  * a geometry object using one of the many &lt;tt&gt;geom_&lt;/tt&gt; functions, e.g.:
+    * &lt;tt&gt;geom_histogram&lt;/tt&gt;
+    * &lt;tt&gt;geom_boxplot&lt;/tt&gt;
+    * &lt;tt&gt;geom_bar&lt;/tt&gt;
+    * &lt;tt&gt;geom_point&lt;/tt&gt;
+    * &lt;tt&gt;geom_line&lt;/tt&gt;
+    
+    
+---
+## Creating the aesthetic
+
+Reminder: the aesthetic tells ggplot which variables to associate with specific characteristics of the graph.
+
+
+--
+
+The aesthetic is created using the &lt;tt&gt;aes&lt;/function&gt;:
+
+
+
+
+---
+### Reading in the data
+
+
+First, read in the data
+
+
+```r
+library(readr)
+cars2018 &lt;- read_csv("data/cars2018.csv")
+```
+
+
+---
+### First graph: a histogram
+
+Question: what does the distribution of MPG values look like? 
+
+--
+
+We can answer this using a histogram
+
+
+--
+
+Graph components: 
+
+--
+
+  * data: &lt;tt&gt;cars2018&lt;/tt&gt;
+--
+
+  * aesthetic:
+    * x = MPG
+--
+  * geometry: &lt;tt&gt;geom_histogram&lt;/tt&gt;
+
+
+
+
+---
+### First graph: a histogram
+
+
+```r
+ggplot(data = cars2018) 
+```
+
+
+---
+### First graph: a histogram
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) 
+```
+
+---
+### First graph: a histogram
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) + 
+  geom_histogram()
+```
+
+
+---
+### First graph: a histogram
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) + 
+  geom_histogram()
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### First graph: a histogram
+
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) + 
+  geom_histogram(fill = "purple", colour = "black") 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### First graph: a histogram
+
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) + 
+  geom_histogram(fill = "purple", colour = "black") + theme_bw()
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### First graph: a histogram
+
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) + 
+  geom_histogram(fill = "purple", colour = "black") + theme_bw() + 
+  ggtitle("Distribution of Fuel Efficiency among 2018 Cars")
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### New concept: faceting
+
+Faceting allows us to see plots for specific levels of categorical variables using either the &lt;tt&gt;facet_wrap&lt;/tt&gt; or &lt;tt&gt;facet_grid&lt;/tt&gt; functions.
+
+E.g. We can look at the distribution for each transmission type
+
+
+
+---
+### Faceted histogram
+
+
+
+```r
+ggplot(data = cars2018, aes(x = MPG)) + 
+  geom_histogram(fill = "purple", colour = "black") + theme_bw() + 
+  ggtitle("Distribution of Fuel Efficiency among 2018 Cars") + 
+  facet_wrap(~Transmission, ncol = 1)
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### A scatterplot:
+
+What is the relationship between engine Displacement and fuel efficiency?
+
+We can answer this using a scatterplot
+
+
+--
+
+Graph components: 
+
+--
+
+  * data: &lt;tt&gt;cars2018&lt;/tt&gt;
+--
+
+  * aesthetic:
+    * x = Displacement
+    
+    * y = MPG
+--
+  * geometry: &lt;tt&gt;geom_point&lt;/tt&gt;
+
+
+
+---
+### Second graph: a scatterplot
+
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG)) + 
+  geom_point() 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Second graph: a scatterplot
+
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG, colour = Transmission)) + 
+  geom_point() 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Second graph: a scatterplot
+
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG, colour = Transmission)) + 
+  geom_point() + theme_bw() 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Second graph: a scatterplot
+
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG, colour = Transmission)) + 
+  geom_point() + theme_bw() + 
+  ggtitle("Fuel Efficiency vs Displacement")
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Dealing with overplotting 
+
+We could try faceting
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG)) + 
+  geom_point() + theme_bw() + 
+  ggtitle("Fuel Efficiency vs Displacement") +
+  facet_wrap(~Transmission)
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Dealing with overplotting 
+
+We could try increasing transparency
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG)) + 
+  geom_point(alpha = 0.3) + theme_bw() + 
+  ggtitle("Fuel Efficiency vs Displacement") 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Dealing with overplotting 
+
+We could try jittering
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG)) + 
+  geom_jitter() + theme_bw() + 
+  ggtitle("Fuel Efficiency vs Displacement") 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+### Dealing with overplotting 
+
+We could try jittering and increased transparency
+
+
+```r
+ggplot(data = cars2018, aes(x = Displacement, y = MPG)) + 
+  geom_jitter(alpha = 0.5) + theme_bw() + 
+  ggtitle("Fuel Efficiency vs Displacement") 
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+### Bar charts
+
+How many incidents reported via 311 in each borough of NYC over the period Jan 1 2020 to Jan 14 2020?
+
+
+First read in the data:
+
+
+```r
+nyc311 &lt;- read_csv("data/nyc311.csv")
+```
+
+
+---
+### Using a bar chart  
+
+We can show the number of calls in each borough using a bar chart
+
+  * data: &lt;tt&gt;nyc311&lt;/tt&gt;
+
+  * aesthetic: 
+    * x: Borough
+    
+    
+  * geometry: &lt;tt&gt;geom_bar&lt;/tt&gt;
+    * note that the default behavior of &lt;tt&gt;geom_bar&lt;/tt&gt; is to use the count, so y aesthetic is not necessary. 
+  
+  
+---
+### Bar chart of NYC 311 calls by borough
+
+
+
+```r
+ggplot(data = nyc311, aes(x = Borough)) + geom_bar()
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+
+---
+### A bar chart with sums instead of counts
+
+How many runs did Brian Lara score in test matches against each test-playing country?
+
+First, get the data:
+
+
+```r
+lara &lt;- read_csv("data/lara.csv") 
+```
+
+---
+### A bar chart with sums instead of counts
+
+How many runs did Brian Lara score in test matches against each test-playing country?
+
+
+First get the data:
+
+
+```r
+library(dplyr)
+library(tidyr)
+lara &lt;- read_csv("data/lara.csv") %&gt;% 
+  separate(Match, into = c("Type", "Number"))
+
+tests &lt;- filter(lara, Type == "Test")
+```
+
+
+---
+### Now to make the chart
+
+  * data: &lt;tt&gt;tests&lt;/tt&gt;
+  
+  * aesthetic:
+    * x: Opp
+    * y: Runs
+    
+  * geometry: &lt;tt&gt;geom_bar&lt;/tt&gt;
+    * now we have to change the statistic
+    
+    
+---
+### Making the bar chart
+
+
+```r
+ggplot(data = tests, aes(x = Opp, y = Runs)) + 
+  geom_bar(stat = "identity")
+```
+
+&lt;img src="ggplot2_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
