@@ -1,0 +1,180 @@
+---
+title: "Intro to making maps with R (ggplot2)"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.align="center", fig.width=5, fig.height=5, warning = FALSE, message = FALSE)
+```
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+duo_accent(
+  primary_color = "ivory",
+  secondary_color = "#310A31",
+  header_font_google = google_font("Roboto", "400"),
+  text_font_google   = google_font("Lato", "300"),
+  code_font_family = "Fira Code",
+  code_font_url = "https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css",
+  header_color = "#f54278",
+  title_slide_text_color = "#354a66"
+)
+```
+
+
+## Background: R Spatial
+
+#### General Comments:
+
+  * R has an extensive collection of packages and functionality for doing geospatial data analysis and geocomputation
+  
+  * many packages have overlapping functionality 
+  
+  * newer packages have built on older packages 
+  
+  * May be intimidating to navigate the landscape of geospatial functionality available
+  
+  
+
+
+
+---
+## Resources
+
+For more extensive information about doing geospatial analysis in R, I've used:
+
+--
+
+  * Angela Li's R spatial workshop notes
+  
+    * [https://spatialanalysis.github.io/workshop-notes/](https://spatialanalysis.github.io/workshop-notes/)
+    
+--
+
+  * Geocomputation with R by Robin Lovelace, Jakub Nowosad, Jannes Muenchow
+  
+    * [https://geocompr.robinlovelace.net/](https://geocompr.robinlovelace.net/)
+    
+--
+
+Both available in bookdown versions as of 2020-03-27
+
+
+
+---
+## What we are not doing today
+
+
+--
+
+  * anything too advanced
+  
+--
+
+  * talking too much about projections
+  
+--
+
+  * working with raster data
+  
+  
+
+---
+## What we are doing today
+
+--
+
+  * a brief review of <tt>ggplot2</tt>
+  
+--
+
+  * working with vector formats
+    * shapefiles, geoJSON
+    
+--
+  
+  * using the <tt>sf</tt> package to read and store geospatial data
+  
+
+--
+
+  * Using <tt>ggplot2</tt> to make a chloropleth map using a new geometry, <tt>geom_sf</tt>
+  
+  
+--
+
+  * at some point, we will use some join functionality from the <tt>dplyr</tt> package to merge geospatial data with a table of aggregate statistics
+  
+
+--
+
+
+  * possibly make a second chloropleth map, if we have the time
+
+
+
+---
+## The data we will be using
+
+#### Definitely:
+
+--
+
+  * Data from the Chicago Data Portal
+    * Shapefile/geoJSON representations of communities in Chicago
+    * Community-level public health/socioeconomic data
+    * Restaurant inspection data for February 2020 
+    
+--
+
+#### Maybe:
+
+--
+
+  * Data from Open Data Toronto
+    * Shapefile of electoral districts 
+    * Voter statistics from the 2018 Toronto City Council Election
+    
+--
+
+#### Unlikely (but not against the laws of Physics)
+  
+--
+  
+  * Data from NYC Open Data
+    * Shapefiles/geoJSON of zip codes in New York City
+    * 311 logs for Jan 1 2020 to Jan 14 2020
+    
+
+
+---
+### Geospatial data formats
+
+  * Shapefiles
+    * widely used, developed by ESRI commonly used in Arc-branded software
+    * information is stored as a collection of points, lines, and polygons (and combinations of points, lines and polygons)
+    * non-geospatial info can be stored as well
+    * take the form of a folder/directory of associated files
+
+--
+
+  * geoJSON: 
+    * open format for storing geospatial information (points, lines, polygons)
+    * can also store non-geospatial information
+    * based on JavaScript Object Notation (JSON)
+  
