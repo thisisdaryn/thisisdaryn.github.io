@@ -61,7 +61,7 @@ philly_calendar <- ggplot(totals, aes(x = wday, y = week, text = desc)) +
 
 
 
-ggplotly(philly_calendar, tooltip = "desc", width = 1000, height = 730)
+ggplotly(philly_calendar, tooltip = "desc", width = 1000, height = 620)
 
 ```
 
@@ -136,7 +136,7 @@ philly_plotly <- ggplotly(philly_calendar, tooltip = "desc")
 
 
 ```{r out.width = "5%", echo = FALSE}
-knitr::include_graphics("source.jpg")
+#knitr::include_graphics("source.jpg")
 ```
 
 
