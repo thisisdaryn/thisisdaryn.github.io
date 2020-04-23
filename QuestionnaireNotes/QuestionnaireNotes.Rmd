@@ -1,0 +1,161 @@
+---
+title: "Survey of Employment"
+author: "Daryn Ramsden"
+date: "last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    css: styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
+```
+
+### Demographic Information
+
+1. Gender
+2. Age 
+3. Industry
+4. Occupational group
+5. Type of worker
+6. Educational attainment
+
+
+
+### Potential Tables
+
+
+#### Primary workplace
+
+
+| Industry        | Workplace | Home  | No longer working  |
+| ----------------|:---------:| -----:|-------------------:|
+| Health          |           |       |                    | 
+| Transportation  |           |       |                    | 
+| Finance         |           |       |                    |
+
+
+#### Income during lockdown
+
+
+| Industry        | Uninterrupted or Increased | Less than half                  | No income  |
+| ----------------|:--------------------------:| -------------------------------:|-----------:|
+| Health          |                            |                                 |            | 
+| Transportation  |                            |                                 |            | 
+| Finance         |                            |                                 |            |
+
+#### Hours worked per week
+
+| Industry        | Equal or Increased         | Less than half                  | None       |
+| ----------------|:--------------------------:| -------------------------------:|-----------:|
+| Health          |                            |                                 |            | 
+| Transportation  |                            |                                 |            | 
+| Finance         |                            |                                 |            |
+
+
+#### Software/Technology used while working at home 
+
+
+| Industry        | Videoconferencing | Other collaborative software  | Work email account  |
+| ----------------|:---------:| -----:|-------------------:|
+| Health          |           |       |                    | 
+| Transportation  |           |       |                    | 
+| Finance         |           |       |                    |
+
+
+
+
+#### Work from home prior to the lockdown 
+
+| Industry        | Regularly | Infrequently  | Never      |
+| ----------------|:---------:| -----:|-------------------:|
+| Health          |           |       |                    | 
+| Transportation  |           |       |                    | 
+| Finance         |           |       |                    |
+
+#### Compared to working at the workplace, working from home is ... 
+
+| Industry        | More demanding | Less demanding     | Equally demanding |
+| ----------------|:---------:| -----:|-------------------:|
+| Health          |           |       |                    | 
+| Transportation  |           |       |                    | 
+| Finance         |           |       |                    |
+
+
+#### Compared to working at the workplace, working from home is ... 
+
+| Industry        | More productive   | Less productive    | Equally productive |
+| ----------------|:---------:| -----:|-------------------:|
+| Health          |           |       |                    | 
+| Transportation  |           |       |                    | 
+| Finance         |           |       |                    |
+
+#### How easy or difficult has it been for you to handle child care responsibilities during the coronavirus outbreak?
+
+| Industry        | Very easy   | Somewhat easy    | Somewhat difficult | Very difficult
+| ----------------|:---------:| -----:|-------------------:|-----:|
+| Health          |           |       |                    | 
+| Transportation  |           |       |                    | 
+| Finance         |           |       |                    |
+
+
+
+### Draft Questions
+
+
+
+
+### Categories from the CSO Labour Force Bulletin
+
+* Industry
+    * agriculture, forestry, hunting and fishing
+    * Petroleum and gas,including production, refining and service contractors
+    * Other mining and quarrying
+    * Other manufacturing (excluding sugar and oil)
+    * Electricity and water
+    * Construction
+    * Wholesale and retail trade 
+    * Restaurants and hotels
+    * Transportation
+    * storage
+    * communication
+    * Financing, insurance, real estate and business services
+    * Education
+    * Health 
+    * Community, social and personal services
+* Occupational group
+    * Legislators, senior officials and managers
+    * Professionals
+    * Technicians and associate professionals
+    * Clerks
+    * Service workers (including defence force) and shop sales workers
+    * Agricultural,forestry and fishery workers
+    * Craft and related workers
+    * Plant and machine operators and assemblers
+    * Elementary occupations
+* Type of worker
+    * Paid employee
+      * Government public service/statutory board
+      * Government State Enterprise
+      * Non-government
+    * Employer
+    * Own account worker
+    * Unpaid worker
+    * Learner/apprentice
+* Educational attainment
+    * No education (including no education plus training and kindergarten)
+    * Primary < Standard 5
+    * Primary > Standard 4
+    * Primary with training
+    * Secondary no subjects
+    * Secondary 1 - 4 subjects
+    * Secondary 5 or more subjects
+    * Secondary no subjects plus training
+    * Secondary 1 - 4 subjects plus training
+    * Secondary 5 or more subjects plus training
+    * University education (no degree)
+    * University degree/diploma/certificate
+    * Educated in a foreign country/other 
