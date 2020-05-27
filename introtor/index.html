@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
-    <title>Intro to R Workshop</title>
+    <title>Intro to R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="@ Cipriani Labour College, Valsayn" />
+    <meta name="author" content="Online training workshop" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
   </head>
@@ -11,12 +11,12 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Intro to R Workshop
+# Intro to R
 ## 📈📊📉
-### @ Cipriani Labour College, Valsayn
+### Online training workshop
 ### <div class="line-block"></div>
-<div class="line-block">2 Sessions:</div>
-Jan 18th &amp; 19th 2020 or January 25th &amp; 26th 2020
+<div class="line-block">Rolling start dates:</div>
+<p>Starting June 7th 2020</p>
 
 ---
 
@@ -94,24 +94,7 @@ using R to make nice charts
 
 
 
----
-### What will the workshop be like?
 
---
-  
-  * you will be programming (typing) a lot
-
---
-  
-  * we will be working with real data sets
-  
---
-  
-  * we will take a break for lunch (provided)
-  
---
-
-  * then we will do some more programming
 
 
 ---
@@ -132,6 +115,7 @@ using R to make nice charts
 --
 
     * Possibly. 
+
 --
 At points. 
 --
@@ -152,11 +136,10 @@ But we will make progress.
 
 --
 
-**Jupyter Notebooks**: 
-  * this is a popular tool that allows analysts to work collaboratively
-    * can be used with other programming languages btw (Python, Julia ...)
+**RStudio Cloud**: 
+  * this is a web-based version of RStudio that you can use in your web browser. 
     
-  * We will use this a little and go over the basics 
+  * includes a classroom workspace that allows teachers and students to share their work 
 
 
 ---
@@ -167,18 +150,24 @@ But we will make progress.
 
 --
 
+**Certification**: [RStudio-certified tidyverse trainer](https://education.rstudio.com/trainers/people/ramsden+daryn/)
+
+--
+
 
 **Background**: 
 
   * Formally trained in Mathematics, Epidemiology and Biostatistics. 
   
   * Also, I've done a lot of programming. 
+  
+  * based in Trinidad and Tobago
 
 --
 
 **Experience**: 
 
-  * I have used R on a daily basis for several years. 
+  * I have used R on a daily basis for approximately 10 years in several application areas. 
   
   * I also have a fair amount of teaching/lecturing experience.
 
@@ -210,22 +199,38 @@ But we will make progress.
 ---
 ### Logistics and other details
 
-**When**: Two options:
+**Format**: 
 --
 
-  * January 18th and 19th, 2020 (Saturday and Sunday)
-
-  or 
+  * 6 class sessions via Zoom over a 3 week period. 
+    
+    * Each topic will be offered at multiple time slots
+    
+    * total time: approx 10 hours (4 2-hr sessions and 2 1-hr sessions)
+    
+  * 2 hours of office hours per student: we can review any topic of student's choosing
   
-  * January 25th and 26th 2020 (Saturday and Sunday)
+  * Additional course materials provided for students to work on independently
+  
+  * 1 project
+  
+--
+
+**When**:
+--
+
+Starting June 7th 2020. 
+  
+  
+
+
 --
 
 
-**Where**: Cipriani Labour College, Valsayn
 
-**How much**: $1100
+**How much**: $1300 TTD/ $200 USD
 
-**Class size**: 12 students max
+
 
 
 ---
@@ -239,7 +244,7 @@ Send your name and contact info either via email/text/whatsapp. I'll get back to
 
 --
 
-☎️: 754-4260  
+☎️: 868-754-4260  
 
 
 ---
@@ -253,7 +258,7 @@ Feel free to get in touch.
 
 --
 
-☎️: 754-4260  
+☎️: 868-754-4260  
 
 
 
@@ -310,9 +315,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -321,7 +342,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
