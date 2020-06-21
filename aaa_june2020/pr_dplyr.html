@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data manipulation with dplyr</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="dr-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data manipulation with <code>dplyr</code>
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2020-06-21
+
+---
+
+
+
+
+
+
+## dplyr: a package for data manipulation
+
+The data you get is almost in the form you want
+
+--
+
+&lt;tt&gt;dplyr&lt;/tt&gt; is an R package that encapsulates many common data manipulation tasks
+
+--
+
+Sometimes you want to: 
+--
+
+  * keep only some of the rows
+
+--
+
+  * keep only some of the columns
+
+--
+
+  * adds new columns
+
+--
+
+  * sort data
+  
+--
+
+  * provide summary statistics
+
+--
+
+&lt;tt&gt;dplyr&lt;/tt&gt; has a function for each of these
+
+  
+---
+## 5 Key tasks/verbs/functions
+
+  * &lt;tt&gt;filter&lt;/tt&gt;: keep only some of the rows 
+
+
+  * &lt;tt&gt;select&lt;/tt&gt;: keep only some of the columns 
+
+  * &lt;tt&gt;mutate&lt;/tt&gt; adds new columns
+
+
+
+  * &lt;tt&gt;arrange&lt;/tt&gt;: sort data
+  
+
+
+  * &lt;tt&gt;summarise&lt;/tt&gt; (and &lt;tt&gt;group_by&lt;/tt&gt;): provide summary statistics 
+  
+---
+## First, let's get some data
+
+
+```r
+library(readr)
+
+cars2020 &lt;- read_csv("data/cars2020.csv")
+```
+
+---
+## First, let's get some data
+
+
+```r
+library(readr)
+
+cars2020 &lt;- read_csv("data/cars2020.csv")
+cars2020
+```
+
+
+---
+## First, let's get some data
+
+
+```r
+library(readr)
+
+cars2020 &lt;- read_csv("data/cars2020.csv")
+cars2020
+```
+
+```
+# A tibble: 1,164 x 14
+   make  model   mpg transmission gears drive  disp   cyl class sidi  aspiration
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+ 2 Acura MDX …  22.1 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+ 3 Acura MDX …  21.3 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+ 4 Acura MDX …  23   Automatic        9 FWD     3.5     6 Sm S… Y     Natural   
+ 5 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Natural   
+ 6 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Turbo     
+ 7 Acura RDX …  23   Automatic       10 AWD     2       4 Sm S… Y     Turbo     
+ 8 Acura RDX …  22.9 Automatic       10 AWD     2       4 Sm S… Y     Turbo     
+ 9 Acura RDX …  24   Automatic       10 FWD     2       4 Sm S… Y     Turbo     
+10 Acura RDX …  23.6 Automatic       10 FWD     2       4 Sm S… Y     Turbo     
+# … with 1,154 more rows, and 3 more variables: fuel &lt;chr&gt;, atvType &lt;chr&gt;,
+#   startStop &lt;chr&gt;
+```
+
+
+
+---
+### What is this data?
+
+
+--
+Information from the US Department of Energy about 2018 model vehicles
+--
+
+#### What do (some) of the fields represent?
+
+  * model: Make and model of the vehicle 
+
+--
+
+  * disp: Measure of the engine's size
+--
+
+  * cyl: Number of cyl
+
+--
+
+  * gears: Number of gears
+  
+--
+  
+  * transmission: &lt;i&gt;Automatic&lt;/i&gt;, &lt;i&gt;Manual&lt;/i&gt;, or &lt;i&gt;CVT&lt;/i&gt; 
+  
+--
+
+  * mpg: Miles per gallon (highway driving)
+
+  
+
+
+---
+## How do we use dplyr?
+
+--
+
+
+```r
+library(dplyr)
+```
+--
+
+
+### Or ...
+
+--
+you can load the entire &lt;tt&gt;tidyverse&lt;/tt&gt; 
+
+
+```r
+library(tidyverse)
+```
+
+
+
+---
+### If you've never installed it before 
+
+--
+
+You will need to install the package first 
+
+
+```r
+install.packages("dplyr")
+```
+
+--
+or 
+
+
+```r
+install.packages("tidyverse")
+```
+
+
+
+
+---
+### Key thing to remember
+
+--
+
+All of these functions have these in common:
+
+--
+
+  * the first input is a data frame 
+  
+--
+
+  * there are a variable number of following inputs specifying the manipulation you want to do
+
+
+---
+## filter
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all cars with manual transmissions?
+--
+
+```r
+manual &lt;- filter(cars2020, transmission == "Manual")
+```
+
+---
+## filter
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all cars with manual transmissions?
+
+
+```r
+manual &lt;- filter(cars2020, transmission == "Manual")
+manual
+```
+
+  
+---
+## filter
+
+#### a function for specifying which rows to keep
+
+
+Example 1: How do we get all vehicles with manual transmissions?
+
+
+```r
+manual &lt;- filter(cars2020, transmission == "Manual")
+manual
+```
+
+```
+# A tibble: 224 x 14
+   make  model   mpg transmission gears drive  disp   cyl class sidi  aspiration
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+ 2 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Natural   
+ 3 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Turbo     
+ 4 Acura RLX …  28   Manual           7 AWD     3.5     6 Mids… Y     Natural   
+ 5 Acura TLX …  27.0 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+ 6 Acura TLX …  26.3 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+ 7 Alfa… 4C     27.9 Manual           6 RWD     1.8     4 Two … Y     Turbo     
+ 8 Audi  A3     30.2 Manual           7 FWD     2       4 Subc… Y     Turbo     
+ 9 Audi  A3 C…  24.8 Manual           7 AWD     2       4 Subc… Y     Turbo     
+10 Audi  A3 q…  24.8 Manual           7 AWD     2       4 Subc… Y     Turbo     
+# … with 214 more rows, and 3 more variables: fuel &lt;chr&gt;, atvType &lt;chr&gt;,
+#   startStop &lt;chr&gt;
+```
+
+
+---
+## filter
+
+#### 
+
+
+Example 2: How do we get all cars with 4 or more cyl?
+--
+
+```r
+cyl_4 &lt;- filter(cars2020, cyl &gt;= 4)
+head(cyl_4)
+```
+
+```
+# A tibble: 6 x 14
+  make  model   mpg transmission gears drive  disp   cyl class sidi  aspiration
+  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+2 Acura MDX …  22.1 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+3 Acura MDX …  21.3 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+4 Acura MDX …  23   Automatic        9 FWD     3.5     6 Sm S… Y     Natural   
+5 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Natural   
+6 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Turbo     
+# … with 3 more variables: fuel &lt;chr&gt;, atvType &lt;chr&gt;, startStop &lt;chr&gt;
+```
+
+
+---
+## filter
+
+#### 
+
+Example 3: How do we get all cars with manual transmissions and 4 or more cyl?
+--
+
+```r
+manual_cyl4 &lt;- filter(cars2020, transmission == "Manual", 
+                     cyl &gt;= 4)
+```
+
+---
+### Assessment
+
+How many automatic transmission cars have less than 6 gears?
+
+
+--
+
+
+```r
+auto_l6 &lt;- filter(cars2020, transmission == "Automatic",
+                      gears &lt; 6)
+dim(auto_l6)
+```
+
+```
+[1]  6 14
+```
+
+
+
+
+
+---
+## select
+
+
+#### a function for specifying which columns to keep
+
+Example: How do we keep only the &lt;tt&gt;model&lt;/tt&gt;, &lt;tt&gt;mpg&lt;/tt&gt;, &lt;tt&gt;transmission&lt;/tt&gt; and &lt;tt&gt;cyl&lt;/tt&gt; columns?  
+
+
+```r
+cars_narrow &lt;- select(cars2020, model, mpg, transmission, cyl)
+```
+
+---
+## select
+
+
+#### a function for specifying which columns to keep
+
+Example: How do we keep only the &lt;tt&gt;model&lt;/tt&gt;, &lt;tt&gt;mpg&lt;/tt&gt;, &lt;tt&gt;transmission&lt;/tt&gt; and &lt;tt&gt;cyl&lt;/tt&gt; columns?  
+
+
+```r
+cars_narrow &lt;- select(cars2020, model, mpg, transmission, cyl)
+
+cars_narrow
+```
+
+
+---
+## select
+
+
+#### a function for specifying which columns to keep
+
+Example: How do we keep only the &lt;tt&gt;model&lt;/tt&gt;, &lt;tt&gt;mpg&lt;/tt&gt;, &lt;tt&gt;transmission&lt;/tt&gt; and &lt;tt&gt;cyl&lt;/tt&gt; columns?  
+
+
+```r
+cars_narrow &lt;- select(cars2020, model, mpg, transmission, cyl)
+
+cars_narrow
+```
+
+```
+# A tibble: 1,164 x 4
+   model            mpg transmission   cyl
+   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+ 1 ILX             27.9 Manual           4
+ 2 MDX AWD         22.1 Automatic        6
+ 3 MDX AWD A-SPEC  21.3 Automatic        6
+ 4 MDX FWD         23   Automatic        6
+ 5 MDX Hybrid AWD  26.9 Manual           6
+ 6 NSX Hybrid      21   Manual           6
+ 7 RDX AWD         23   Automatic        4
+ 8 RDX AWD A-SPEC  22.9 Automatic        4
+ 9 RDX FWD         24   Automatic        4
+10 RDX FWD A-SPEC  23.6 Automatic        4
+# … with 1,154 more rows
+```
+
+
+---
+## select
+
+#### Example: we can use the &lt;tt&gt;-&lt;/tt&gt; to specify columns we don't want to keep:
+
+--
+
+How do we keep all columns except the &lt;tt&gt;startStop&lt;/tt&gt;, and &lt;tt&gt;aspiration&lt;/tt&gt;?
+
+
+```r
+cars_alt &lt;- select(cars2020,  -startStop, -aspiration)
+```
+
+
+---
+## select
+
+#### Example: we can use the &lt;tt&gt;-&lt;/tt&gt; to specify columns we don't want to keep:
+
+
+
+How do we keep all columns except the &lt;tt&gt;startStop&lt;/tt&gt;, and &lt;tt&gt;aspiration&lt;/tt&gt;?
+
+
+```r
+cars_alt &lt;- select(cars2020,  -startStop, -aspiration)
+```
+
+---
+## select
+
+#### Example: we can use the &lt;tt&gt;-&lt;/tt&gt; to specify columns we don't want to keep:
+
+
+
+How do we keep all columns except the &lt;tt&gt;startStop&lt;/tt&gt;, and &lt;tt&gt;aspiration&lt;/tt&gt;?
+
+
+```r
+cars_alt &lt;- select(cars2020,  -startStop, -aspiration)
+cars_alt
+```
+
+```
+# A tibble: 1,164 x 12
+   make  model   mpg transmission gears drive  disp   cyl class sidi  fuel 
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Prem…
+ 2 Acura MDX …  22.1 Automatic        9 AWD     3.5     6 Sm S… Y     Prem…
+ 3 Acura MDX …  21.3 Automatic        9 AWD     3.5     6 Sm S… Y     Prem…
+ 4 Acura MDX …  23   Automatic        9 FWD     3.5     6 Sm S… Y     Prem…
+ 5 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Prem…
+ 6 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Prem…
+ 7 Acura RDX …  23   Automatic       10 AWD     2       4 Sm S… Y     Prem…
+ 8 Acura RDX …  22.9 Automatic       10 AWD     2       4 Sm S… Y     Prem…
+ 9 Acura RDX …  24   Automatic       10 FWD     2       4 Sm S… Y     Prem…
+10 Acura RDX …  23.6 Automatic       10 FWD     2       4 Sm S… Y     Prem…
+# … with 1,154 more rows, and 1 more variable: atvType &lt;chr&gt;
+```
+
+
+
+---
+## arrange 
+
+### a function to sort your data
+
+Example: How do we sort the data so that the cars are sorted by mpg?
+
+
+```r
+cars_sorted &lt;- arrange(cars2020, mpg)
+```
+
+
+
+---
+## arrange
+
+Example: How do we sort the data so that the cars are sorted by mpg in descending order?
+
+
+```r
+cars_desc &lt;- arrange(cars2020, desc(mpg))
+```
+
+
+---
+## arrange
+
+You can also sort by more than one variable
+
+Example: How do we sort the cars by transmission type (alphabetically) with each type sorted by mpg (descending)?
+
+
+
+```r
+cars_transmpg &lt;- arrange(cars2020, transmission, desc(mpg))
+```
+
+
+
+--
+
+Question: How can you check that this works?
+
+--
+
+  * One way: Try the &lt;tt&gt;View&lt;/tt&gt; function with the data frame you created as input.
+
+
+
+---
+### Assessment
+
+Fill in the code below to do the following tasks:
+
+  * start with the original data set (all vehicles)
+  * restrict to CVT transmission vehicles
+  * remove the &lt;i&gt;sidi&lt;/i&gt;, &lt;i&gt;aspiration&lt;/i&gt; and &lt;i&gt;startStop&lt;/i&gt; columns
+  * order the data in descending order of mpg
+    * if cars have the same mpg order them by model alphabetically 
+  
+  
+
+```r
+____ &lt;- filter(____, ____ == ____)
+____ &lt;- select(____, -____, -_____, -_______)
+____ &lt;- arrange(____, ____, ____)
+```
+
+
+
+
+---
+### Assessment solution
+
+
+
+
+
+
+```r
+df &lt;- filter(cars2020, transmission == "CVT")
+df2 &lt;- select(df, -sidi, -aspiration, -startStop)
+df3 &lt;- arrange(df2, desc(mpg), model)
+
+df3
+```
+
+```
+# A tibble: 128 x 11
+   make   model     mpg transmission gears drive  disp   cyl class fuel  atvType
+   &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1 Toyota Prius …  55.7 CVT              1 FWD     1.8     4 Mids… Regu… Hybrid 
+ 2 Toyota Prius …  54.4 CVT              1 FWD     1.8     4 Mids… Regu… Plug-i…
+ 3 Toyota Prius    52.2 CVT              1 FWD     1.8     4 Mids… Regu… Hybrid 
+ 4 Toyota Coroll…  52   CVT              1 FWD     1.8     4 Comp… Regu… Hybrid 
+ 5 Honda  Insight  52.0 CVT              1 FWD     1.5     4 Mids… Regu… Hybrid 
+ 6 Toyota Camry …  51.8 CVT              6 FWD     2.5     4 Mids… Regu… Hybrid 
+ 7 Toyota Prius …  50   CVT              1 PT 4…   1.8     4 Mids… Regu… Hybrid 
+ 8 Honda  Insigh…  48.0 CVT              1 FWD     1.5     4 Mids… Regu… Hybrid 
+ 9 Honda  Accord…  47.6 CVT              1 FWD     2       4 Large Regu… Hybrid 
+10 Toyota Prius c  46.2 CVT              1 FWD     1.5     4 Comp… Regu… Hybrid 
+# … with 118 more rows
+```
+
+(You don't have to use the same data frame names.)
+
+
+---
+### Assessment solution: alternative
+
+
+  * You could also have overwritten the data frame at each step.
+    * your environment is less cluttered
+    * but seeing the intermediate data may help with troubleshooting/debugging your code
+
+
+```r
+df &lt;- filter(cars2020, transmission == "CVT")
+df &lt;- select(df, -sidi, -aspiration, -startStop)
+df &lt;- arrange(df, desc(mpg), model)
+
+df
+```
+
+```
+# A tibble: 128 x 11
+   make   model     mpg transmission gears drive  disp   cyl class fuel  atvType
+   &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  
+ 1 Toyota Prius …  55.7 CVT              1 FWD     1.8     4 Mids… Regu… Hybrid 
+ 2 Toyota Prius …  54.4 CVT              1 FWD     1.8     4 Mids… Regu… Plug-i…
+ 3 Toyota Prius    52.2 CVT              1 FWD     1.8     4 Mids… Regu… Hybrid 
+ 4 Toyota Coroll…  52   CVT              1 FWD     1.8     4 Comp… Regu… Hybrid 
+ 5 Honda  Insight  52.0 CVT              1 FWD     1.5     4 Mids… Regu… Hybrid 
+ 6 Toyota Camry …  51.8 CVT              6 FWD     2.5     4 Mids… Regu… Hybrid 
+ 7 Toyota Prius …  50   CVT              1 PT 4…   1.8     4 Mids… Regu… Hybrid 
+ 8 Honda  Insigh…  48.0 CVT              1 FWD     1.5     4 Mids… Regu… Hybrid 
+ 9 Honda  Accord…  47.6 CVT              1 FWD     2       4 Large Regu… Hybrid 
+10 Toyota Prius c  46.2 CVT              1 FWD     1.5     4 Comp… Regu… Hybrid 
+# … with 118 more rows
+```
+
+
+
+---
+## mutate
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether a car has a fuel efficiency 30 mpg or greater 
+
+
+```r
+cars_30 &lt;- mutate(cars2020, above30 = if_else(mpg &gt; 30, TRUE, FALSE))
+```
+
+---
+## mutate
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether a car has a fuel efficiency 30 mpg or greater 
+
+
+```r
+cars_30 &lt;- mutate(cars2020, above30 = if_else(mpg &gt; 30, TRUE, FALSE))
+
+cars30 
+```
+
+
+
+---
+## mutate
+
+#### a function to add new columns
+
+
+Example: Adding a column that indicates whether a car has a fuel efficiency 30 mpg or greater 
+
+
+```r
+cars_30 &lt;- mutate(cars2020, above30 = if_else(mpg &gt; 30, TRUE, FALSE))
+
+head(cars_30)
+```
+
+```
+# A tibble: 6 x 15
+  make  model   mpg transmission gears drive  disp   cyl class sidi  aspiration
+  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+2 Acura MDX …  22.1 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+3 Acura MDX …  21.3 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+4 Acura MDX …  23   Automatic        9 FWD     3.5     6 Sm S… Y     Natural   
+5 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Natural   
+6 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Turbo     
+# … with 4 more variables: fuel &lt;chr&gt;, atvType &lt;chr&gt;, startStop &lt;chr&gt;,
+#   above30 &lt;lgl&gt;
+```
+
+
+---
+## summarise
+
+#### a function for summary statistics
+
+
+Example: Provide the following summary statistics:
+
+  * the total number of cars
+  * the average mpg
+
+
+```r
+report &lt;- summarise(cars2020, num_cars = n(),
+                    avg_mpg = mean(mpg, na.rm = TRUE))
+```
+
+---
+## summarise
+
+#### a function for summary statistics
+
+
+Example: Provide the following summary statistics:
+
+  * the total number of cars
+  * the average mpg
+
+
+```r
+report &lt;- summarise(cars2020, num_cars = n(),
+                    avg_mpg = mean(mpg, na.rm = TRUE))
+
+report
+```
+---
+## summarise
+
+#### a function for summary statistics
+
+
+Example: Provide the following summary statistics:
+
+  * the total number of cars
+  * the average mpg
+
+
+```r
+report &lt;- summarise(cars2020, num_cars = n(),
+                    avg_mpg = mean(mpg, na.rm = TRUE))
+
+report
+```
+
+```
+# A tibble: 1 x 2
+  num_cars avg_mpg
+     &lt;int&gt;   &lt;dbl&gt;
+1     1164    23.6
+```
+---
+
+## summarise
+
+#### How can we find the following for Manual transmission cars?
+
+  * the total number of cars
+  * the median mpg
+
+--
+
+
+```r
+manual_report &lt;- summarise(manual, num_cars = n(),
+                           med_mpg = median(mpg, na.rm = TRUE))
+```
+
+---
+
+## summarise
+
+#### How can we find the following for Manual transmission cars?
+
+  * the total number of cars
+  * the median mpg
+
+
+
+
+```r
+manual_report &lt;- summarise(manual, num_cars = n(),
+                           med_mpg = median(mpg, na.rm = TRUE))
+manual_report
+```
+
+
+---
+
+## summarise
+
+#### How can we find the following for Manual transmission cars?
+
+  * the total number of cars
+  * the median mpg
+
+
+
+
+```r
+manual_report &lt;- summarise(manual, num_cars = n(),
+                           med_mpg = median(mpg, na.rm = TRUE))
+manual_report
+```
+
+```
+# A tibble: 1 x 2
+  num_cars med_mpg
+     &lt;int&gt;   &lt;dbl&gt;
+1      224    23.1
+```
+
+
+
+
+---
+
+
+## group_by
+
+#### A function to put the data into groups (before you summarise)
+
+
+What if we wanted summary statistics for Automatic, Manual and CVT?
+
+
+```r
+grouped_cars &lt;- group_by(cars2020, transmission)
+grouped_cars
+```
+
+```
+# A tibble: 1,164 x 14
+# Groups:   transmission [3]
+   make  model   mpg transmission gears drive  disp   cyl class sidi  aspiration
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+ 2 Acura MDX …  22.1 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+ 3 Acura MDX …  21.3 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+ 4 Acura MDX …  23   Automatic        9 FWD     3.5     6 Sm S… Y     Natural   
+ 5 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Natural   
+ 6 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Turbo     
+ 7 Acura RDX …  23   Automatic       10 AWD     2       4 Sm S… Y     Turbo     
+ 8 Acura RDX …  22.9 Automatic       10 AWD     2       4 Sm S… Y     Turbo     
+ 9 Acura RDX …  24   Automatic       10 FWD     2       4 Sm S… Y     Turbo     
+10 Acura RDX …  23.6 Automatic       10 FWD     2       4 Sm S… Y     Turbo     
+# … with 1,154 more rows, and 3 more variables: fuel &lt;chr&gt;, atvType &lt;chr&gt;,
+#   startStop &lt;chr&gt;
+```
+
+
+---
+
+#### How is the grouped data frame different from the original?
+--
+
+
+```r
+grouped_cars
+```
+
+```
+# A tibble: 1,164 x 14
+# Groups:   transmission [3]
+   make  model   mpg transmission gears drive  disp   cyl class sidi  aspiration
+   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+ 1 Acura ILX    27.9 Manual           8 FWD     2.4     4 Comp… Y     Natural   
+ 2 Acura MDX …  22.1 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+ 3 Acura MDX …  21.3 Automatic        9 AWD     3.5     6 Sm S… Y     Natural   
+ 4 Acura MDX …  23   Automatic        9 FWD     3.5     6 Sm S… Y     Natural   
+ 5 Acura MDX …  26.9 Manual           7 AWD     3       6 Sm S… N     Natural   
+ 6 Acura NSX …  21   Manual           9 AWD     3.5     6 Two … Y     Turbo     
+ 7 Acura RDX …  23   Automatic       10 AWD     2       4 Sm S… Y     Turbo     
+ 8 Acura RDX …  22.9 Automatic       10 AWD     2       4 Sm S… Y     Turbo     
+ 9 Acura RDX …  24   Automatic       10 FWD     2       4 Sm S… Y     Turbo     
+10 Acura RDX …  23.6 Automatic       10 FWD     2       4 Sm S… Y     Turbo     
+# … with 1,154 more rows, and 3 more variables: fuel &lt;chr&gt;, atvType &lt;chr&gt;,
+#   startStop &lt;chr&gt;
+```
+
+
+  * Notice the information about groups above the data
+
+  * Rows have been put into 3 different groups based on their department
+  
+
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each transmission type, what are:
+  * the number of cars
+  * the average mpg?
+  
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each transmission type, what are:
+  * the number of cars
+  * the average mpg?
+  
+
+```r
+grouped_cars &lt;- group_by(cars2020, transmission)
+```
+ 
+ 
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each transmission type, what are:
+  * the number of cars
+  * the average mpg?
+  
+
+```r
+grouped_cars &lt;- group_by(cars2020, transmission)
+report &lt;- summarise(grouped_cars, num_cars = n(), 
+                    avg_mpg = mean(mpg, na.rm = TRUE))
+```
+
+
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each transmission type, what are:
+  * the number of cars
+  * the average mpg?
+  
+
+```r
+grouped_cars &lt;- group_by(cars2020, transmission)
+report &lt;- summarise(grouped_cars, num_cars = n(), 
+                    avg_mpg = mean(mpg, na.rm = TRUE))
+
+head(report)
+```
+
+
+---
+### So how can we use group_by?
+
+
+  * If we use summarise on grouped data, we get summary statistics for each group
+  
+
+Example: For each transmission type, what are:
+  * the number of cars
+  * the average mpg?
+  
+
+```r
+grouped_cars &lt;- group_by(cars2020, transmission)
+report &lt;- summarise(grouped_cars, num_cars = n(), 
+                    avg_mpg = mean(mpg, na.rm = TRUE))
+
+head(report)
+```
+
+```
+# A tibble: 3 x 3
+  transmission num_cars avg_mpg
+  &lt;chr&gt;           &lt;int&gt;   &lt;dbl&gt;
+1 Automatic         812    21.8
+2 CVT               128    33.0
+3 Manual            224    24.5
+```
+
+---
+### Assessment
+
+#### Create a data frame that:
+  * contains the number of cars of each transmission type with fuel efficiency 30 mpg or greater
+  * is ordered by the number of cars meeting the criterion (descending)
+
+Reorder the following lines of code and fill in the blanks where necessary
+
+
+
+```r
+____ &lt;- arrange(____, desc(____))
+____ &lt;- summarise(____, ____ = n())
+____ &lt;- filter(____, ____ &gt; ____)
+____ &lt;- group_by(____, ____)
+```
+
+
+
+---
+### Creating piplelines
+
+#### Can we pass output from one function automatically to other functions?
+
+--
+
+Yes. Using the &lt;tt&gt;%&gt;%&lt;/tt&gt; operator (which is in the &lt;tt&gt;dplyr&lt;/tt&gt; package)
+
+--
+
+How:
+
+  * place the &lt;tt&gt;%&gt;%&lt;/tt&gt; between the functions in the pipeline
+  
+  * omit the first input to any function that is receiving input from the &lt;tt&gt;%&gt;%&lt;/tt&gt;
+  
+--
+
+Example: Create a report with the number of cars with each transmission type and the average mpg for each type
+
+--
+
+
+```r
+transmission_rpt &lt;- group_by(cars2020, transmission) %&gt;%
+  summarise(NumCars = n(), Avgmpg = mean(mpg))
+
+transmission_rpt
+```
+
+```
+# A tibble: 3 x 3
+  transmission NumCars Avgmpg
+  &lt;chr&gt;          &lt;int&gt;  &lt;dbl&gt;
+1 Automatic        812   21.8
+2 CVT              128   33.0
+3 Manual           224   24.5
+```
+
+
+---
+
+### Alternative solution
+
+
+```r
+transmission_rpt &lt;- cars2020 %&gt;% group_by(transmission) %&gt;%
+  summarise(NumCars = n(), Avgmpg = mean(mpg))
+
+transmission_rpt
+```
+
+```
+# A tibble: 3 x 3
+  transmission NumCars Avgmpg
+  &lt;chr&gt;          &lt;int&gt;  &lt;dbl&gt;
+1 Automatic        812   21.8
+2 CVT              128   33.0
+3 Manual           224   24.5
+```
+
+
+
+---
+
+### Maybe time for other data
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
