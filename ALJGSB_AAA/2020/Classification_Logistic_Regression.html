@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Classification and Logistic Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="dr-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Classification and Logistic Regression
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2020-06-27
+
+---
+
+
+
+
+
+
+### What are classification problems?
+
+**classification**: supervised learning task with the goal of assigning an individual to one of a known set of groups
+
+--
+
+**binary classification**: classification problem in which there are two possible groups 
+
+
+---
+### Confusion Matrix 
+
+#### (yes, we really call it the confusion matrix)
+
+Given a list of prediction results for a supervised binary classification we can use the confusion matrix to appraise model performance.
+
+ &lt;style&gt; 
+
+tr.bordered {
+    border-bottom: solid
+}
+  &lt;/style&gt; 
+  
+&lt;style&gt;  
+ td{ border-left:1px solid #ccc; border-right: 1px solid #ccc;}
+tr.bordered {
+    border-bottom: 1px solid #ccc;
+}
+&lt;/style&gt;
+
+
+&lt;table&gt;
+&lt;thead&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td colspan = 2 align = "center"&gt;&lt;b&gt;Reality&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr class = "bordered"&gt;&lt;td&gt;&lt;b&gt;Prediction&lt;/b&gt;&lt;/td&gt;&lt;td align = "center"&gt;True&lt;/td&gt;&lt;td align="center"&gt;False&lt;/td&gt;&lt;/tr&gt;&lt;/thead&gt;
+
+
+&lt;tr&gt;&lt;td&gt;True&lt;/td&gt;&lt;td&gt;True Positive&lt;/td&gt;&lt;td&gt;False Positive&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;False&lt;/td&gt;&lt;td&gt;False Negative&lt;/td&gt;&lt;td&gt;True Negative&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+--
+
+  There are many different metrics used to appraise model performance.
+
+
+---
+### Two types of errors 
+
+&lt;img src="images/errorTypes.png" width="2133" /&gt;
+
+
+---
+### False Positive Rate
+
+What fraction of negatives are incorrectly classified (as positives):
+
+`$$ \mbox{FPR} = \frac{\mbox{FP}}{\mbox{FP+TN}} $$`
+
+
+
+--
+### False Negative Rate
+
+What fraction of positives are incorrectly classified (as negatives):
+
+`$$ \mbox{FNR} = \frac{\mbox{FN}}{\mbox{FN+TP}} $$`
+
+--
+
+Typically there is a tradeoff between these measures.
+
+---
+### True Positive Rate aka Sensitivity aka Recall
+
+What fraction of positives are classified correctly:
+
+`$$ \mbox{TPR or Sensitivity} = \frac{\mbox{TP}}{\mbox{TP+FN}} $$`
+
+--
+### True Negative Rate aka Specificity
+
+What fraction of negatives are classified correctly:
+
+`$$ \mbox{TNR or Specificity} = \frac{\mbox{TN}}{\mbox{TN+FP}} $$`
+
+
+---
+### Precision or Positive Predictive Value
+
+Can you trust a positive result?
+
+`$$ \mbox{PPV (Precision)} = \frac{\mbox{TP}}{\mbox{TP+FP}} $$`
+
+--
+### Negative Predictive Value
+
+Can you trust a negative result? 
+
+`$$ \mbox{NPV } = \frac{\mbox{TN}}{\mbox{TN+FN}} $$`
+
+---
+### Question: Calculating metrics for a given problem
+
+A machine learning model was trained to detect if photos were fashion-related or not. The results of using the model with a test data set are shown below. 
+
+--
+
+What are the **FPR**, **FNR**, **TPR**,  **TNR**, **PPV**, and **NPV**? 
+
+&lt;img src="images/predfashion.png" width="1949" /&gt;
+
+---
+### Answers
+
+`$$ \mbox{FPR} = \frac{22}{1513} = .015  $$`
+`$$ \mbox{FNR} = \frac{112}{309} = .362  $$`
+`$$ \mbox{TPR} = \frac{197 }{309} = .638  $$`
+`$$ \mbox{TNR} = \frac{1491}{1513} = .985  $$`
+`$$ \mbox{PPV} = \frac{197}{219} =  .900 $$`
+`$$ \mbox{NPV} = \frac{1491}{1603} = .930  $$`
+
+
+---
+### Logistic regression 
+
+One example of Generalised Linear Modeling, specifically we are looking for a model of the form
+
+`$$ \mbox{ln} \left( \frac{p}{1-p}  \right) = b_o + b_1 x_1 + \ldots + b_n x_n$$`
+
+p: probability of the event happening
+
+`\(\mbox{ln}\left(\frac{p}{1-p}\right)\)` is sometimes referred to as the **logit** function
+
+
+---
+### What does the logit function look like?
+
+&lt;img src="images/logit.png" width="2165" /&gt;
+
+
+
+---
+### Interpreting the coefficients
+
+  * In a general sense, the coefficients in a logistic regression model are interpreted in the same manner as for a multiple regression model
+  
+  * However they indicate how much the **logit(p)** changes in response to changes in the explanatory variable
+  
+  
+--
+### Making predictions
+
+  * We often set a threshold probability above which we take predicted values to indicate a prediction that the event will happen
+  
+  
+---
+### Imbalanced Data
+
+In some situations, one group is much more/less prevalent than others in the training data. Data like this is said to be **imbalanced**. 
+
+  * When data is imbalanced learning algorithms will very rarely predict outcomes of the majority class
+  
+  * **Downsampling**: a process of taking disproportionately more samples from the minority class in the training data to address the negative effects of imbalanced data
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
