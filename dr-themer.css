@@ -46,7 +46,7 @@
   --text-color: #000000;
   --header-color: #2180CE;
   --background-color: #FFFFFF;
-  --link-color: #2180CE;
+  --link-color: #2180EE;
   --text-bold-color: #D17529;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #000000;
@@ -83,11 +83,6 @@ h3 {
   font-weight: 600;
   color: var(--header-color);
 }
-
-h4 {
-  
-  color: #D17529;
-}
 .remark-slide-content {
   background-color: var(--background-color);
   font-size: 1rem;
@@ -112,7 +107,7 @@ h4 {
 }
 .remark-inline-code {
   font-size: var(--code-inline-font-size);
-  color: #D17529;
+  color: #2180CE;
 }
 .remark-slide-number {
   color: #2180CE;
