@@ -1,0 +1,23 @@
+<style>
+.topright {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  height:30px;
+  width:30px;
+  background-image: var(--mode-switch-image);
+}
+</style>
+
+<script>
+function toggleTheme() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
+</script>
+
+
+<div id="mode_toggle" onclick="toggleTheme();" class="topright"></div>
+

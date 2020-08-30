@@ -1,0 +1,240 @@
+---
+title: "Sample Plot types"
+author: ""
+date: "last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    highlight: haddock
+    theme: readable
+    css: libs/switch-themer.css
+    includes:
+      after_body: libs/toggle.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
+```
+
+## Total Cases and New Cases
+
+```{r echo = FALSE}
+library(tidyverse)
+library(plotly)
+library(scales)
+
+df <- read_csv("data/owid-covid-data.csv") %>%
+  filter(location == "Trinidad and Tobago") %>% 
+  arrange(date) %>%
+  mutate(new = ifelse(new_cases > 0, new_cases, NA),
+         text_label = ifelse(new_cases >0, 
+                             paste(paste0(date,":"), new_cases, "new cases."),
+                             "")) %>%
+  rename(`Total Cases` = total_cases,
+         `New Cases` = new_cases) %>%
+  pivot_longer(`Total Cases`:`New Cases`)
+
+df2 <- df %>% filter(name == "New Cases")
+
+plot1 <- ggplot(data = df) + 
+  geom_line(aes(x = date, 
+                y = value, 
+                group = name,
+                color = name)) +
+#  geom_line(aes(x = date,
+#                y = `New Cases`),
+#            color = "royalblue") + 
+  geom_point(aes(x = date,
+                 y = new, 
+                 text = text_label,
+                 color = name),
+             data = df2) + 
+  theme_minimal() + ylab("") + xlab("") +
+  scale_y_continuous(label = comma) + 
+  theme(legend.title = element_blank())
+
+ggplotly(plot1, tooltip = "text")
+```
+
+
+## Case Types
+
+
+```{r echo = FALSE}
+df <- read_csv("data/covid_bulletins.csv") %>%
+  filter(complete.cases(.)) %>% select(Date, Active, Discharged, Deaths)
+
+df_2 <- pivot_longer(df, cols = 2:4)
+ggplot(data = df_2, 
+       aes(x = Date,
+           y = value)) + 
+  geom_col(fill = "royalblue", alpha = 0.95) + 
+  facet_wrap(~name, ncol = 1, scales = "free_y") + 
+  theme_minimal() + ylab("# of patients") + xlab("") + 
+  scale_y_continuous(label=comma) + 
+  scale_y_continuous(labels = label_comma(accuracy = 1))
+``` 
+
+
+```{r echo = FALSE}
+df_2 <- pivot_longer(df, cols = 2:4)
+ggplot(data = df_2, 
+       aes(x = Date,
+           y = value)) + 
+  geom_line(color = "royalblue", alpha = 0.95) + 
+  geom_point(color = "royalblue") +
+  facet_wrap(~name, ncol = 1, scales = "free_y") + 
+  theme_minimal() + ylab("# of patients")  +  xlab("") + 
+  scale_y_continuous(labels = label_comma(accuracy = 1))
+```
+
+
+```{r echo = FALSE}
+df_2 <- pivot_longer(df, cols = 2:4)
+
+
+ggplot(data = df_2, 
+       aes(x = Date,
+           y = value)) + 
+  geom_segment(aes(x = Date, xend = Date,
+                   y = 0, yend = value), 
+               color = "royalblue", alpha = 0.95) + 
+  geom_point(color = "royalblue") +
+  facet_wrap(~name, ncol = 1, scales = "free_y") + 
+  theme_minimal() + ylab("# of patients") + xlab("") + 
+  scale_y_continuous(labels = label_comma(accuracy = 1))
+
+
+```
+
+
+## Facility occupancy
+
+
+```{r}
+facilities <- read_csv("data/patient_counts_capacity.csv") 
+
+main <- facilities %>% select(1,3:6) %>% 
+  pivot_longer(2:5) %>% 
+  separate(name, into = c("Location", "Sub")) %>%
+  mutate(Sub = ifelse(is.na(Sub), "Main", Sub))
+
+step_down <- facilities %>% select(1,7:14) %>%
+  pivot_longer(2:9)
+
+main$Location <- factor(main$Location, 
+                        levels = c("Couva", "Caura"))
+
+ggplot(data = main,
+       aes(x = Date,
+           y = value)) + 
+  geom_col(aes(fill = Sub), alpha = 0.9) + 
+  facet_wrap(~Location, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank())
+```
+
+
+
+```{r}
+ggplot(data = main,
+       aes(x = Date,
+           y = value)) + 
+  geom_area(aes(fill = Sub), alpha = 0.8) + 
+  facet_wrap(~Location, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+ggplot(data = main,
+       aes(x = Date,
+           y = value)) + 
+  geom_col(aes(fill = Sub), alpha = 0.9) + 
+  facet_wrap(~Location, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank())
+```
+
+
+```{r}
+ggplot(data = main,
+       aes(x = Date,
+           y = value)) + 
+  geom_line(aes(color = Sub), alpha = 0.9) + 
+  geom_point(aes(color = Sub)) + 
+  facet_wrap(~Location, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+ggplot(data = step_down,
+       aes(x = Date,
+           y = value)) + 
+  geom_col(fill = "royalblue", alpha = 0.9) +
+  facet_wrap(~name, 
+             scales = "free") + 
+  xlab("") + ylab("# of patients") + theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        axis.text.x = element_text(angle = 90),
+        plot.title = element_text(hjust = 0.5)) + 
+        ggtitle("Occupancy of Step-down facilities")
+  
+
+main2 <- facilities %>% select(1,3:6) %>% 
+  pivot_longer(2:5)
+```
+
+
+```{r}
+ggplot(data = main2,
+       aes(x = Date,
+           y = value)) + 
+  geom_col(fill = "#4c2a85", alpha = 0.9) + 
+  facet_wrap(~name, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+ggplot(data = main2,
+       aes(x = Date,
+           y = value)) + 
+  geom_point(color = "#4c2a85", alpha = 0.9, shape = 19) + 
+  geom_segment(aes(x = Date, xend = Date,
+                   y = 0, yend = value), 
+               color = "#4c2a85") + 
+  geom_line(color = "#4c2a85") + 
+  geom_area(fill = "#4c2a85", alpha = 0.3) + 
+  facet_wrap(~name, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank(),
+        panel.grid.minor = element_blank())
+```
+
+
+```{r echo = FALSE}
+ggplot(data = main2,
+       aes(x = Date,
+           y = value)) + 
+  geom_col(aes(fill = name), alpha = 0.9) + 
+  #facet_wrap(~name, ncol = 1, scales = "free_y") + 
+  ylab("") + xlab("") + theme_minimal() + 
+  scale_y_continuous(labels = label_comma(accuracy = 1)) +
+  theme(legend.title = element_blank())
+
+```
+
+
