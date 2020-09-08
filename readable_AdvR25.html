@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Daryn Ramsden" />
 
 
-<title>An Awesome Title</title>
+<title>Advanced R: Chapter 25 code</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1603,8 +1602,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">An Awesome Title</h1>
-<h4 class="author">Daryn Ramsden</h4>
+<h1 class="title toc-ignore">Advanced R: Chapter 25 code</h1>
+<h4 class="author"></h4>
 <h4 class="date">last updated: 2020-09-08</h4>
 
 </div>
@@ -1623,7 +1622,7 @@ div.tocify {
 <span id="cb1-6"><a href="#cb1-6"></a><span class="st">}&#39;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>add</span></code></pre></div>
 <pre><code>function (x, y, z) 
-.Call(&lt;pointer: 0x1051aad10&gt;, x, y, z)</code></pre>
+.Call(&lt;pointer: 0x10db59d10&gt;, x, y, z)</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">add</span>(<span class="dv">1729</span>, <span class="dv">101</span>, <span class="dv">99</span>)</span></code></pre></div>
 <pre><code>[1] 1929</code></pre>
 <div id="no-inputs-scalar-outputs" class="section level3">
@@ -2001,8 +2000,8 @@ div.tocify {
 <pre><code># A tibble: 2 x 6
   expression              min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;         &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 gibbs_r(100, 10)      4.2ms   4.99ms      189.    5.06MB     20.7
-2 gibbs_cpp(100, 10)  202.4µs 223.77µs     4291.     4.1KB     26.8</code></pre>
+1 gibbs_r(100, 10)     4.05ms   4.67ms      198.    5.06MB     20.0
+2 gibbs_cpp(100, 10) 203.45µs 225.09µs     4184.     4.1KB     24.2</code></pre>
 </div>
 <div id="r-vectorisation-versus-c-vectorisation" class="section level3">
 <h3>25.6.2 R vectorisation versus C++ vectorisation</h3>
@@ -2068,9 +2067,9 @@ div.tocify {
 <pre><code># A tibble: 3 x 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 vacc1        1.69ms   1.85ms      517.    7.86KB     27.4
-2 vacc2       46.61µs   52.6µs    16199.  148.85KB     23.4
-3 vacc3       10.05µs  10.99µs    83477.   14.48KB     16.7</code></pre>
+1 vacc1        1.67ms   1.85ms      524.    7.86KB    27.1 
+2 vacc2       45.95µs  52.18µs    16777.  148.84KB    26.0 
+3 vacc3        9.93µs  10.76µs    88035.   14.48KB     8.80</code></pre>
 </div>
 </div>
 <div id="using-rcpp-in-a-package" class="section level2">
