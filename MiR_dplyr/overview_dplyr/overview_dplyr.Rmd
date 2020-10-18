@@ -481,6 +481,21 @@ paged_table(penguins_sorted)
 ---
 ### sorting with multiple columns using `arrange`
 
+Example sorting by species, then by descending order of mass:
+
+```{r eval = FALSE}
+penguins_sorted2 <- penguins %>% 
+  arrange(species, desc(body_mass_g))
+penguins_sorted2
+```
+```{r echo = FALSE}
+penguins_sorted2 <- penguins %>% 
+  arrange(species, desc(body_mass_g))
+paged_table(penguins_sorted2)
+```
+
+
+
 
 
 ---
