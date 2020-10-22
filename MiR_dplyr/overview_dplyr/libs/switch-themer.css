@@ -59,6 +59,9 @@
   --header-background-color: #2180CE;
   --header-background-text-color: #FFFFFF;
   --code-string-color: #EF798A;
+  --code-number-color: #5D2E46;
+  --table-even-color: #F5E4D4;
+  --table-na-color: #5A0B4D;
   --background-image-url: url("www/moon.svg");
 
   --primary: #2180CE;
@@ -91,6 +94,9 @@
   --code-color: #FFFFFF;
   --code-inline-color: #B0FF92;
   --code-string-color: #EF798A;
+  --code-number-color: #FDCA40;
+  --table-even-color: #505A5B;
+  --table-na-color: #5A0B4D;
   --background-image-url: url("www/sun.svg");
 }
 
@@ -313,6 +319,29 @@ code.r.hljs.remark-code.string{
   color: var(--link-color);
 }
 
+
 .hljs-string {
   color: var(--code-string-color) !important;
+}
+
+.hljs-number{
+  color: var(--code-number-color) !important;
+}
+
+.pagedtable-header-type{
+  background-color: var(--table-even-color) !important;
+}
+.pagedtable-header-name{
+  background-color: var(--table-even-color) !important;
+}
+
+tr.even td{
+  background-color: var(--table-even-color) !important;
+}
+.pagedtable-na-cell{
+  background-color: var(--table-na-color) !important;
+}
+
+thead tr{
+  background-color: var(--table-even-color) !important;
 }
