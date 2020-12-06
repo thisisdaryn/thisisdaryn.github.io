@@ -1,0 +1,21 @@
+<html>
+<body>
+Merchant: <input type="text" id="merchant"><br>
+Price: <input type = "text" id = "price"><br>
+<input type = "submit" id = "create_qr" onclick="gen_qr_code()"><br>
+<script src="qrcode.js"></script>
+
+<div id="qrcode"></div>
+<script type="text/javascript">
+
+var gen_qr_code = function(){
+
+merchant_name = document.getElementById("merchant").value;
+price_value = document.getElementById('price').value;
+my_url = "https://thisisdaryn.github.io/qr_trial/qr_confirmation.html?merchant="+merchant_name+"&price="+price_value;
+new QRCode(document.getElementById("qrcode"), my_url);
+
+}
+</script>
+</body>
+</html>
