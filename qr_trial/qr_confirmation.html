@@ -7,7 +7,7 @@
 </body>
 <h1><p id='merchantText'></p></h1>
 <h2><p id='priceText'></p></h2>
-
+<h3><p id = 'confText'></p></h3>
 <script>
   var getParams = function (url) {
     var params = {};
@@ -25,14 +25,15 @@
   my_params = getParams(window.location.href)
   var merchant = my_params["merchant"];
   var price = my_params["price"];
+  var conf_code = my_params["conf"];
   
-  
-  merchantText = document.getElementById('merchantText')
-  priceText = document.getElementById('priceText')
-  
+  merchantText = document.getElementById('merchantText');
+  priceText = document.getElementById('priceText');
+  confText = document.getElementById('confText');
   
   merchantText.innerText = `Merchant: ${merchant}`
   priceText.innerText = `Price: ${price}`
+  confText.innerText = `Confirmation code: ${conf_code}`
   
   </script>
 

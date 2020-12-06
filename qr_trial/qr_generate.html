@@ -8,7 +8,16 @@ Price: <input type = "text" id = "price"><br>
 <div id="qrcode"></div>
 <script type="text/javascript">
 
+function removeElement(elementId) {
+    // Removes an element from the document
+    var element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
+}
+
 var gen_qr_code = function(){
+
+var node = document.getElementById('qrcode');
+node.innerHTML = "";
 
 merchant_name = document.getElementById("merchant").value;
 price_value = document.getElementById('price').value;
