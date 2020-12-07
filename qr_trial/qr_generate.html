@@ -6,6 +6,7 @@ Price: <input type = "text" id = "price"><br>
 <script src="qrcode.js"></script>
 
 <div id="qrcode"></div>
+<div id="confText"></div>
 <script type="text/javascript">
 
 function removeElement(elementId) {
@@ -18,11 +19,17 @@ var gen_qr_code = function(){
 
 var node = document.getElementById('qrcode');
 node.innerHTML = "";
+var conf_node = document.getElementById('confText');
+conf_node.innerHTML = "";
+var conf_code = Math.floor(1000 + Math.random() * 9000);
+
 
 merchant_name = document.getElementById("merchant").value;
 price_value = document.getElementById('price').value;
-my_url = "https://thisisdaryn.github.io/qr_trial/qr_confirmation.html?merchant="+merchant_name+"&price="+price_value;
+my_url = "https://thisisdaryn.github.io/qr_trial/qr_confirmation.html?merchant="+merchant_name+"&price="+price_value+"&conf="+conf_code;
 new QRCode(document.getElementById("qrcode"), my_url);
+var conf_node = document.getElementById('confText');
+conf_node.innerHTML = conf_code;
 
 }
 </script>
