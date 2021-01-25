@@ -1,0 +1,84 @@
+---
+title: "Installing R and RStudio"
+author: ""
+date: "last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    css: dr-themer.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
+```
+
+
+
+## 1. Install R and RStudio
+
+  * Download R @ The [R Project’s Home Page](https://cloud.r-project.org/)
+    
+    * Windows: 
+      * [https://cloud.r-project.org/bin/windows/base/R-4.0.3-win.exe](https://cloud.r-project.org/bin/windows/base/R-4.0.3-win.exe)
+    
+    * Mac: 
+      * [https://cloud.r-project.org/bin/macosx/R-4.0.3.pkg](https://cloud.r-project.org/bin/macosx/R-4.0.3.pkg)
+    * Linux
+      * [https://cloud.r-project.org/bin/linux/](https://cloud.r-project.org/bin/linux/)
+    
+  * Download RStudio Desktop from [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
+    * Windows
+      * [https://download1.rstudio.org/desktop/windows/RStudio-1.4.1103.exe](https://download1.rstudio.org/desktop/windows/RStudio-1.4.1103.exe)
+    * Mac
+      * [https://download1.rstudio.org/desktop/macos/RStudio-1.4.1103.dmg](https://download1.rstudio.org/desktop/macos/RStudio-1.4.1103.dmg)
+    * Linux
+      * [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download)
+  
+  * Run the installers for R and RStudio, in that order.
+  
+## 2. Open RStudio
+
+It should look like this when you do:
+![](RStudioScreen.png)
+
+## 3. Install additional packages and data
+  
+  * copy-paste the text below into the command window 
+  * hit enter
+  * accept any defaults if you get prompted
+  * this may take a little while. But nothing too exorbitant.
+  
+```{r eval = FALSE}
+install.packages(c("tidyverse", "nycflights13", "devtools"))
+remotes::install_github("allisonhorst/palmerpenguins")
+```
+
+## 4. Test it out
+
+**Copy-paste the following text into the command window and hit enter**. 
+
+  * If the graphs show up then you have installed all the necessary packages.
+  * Don't worry if you don't understand the commands. 
+
+
+  
+```{r message = FALSE}
+library(tidyverse)
+library(nycflights13)
+flights <- flights %>% mutate(cancelled = is.na(arr_delay) & is.na(dep_delay),
+Day = ISOdate(year, month, day))
+flight_report <- flights %>%
+group_by(Day, origin) %>% summarise(Cancelled = mean(cancelled)*100)
+ggplot(flight_report, aes(x = Day, y = Cancelled)) +
+geom_line() +
+facet_wrap(~origin, ncol = 1) +
+theme_bw() + 
+ylab("% of Flights Cancelled") + 
+ggtitle("Flights cancelled at NYC airports in 2013")
+
+```
+
+
+

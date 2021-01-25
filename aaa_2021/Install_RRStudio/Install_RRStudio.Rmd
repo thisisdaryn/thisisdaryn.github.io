@@ -1,0 +1,17 @@
+---
+title: "An Awesome Title"
+author: "Daryn Ramsden"
+date: "last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    css: dr-themer.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
+```
+
+
