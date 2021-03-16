@@ -1,0 +1,284 @@
+---
+title: "Money and Payments in Trinidad and Tobago"
+subtitle: "Daryn Ramsden"
+author: "thisisdaryn at gmail dot com"
+date: "last updated: `r Sys.Date()`"
+institution: ""
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: libs/switch-themer.css
+    chakra: libs/remark.js
+    nature:
+      highlightLines: true
+      countIncrementalSlides: false
+    includes:
+      after_body: libs/toggle.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      comment = "")
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+xaringanExtra::use_webcam()
+xaringanExtra::use_editable()
+
+library(tidyverse)
+library(readxl)
+library(hrbrthemes)
+library(lubridate)
+library(scales)
+library(gt)
+
+thousand <- 1000
+hundred <- 100
+million <- 1000000
+```
+
+
+---
+title: "Payment Systems and Money in T&T"
+author: "Daryn Ramsden"
+date: "last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    highlight: haddock
+    theme: readable
+    css: dr-themer.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      comment = "")
+
+library(tidyverse)
+library(readxl)
+library(hrbrthemes)
+library(lubridate)
+library(scales)
+library(gt)
+
+thousand <- 1000
+hundred <- 100
+million <- 1000000
+```
+
+## How can you make payments in Trinidad and Tobago
+
+There are several payment media:
+
+--
+  
+  1. Cash
+  
+--
+  
+  2. Cheques
+  
+--
+  
+  3. Electronic Payments, including:
+  
+--
+    1. Debit Cards
+    
+--
+    2. Credit Cards
+    
+--
+    3. ACH: Automated Clearing House
+    
+--
+    4. RTGS: Real Time Gross-Settlement System
+
+---
+# Currency in Active Circulation
+
+
+```{r}
+a <- 100
+```
+
+
+---
+# Debit Cards
+
+## Daily usage of debit and credit cards
+
+```{r echo = FALSE}
+debit_cards <- read_csv("data/DebitCardTransactions.csv") %>% 
+  mutate(DATE = my(DATE)) %>% 
+  rename(Year = YEAR)
+credit_cards <- read_csv("data/CreditCardTransactions.csv") %>% 
+  mutate(DATE = my(PERIOD),
+         Year = year(DATE)) 
+ydl <- read_csv("data/year_days_lookup.csv")
+
+thousand <- 1000
+cc_year <- credit_cards %>% 
+  group_by(Year) %>% 
+  summarise(`POS transactions` = sum(POSVOLUME),
+            `POS Value` = sum(POSVALUE_TTM),
+            `ATM transactions` = sum(ATM_VOLUME),
+            `ATM value` = sum(ATMVALUE_TTM)) %>% 
+  left_join(ydl) %>% 
+  mutate(`CC Point of Sale transactions per day` = paste0(round(`POS transactions`/(thousand*Days)),"k"),
+         `CC ATM withdrawals per day` = paste0(round(`ATM transactions`/(thousand*Days)),
+                          "k")) %>% 
+  select(Year, `CC Point of Sale transactions per day`, `CC ATM withdrawals per day`)
+
+dc_year <- debit_cards %>% 
+  group_by(Year) %>% 
+  summarise(`POS transactions` = sum(POSVOLUME),
+            `POS Value` = sum(POSVALUE_TTM),
+            `ATM transactions` = sum(ATMVOLUME),
+            `ATM value` = sum(ATMVALUE_TTM))  %>% 
+  left_join(ydl) %>% 
+  mutate(`DC Point of Sale transactions per day` = paste0(round(`POS transactions`/(thousand*Days)),
+                          "k"),
+         `DC ATM withdrawals per day` = paste0(round(`ATM transactions`/(thousand*Days)),
+                          "k")) %>% 
+  select(Year, `DC Point of Sale transactions per day`, `DC ATM withdrawals per day`)
+
+daily_volumes <- left_join(dc_year, cc_year)
+daily_vol_tbl <- daily_volumes %>% 
+  gt() %>% tab_spanner(
+    label = "Credit cards",
+    columns = vars(
+      `CC Point of Sale transactions per day`, `CC ATM withdrawals per day`)
+  ) %>% tab_spanner(
+    label = "Debit cards",
+    columns = vars(
+      `DC Point of Sale transactions per day`, `DC ATM withdrawals per day`)
+  ) %>% cols_align(
+    align = "center",
+    columns = vars(`DC Point of Sale transactions per day`, `DC ATM withdrawals per day`,
+                   `CC Point of Sale transactions per day`, `CC ATM withdrawals per day`)
+  ) %>% tab_style(
+    style = list(
+      cell_borders(
+        sides = "right",
+        color = "blue",
+        weight = px(3)
+      )
+    ),
+    locations = list(
+      cells_body(
+        columns = vars(Year, `DC ATM withdrawals per day`,
+                       `CC ATM withdrawals per day`)
+      )
+    )
+  )
+
+
+daily_vol_tbl
+```
+```{r}
+linx_debit_fee <- 0.75
+credit_card_fee <- 0.02
+debit_rev <- debit_cards %>% 
+group_by(Year) %>% summarise(`POS transactions` = sum(POSVOLUME)) %>%
+  mutate(`Debit card transaction revenue (TTM)` = round(linx_debit_fee*`POS transactions`/million))
+
+credit_rev <- credit_cards %>%
+  group_by(Year) %>% summarise(`POS Value (TTM)` = sum(POSVALUE_TTM)) %>% 
+  mutate(`Credit Card transaction revenue (TTM)` = credit_card_fee*`POS Value (TTM)`)
+```
+
+
+```{r}
+
+
+
+
+dc_narrow <- debit_cards %>% 
+  select(DATE, ATMVALUE_TTM, POSVALUE_TTM) 
+
+cc_narrow <- credit_cards %>% 
+  select(DATE, POSVALUE_TTM) %>% 
+  rename(CC_POS = POSVALUE_TTM)
+
+
+payments_long <- left_join(dc_narrow, cc_narrow)  %>% 
+  pivot_longer(c(ATMVALUE_TTM, POSVALUE_TTM, CC_POS), 
+               names_to = "Measure", values_to = "Value")
+
+```
+
+
+```{r}
+ggplot(data = payments_long,
+       aes(x = DATE, y = Value, 
+           group = Measure, color = Measure)) + 
+  geom_line(size = 0.3) + geom_point() + 
+  geom_smooth(se = FALSE) + 
+  theme_ipsum() + 
+  scale_y_continuous(labels = comma)
+```
+
+
+# Electronic Payment methods 
+
+  * Payment cards
+    * debit cards 
+    * credit cards
+  * ACH 
+  * RTGS 
+  
+  
+# Debit card
+
+Most heavily-used form of electronic payment
+
+Can be used for:
+  1. Point-of-sale transactions
+  2. Withdrawals from ATM machines
+  
+# Pre-paid cards
+
+ Do not require an account. The card itself has the value attached to it. Can be used anonymously.
+ 
+ Gift cards
+ prepaid telephone cards
+ 
+# ACH: Automated clearinghouse
+
+Used for retail transactions: TT $500,000 or less)
+
+
+# Telephone banking
+
+
+# Mobile payments 
+
+
+
+# The LINX network
+
+
+ Government book grant cards
+
+
+# Credit Cards
+
+
+
+# Estimating Revenue at Point of Sales
+
+
+
+
+
+
+
+
+
