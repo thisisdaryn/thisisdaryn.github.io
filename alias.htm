@@ -1,0 +1,248 @@
+
+<html>
+<head>
+<title>Aliasing of the complex sinusoid</title>
+<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="thecssfile.css">
+</head>
+<body>
+<h2> Aliasing of the complex sinusoid. Or not.</h2>
+I'm taking <a href = "https://courses.edx.org/courses/RiceX/ELEC301x_/2015Q3/info">Discrete Time Signals and Systems, Part 1: Time Domain</a> from Rice University on edX. One thing that gets mentioned is 
+a phenomenom called aliasing where two complex sinusoids - of the form, y(n) = e <sup> j(&#969 n + &#966) </sup> - are identical on the domain of integers if their frequencies differ by integer multiples of 2&#960.<br>
+Given the periodicity of sin and cos it's straightforward that this would be the case. But it's still kinda cool - I think - that such drastically different functions on the reals are the same when restricted to an integer domain.<br> 
+Anyhow, I made this plotting
+tool to actually see the aliasing (or lack thereof) for pairs of complex sinusoids.<p>
+<font color = "red">y<sub>1</sub>(n) = e <sup> j(&#969 n + &#966) </sup></font> and <font color = "blue">y<sub>2</sub>(n) = e <sup> j((&#969 + 2 &#960 m) n + &#966) </sup> </font>  (Feel free to change the parameter values.)<br><br><br>
+&#969: <input type="text" id="freq" value ="1">  &nbsp&nbsp   &#966: <input type="text" id="phase" value ="0"> &nbsp&nbsp    m: <input type="text" id="freqMult" value = "1"> &nbsp&nbsp <button type="button" onclick = plot()>Plot</button>
+<br>
+
+
+<h4>
+<svg id = "graphPanel">
+<text id = "rlabel" style = "fill:#800000;">Real Component</text>
+<text id = "ilabel" style = "fill:#800000;">Imaginary Component</text>
+</svg></h4>
+
+
+
+
+  
+<script>
+var panel = document.getElementById('graphPanel');
+
+var graphWidth = 0.7*window.innerWidth;
+var padding = 0.02*window.innerWidth;
+var padding = 2;
+var graphUnit = Math.floor(graphWidth/11.5);
+var graphHeight = 10*graphUnit;
+
+
+panel.setAttribute("width",window.innerWidth);
+panel.setAttribute("height",graphHeight);
+
+var phase;
+var freq;
+var freqMult;
+var freq2;
+
+var origin = { //origin of axes
+    x: padding,
+    y1: 1.5*graphUnit,
+    y2: 4.5*graphUnit+padding
+};
+
+var elements = [];
+
+
+
+var placeAxes = function(svgObject, x, y, xlength,ylength,top){
+
+    var xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    var yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+    xAxis.setAttribute('x1', x);
+    xAxis.setAttribute('x2', x+xlength);
+    xAxis.setAttribute('y1', y - ylength/2);
+    xAxis.setAttribute('y2',y - ylength/2);
+    xAxis.setAttribute('style', "stroke:black;stroke-width:1");
+    
+    yAxis.setAttribute('x1', x);
+    yAxis.setAttribute('x2', x);
+    yAxis.setAttribute('y1', y);
+    yAxis.setAttribute('y2',y - ylength);
+    yAxis.setAttribute('style', "stroke:black;stroke-width:1");
+    
+    svgObject.appendChild(xAxis);
+    svgObject.appendChild(yAxis);
+    
+}
+
+var upperLevel = 3*graphUnit;
+var lowerLevel = 6*graphUnit + padding;
+
+
+placeAxes(panel, padding, upperLevel, 11.5*graphUnit, 3*graphUnit, true);
+placeAxes(panel, padding, lowerLevel, 11.5*graphUnit, 3*graphUnit, true);
+
+
+var labelAxes = function(lowy, highy){
+    
+    for(var j = 0; j < 12; ++j){
+        var gridline = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        gridline.setAttribute('x1', j*graphUnit+origin.x);
+        gridline.setAttribute('x2', j*graphUnit+origin.x);
+        //cons
+        gridline.setAttribute('y1', highy);
+        gridline.setAttribute('y2', lowy);
+        gridline.setAttribute('style', "stroke:gray;stroke-width:1;stroke-dasharray='-'");
+        panel.appendChild(gridline);
+    }
+
+}
+
+labelAxes(0, upperLevel);
+labelAxes(upperLevel+padding, lowerLevel);
+
+
+var approxFunc = function(x, step, xOffset, inFunc, colour){
+    var outLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    outLine.setAttribute('x1', x + xOffset);
+    outLine.setAttribute('y1', inFunc(x) );
+    var x2 = x + step;
+    outLine.setAttribute('x2', x2 + xOffset);
+    outLine.setAttribute('y2', inFunc(x2));
+    outLine.setAttribute('style', "stroke:"+colour+";stroke-width:2");
+    return outLine;
+}
+
+
+
+//for (var j = 0; j < graphUnit*11; ++j) {
+var waveStep = function(){
+    var j = animStep;
+    
+    if (j > graphUnit*11){
+        clearInterval(animate);
+    }
+    else{
+        var rline = approxFunc(j, 1, origin.x, function(x){
+                                                    return origin.y1 - graphUnit*Math.cos(freq *(x/graphUnit) + phase);
+                                                    }, "red" );  
+        var rline2 = approxFunc(j, 1, origin.x, function(x){
+                                                    return origin.y1 - graphUnit*Math.cos(freq2 *(x/graphUnit) + phase);
+                                                    } , "blue");  
+        var iline = approxFunc(j, 1, origin.x, function(x){
+                                                    return origin.y2 - graphUnit*Math.sin(freq *(x/graphUnit) + phase);
+                                                    }, "red" ); 
+        var iline2 = approxFunc(j, 1, origin.x, function(x){
+                                                    return origin.y2 - graphUnit*Math.sin(freq2 *(x/graphUnit) + phase);
+                                                    }, "blue" );
+
+        panel.appendChild(rline);
+        panel.appendChild(iline);
+        panel.appendChild(rline2);
+        panel.appendChild(iline2);
+    
+        elements.push(rline);
+        elements.push(iline);
+        elements.push(rline2);
+        elements.push(iline2);
+    
+    
+    
+        if(j%graphUnit == 0){
+            drawPoint(j+origin.x,origin.y1 - graphUnit*Math.cos(freq *(j/graphUnit) + phase),"#FF0000");
+            drawPoint(j+origin.x,origin.y1 - graphUnit*Math.cos(freq2 *(j/graphUnit) + phase),"#0000FF");
+            drawPoint(j+origin.x,origin.y2 - graphUnit*Math.sin(freq *(j/graphUnit) + phase),"#FF0000");
+            drawPoint(j+origin.x,origin.y2 - graphUnit*Math.sin(freq2 *(j/graphUnit) + phase),"#0000FF");
+    
+        }
+        ++animStep;
+    }
+}
+
+var placeText = function(){
+    //var rlabel = document.createTextNode("Real Component");
+    //var rlabelNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var rlabelNode = panel.getElementById("rlabel")
+    rlabelNode.setAttribute('x', 0.7*window.innerWidth+5);
+    rlabelNode.setAttribute('y', 30);
+
+    var ilabelNode = panel.getElementById("ilabel")
+    ilabelNode.setAttribute('x', 0.7*window.innerWidth+5);
+    ilabelNode.setAttribute('y', 3*graphUnit + padding + 30);
+
+    
+
+}
+
+
+
+var drawPoint = function(x,y,colour){
+    var point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    point.setAttribute('cx', x);
+    point.setAttribute('cy', y);
+    point.setAttribute('r', 6);
+    point.setAttribute('stroke-width',1);
+    point.style.fill = colour;
+    point.style.stroke=colour;
+    point.style.opacity = 0.5;
+    elements.push(point);
+    panel.appendChild(point);
+}
+
+var animStep = 0;
+
+var animate;
+
+
+var cleanup = function(){
+
+    for(var j = 0; j < elements.length; ++j){
+        elements[j].remove();
+    }
+    elements = [];
+}
+
+var initPlot = function(){
+    var freqBox = document.getElementById('freq');
+    var freqMultBox = document.getElementById('freqMult');
+    freqBox.value = Math.floor(Math.random()*4-2);
+
+    var temp  = Math.floor(Math.random()*5 + 1);
+    if (Math.random()<0.5){
+        temp*=-1;
+    }
+    freqMultBox.value = temp;
+    
+}
+
+var delay = 1
+placeText();
+initPlot();
+var plot = function(){
+    phase = parseFloat(document.getElementById('phase').value);
+    freq = parseFloat(document.getElementById('freq').value);
+    freqMult = parseFloat(document.getElementById('freqMult').value);
+    freq2 = freq + freqMult*Math.PI*2;
+    cleanup();
+    animStep = 0;
+    animate = setInterval(waveStep,delay);
+    
+}
+
+plot();
+
+
+
+
+
+
+
+
+
+</script>
+
+<body>
+
+</html>
