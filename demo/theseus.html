@@ -1,0 +1,607 @@
+<html>
+<title>Depth-first Search</title>
+<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="thecssfile.css">
+
+<body>
+<H2>Visualizing depth-first search</H2>
+
+Two implementations of depth-first search: Theseus, picks randomly from among adjacent locations when given a choice. This can be frustrating to watch, so I wrote a 
+second searcher, Greedy, that orders adjacent locations by their distance from the destination.<br><br>
+
+
+Maze Dimension: <input type="text" id="gridDim" value ="50">  &nbsp
+<button type="button" onclick = refreshSearches()>New Search</button> &nbsp  
+
+
+Theseus: <input type="text" id="TheseusResults" value ="">&nbsp&nbsp Greedy: <input type="text" id="GreedyResults" value =""><br><br>
+<svg id = "Maze"></svg><br>
+<font color = "#0000FF">On Theseus' path</font> &nbsp <font color = "#FF0000">On Greedy's path</font> &nbsp <font color = "#9400D3">On both paths </font><br>
+<font color = "#BAAFFF">Visited by Theseus</font> &nbsp <font color = "#FAAFBA">Visited by Greedy</font> &nbsp <font color = "#A0A0A0">Visited by both </font><br>
+Large mazes may kill your browser.
+
+
+
+
+<script>
+
+var maze = document.getElementById('Maze');
+var frame
+var mazeDim;
+
+var visited =[];
+var visited2 = [];
+var inPath = [];
+var inPath2 = [];
+var thresh = 0.666;
+var fflag1 = false, fflag2 = false;
+
+if(window.innerHeight < window.innerWidth){
+    mazeDim = 0.75*window.innerHeight;
+}
+else{
+    mazeDim = 0.75*window.innerWidth;
+}
+
+
+
+
+
+maze.setAttribute("width",mazeDim);
+maze.setAttribute("height",mazeDim);
+
+
+
+var gridSize = 100;
+var edges = [];
+var lines = [];
+var edgeAvailable = [];
+
+var intervalFlag;
+
+
+var Edge = function(v1,v2){
+
+    this.vertex1 = v1;
+    this.vertex2 = v2;
+    
+    
+}
+
+
+var clearMaze = function(){
+
+    for(var j = 0; j < edges.length; ++j){
+        edgeAvailable[j] = true;
+    }
+
+}
+
+
+var path = [];
+var path2 = [];
+
+var newBlock = function(x)
+{
+    var NS = "http://www.w3.org/2000/svg";
+    var block = document.createElementNS(NS, "rect");
+    block.setAttribute("width",x);
+    block.setAttribute("height",x);
+    block.style.fill = "#FFEBCD";    
+    return block;    
+}
+
+
+
+var colourBlock = function(block, colour)
+{
+    block.style.fill = colour;
+    //block.style.stroke = "#888888";
+    block.style.opacity = 0.5;    
+}
+
+var Line = function(x1, y1, x2, y2){    
+    var NS = "http://www.w3.org/2000/svg";
+    var line = document.createElementNS(NS, 'line');
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    return line;
+}
+
+var boldLine = function(e){
+    e.setAttribute("width",2);
+    e.style.stroke = "#A52A2A";
+}
+
+var mazeLookup = [];
+var barsLookup = [];
+
+var makeMaze = function(threshold){
+
+    edges = [];
+    edgeAvailable = [];
+    var edgeCheck;
+    
+    var cellSize = mazeDim/gridSize;
+    var v1, v2;
+    
+    for(var j = 0; j < gridSize; ++j){
+        for(var k = 0; k < gridSize; ++k){
+            var block = newBlock(cellSize);
+            block.setAttribute("x",k*cellSize);
+            block.setAttribute("y",j*cellSize);
+            mazeLookup.push(block);
+            maze.appendChild(mazeLookup[mazeLookup.length-1]);				
+        }    
+    }
+
+    for(var j =0; j < gridSize-1; ++j){
+        for(var k = 0; k < gridSize -1; ++k){
+            v1 = j*gridSize + k;
+            v2 = v1 + 1;
+            var temp = new Edge(v1, v2);
+
+            edges.push(temp);
+            var tempLine = new Line((k+1)*cellSize, j*cellSize,(k+1)*cellSize, (j+1)*cellSize );
+            lines.push(tempLine);
+            maze.appendChild(lines[lines.length-1]);
+            edgeCheck = Math.random();
+            if(edgeCheck<threshold){
+                edgeAvailable.push(true);            
+            }
+            else{
+                edgeAvailable.push(false);
+                boldLine(lines[lines.length-1]);
+            }
+            v2 = v1 + gridSize;
+            var temp = new Edge(v1,v2);
+            edges.push(temp);
+            var tempLine = new Line(k*cellSize, (j+1)*cellSize,(k+1)*cellSize, (j+1)*cellSize );
+            lines.push(tempLine);
+            maze.appendChild(lines[lines.length-1]);
+            edgeCheck = Math.random();
+            if(edgeCheck<threshold){
+                edgeAvailable.push(true);            
+            }
+            else{
+                edgeAvailable.push(false);
+                boldLine(lines[lines.length-1]);
+            }        
+        }
+    }
+
+    for(var j = 1; j < gridSize; ++j){
+        v1 = (j*gridSize) -1;
+        v2 = v1 + gridSize;
+        var temp = new Edge(v1, v2);
+        edges.push(temp);
+        var tempLine = new Line((gridSize-1)*cellSize, j*cellSize,gridSize*cellSize, j*cellSize );
+        lines.push(tempLine);
+        maze.appendChild(lines[lines.length-1]);
+        edgeCheck = Math.random();
+        if(edgeCheck<threshold){
+            edgeAvailable.push(true);            
+        }
+        else{
+            edgeAvailable.push(false);
+            boldLine(lines[lines.length-1]);
+        }
+    } 
+
+    for(var j = 0; j < gridSize-1; ++j){
+        v1 = gridSize*(gridSize-1)+j;
+        v2 = v1+1;
+        var temp = new Edge(v1, v2);
+        edges.push(temp);
+        var tempLine = new Line((j+1)*cellSize, (gridSize-1)*cellSize, (j+1)*cellSize, gridSize*cellSize );
+        lines.push(tempLine);
+        maze.appendChild(lines[lines.length-1]);
+        edgeCheck = Math.random();
+        if(edgeCheck<threshold){
+            edgeAvailable.push(true);            
+        }
+        else{
+            edgeAvailable.push(false);
+            boldLine(lines[lines.length-1]);
+        }    
+    }
+
+}
+
+var refreshSearches = function(){
+	clearInterval(intervalFlag);
+    gridSize = parseFloat(document.getElementById('gridDim').value);
+    document.getElementById('GreedyResults').value = "";
+    document.getElementById('TheseusResults').value = "";
+
+	for(var j = 0; j < mazeLookup.length; ++j){
+		maze.removeChild(mazeLookup[j]);
+	}
+    for(var j = 0; j < lines.length; ++j){
+        maze.removeChild(lines[j]);
+    }
+    edges = [];
+    mazeLookup = [];
+    lines = [];
+    makeMaze(thresh);
+    path = [];
+    path2 = [];
+    fflag1 = false;
+    fflag2 = false;
+    setSource(Math.floor(Math.random()*gridSize*gridSize));
+    setDestination(Math.floor(Math.random()*gridSize*gridSize));
+    
+    inPath = [];
+    inPath2 = [];
+    visited = [];
+    visited2 = [];
+    
+    for(var j = 0; j < mazeLookup.length; ++j){
+        inPath.push(false);
+        inPath2.push(false);
+        visited.push(false);
+        visited2.push(false);
+    }
+    
+    intervalFlag = setInterval(DFS, 7);	
+}
+
+var getEdgeNum = function(v1, v2){
+    
+    if (v2<v1){
+        var temp = v1;
+        v1 = v2;
+        v2 = temp;
+    }
+    var rval = -1;
+    var row = Math.floor(v1/gridSize);
+    var col = v1%gridSize
+    if((col < gridSize - 1) && (row < gridSize-1)){
+        if(v2 == v1+1){
+            rval = row*(gridSize-1)*2 + col*2;
+        }
+        else if (v2 == v1+gridSize){
+            rval = row*(gridSize-1)*2 + col*2 + 1;
+        }
+    }
+    else if(col == gridSize-1){
+        if(v2 == v1 + gridSize){
+            rval = (gridSize-1)*(gridSize-1)*2 + row;
+        }
+    }
+    else if(row == gridSize-1){
+        if(v2 == v1+1){
+            rval = (gridSize-1)*(gridSize-1)*2 + (gridSize-1) + col;
+        }
+    }
+    
+    return rval;
+
+}
+
+//var v2;
+
+var verifyEdgeLookup = function(){
+    //a function I wrote to test. No functionality in final page.
+    for(var j = 0; j < gridSize*gridSize; ++j){
+        
+        var e;
+        if (j>=gridSize){
+            v2 = j - gridSize;
+            e = getEdgeNum(j, v2);
+        }
+        if(j < gridSize*(gridSize-1)){
+            v2 = j + gridSize;
+            e = getEdgeNum(j, v2);
+        }
+        if(j%gridSize > 0){
+            v2 = j -1;
+            e = getEdgeNum(j, v2);
+        }
+        if(j%gridSize < gridSize -1){
+            v2 = j + 1;
+            e = getEdgeNum(j, j+1);
+        }
+    }
+}
+
+
+
+var shuffle = function(array) {
+  //Fisher-Yates. Code from http://bost.ocks.org/mike/shuffle/
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffleÃ¢â‚¬Â¦
+  while (m) {
+
+    // Pick a remaining elementÃ¢â‚¬Â¦
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
+
+
+
+var neighbours = function(v){
+
+    var neighbours = [];
+    var edgeNum;
+    if (v>=gridSize){
+        if(edgeAvailable[getEdgeNum(v,v-gridSize)]){
+            neighbours.push(v-gridSize);
+        }
+    }
+    if(v < gridSize*(gridSize-1)){
+        if(edgeAvailable[getEdgeNum(v,v+gridSize)]){
+            neighbours.push(v + gridSize);
+        }
+    }
+    if(v%gridSize > 0){
+        if(edgeAvailable[getEdgeNum(v,v-1)]){
+            neighbours.push(v-1);
+        }
+    }        
+    if(v%gridSize < gridSize -1){
+        if(edgeAvailable[getEdgeNum(v,v+1)]){
+            neighbours.push(v + 1);
+        }
+    }
+    shuffle(neighbours);
+    return neighbours;
+}
+
+var distance = function(row1, col1, row2, col2){
+    return Math.abs(row1-row2)+Math.abs(col1-col2);
+}
+
+var selectionSort = function(nodes, dists){
+    //kinda lazy. Heavily borrowed from https://www.nczonline.net/blog/2009/09/08/computer-science-in-javascript-selection-sort/
+    //Expecting arrays of small size to be sorted. Upper bound of length 4.
+    var len = nodes.length;
+    var min;
+
+    for (var j=0; j < len-1; ++j){
+
+        //set minimum to this position
+        min = j;
+
+        //check the rest of the array to see if anything is smaller
+        for (k=j+1; k < len; ++k){
+            if (dists[k] < dists[min]){
+                min = k;
+            }
+        }
+
+        //if the minimum isn't in the position, swap it
+        if (j != min){
+            var temp = nodes[j];
+            nodes[j] = nodes[min];
+            nodes[min] = temp;
+            temp = dists[j];
+            dists[j] = dists[min];
+            dists[min] = temp;
+        }
+    }
+}
+
+
+
+var neighboursG = function(v){
+    //orders neighbours by 1-norm distance to goal
+    var neighbours = [];
+    var edgeNum;
+    if (v>=gridSize){
+        if(edgeAvailable[getEdgeNum(v,v-gridSize)]){
+            neighbours.push(v-gridSize);
+        }
+    }
+    if(v < gridSize*(gridSize-1)){
+        if(edgeAvailable[getEdgeNum(v,v+gridSize)]){
+            neighbours.push(v + gridSize);
+        }
+    }
+    if(v%gridSize > 0){
+        if(edgeAvailable[getEdgeNum(v,v-1)]){
+            neighbours.push(v-1);
+        }
+    }        
+    if(v%gridSize < gridSize -1){
+        if(edgeAvailable[getEdgeNum(v,v+1)]){
+            neighbours.push(v + 1);
+        }
+    }
+    var row, col, drow, dcol;
+    drow = Math.floor(dest/gridSize);
+    dcol = dest%gridSize;
+    var dists = [];
+    for(var j = 0; j < neighbours.length; j++){
+        row = Math.floor(neighbours[j]/gridSize);
+        col = neighbours[j]%gridSize;
+        dists.push(distance(row,col,drow,dcol));
+    } 
+    selectionSort(neighbours, dists)
+    return neighbours;
+}
+
+
+
+var addToPath = function(v, id){
+    
+    if(id == 1){
+        path.push(v);
+        inPath[v] = true;
+        if(path.length>1 && v!=dest){
+            if(inPath2[v]==true){
+                colourBlock(mazeLookup[v], "#9400D3");
+            }
+            else{
+                colourBlock(mazeLookup[v], "#0000FF");
+            }
+        }
+    }
+    else if (id ==2){
+        path2.push(v);
+        inPath2[v] = true;
+        if(path2.length>1 && v!=dest){   
+            if(inPath[v]==true){
+                colourBlock(mazeLookup[v], "#9400D3");
+            }
+            else{ 
+                colourBlock(mazeLookup[v], "#FF0000");
+            }
+        }
+    
+    }
+}
+
+var source;
+var setSource = function(cell){
+    path = [];
+    path2 = [];
+    colourBlock(mazeLookup[cell], "#000000");
+    addToPath(cell,1);
+    addToPath(cell,2);
+    source = cell;    
+}
+var setDestination = function(cell){
+    dest = cell;
+    colourBlock(mazeLookup[cell], "#000000");
+}
+
+
+
+
+
+var pathPop = function(id){
+    
+    var temp;
+    if(id==1){
+        temp = path[path.length-1];
+        if(path.length>1){
+            if(inPath2[temp]){
+                colourBlock(mazeLookup[temp], "#FF0000");//still in the other path
+            }
+            else if (visited2[temp])
+            {
+                colourBlock(mazeLookup[temp], "#A0A0A0"); //visited by both already
+            }
+            else{
+                colourBlock(mazeLookup[temp], "#BAAFFF"); //only visited by this path
+            }
+        }
+        path.pop();
+        inPath[temp] = false;
+    }
+    else if(id==2){
+        temp = path2[path2.length-1];
+        if(path2.length>1){
+            if(inPath[temp]){
+                colourBlock(mazeLookup[temp],"#0000FF");
+            }
+            else if (visited[temp]){
+                colourBlock(mazeLookup[temp], "#A0A0A0"); 
+            }
+            else{
+                colourBlock(mazeLookup[temp], "#FAAFBA");
+            }
+    
+        }
+        path2.pop();
+        inPath2[temp] = false;
+    }
+}
+
+
+
+var DFS = function(){
+    //console.log(path);
+    //console.log(path2, source, dest );
+    if(fflag1==false){
+        if(path.length==0){
+            if(fflag1==false){
+                fflag1 = true;
+                document.getElementById('TheseusResults').value = "No path";
+            }
+        }
+        else if(!visited[path[path.length-1]]){
+            if(path[path.length-1]==dest){
+                if(fflag1==false){
+                    fflag1 = true;
+                    var vcount = 0;
+                    for(var j = 0; j < gridSize*gridSize; ++j){
+                        if(visited[j]){
+                            ++vcount;
+                        }
+                    }
+                    document.getElementById('TheseusResults').value = "Length "+path.length+" ("+vcount+" sites visited)";
+                }
+            }
+            visited[path[path.length-1]] = true;
+            //console.log(path[path.length-1]);
+        }
+        else{
+            var possibles = neighbours(path[path.length-1]);
+            for(var j = 0; j < possibles.length; ++j){
+                if(!visited[possibles[j]]){
+                    addToPath(possibles[j],1);
+                    return;
+                }
+            }
+            pathPop(1);
+        }
+    }
+    
+    if(fflag2==false){
+        if(path2.length==0){
+            fflag2 = true;
+            document.getElementById('GreedyResults').value = "No path";
+        }
+        else if(!visited2[path2[path2.length-1]]){
+            if(path2[path2.length-1]==dest){
+                fflag2 = true;
+                var vcount = 0;
+                    for(var j = 0; j < gridSize*gridSize; ++j){
+                        if(visited2[j]){
+                            ++vcount;
+                        }
+                    }
+                document.getElementById('GreedyResults').value = "Length "+path2.length+" ("+vcount+" sites visited)";
+            }
+            visited2[path2[path2.length-1]] = true;
+        }
+        else{
+            var possibles = neighboursG(path2[path2.length-1]);
+            for(var j = 0; j < possibles.length; ++j){
+                if(!visited2[possibles[j]]){
+                    addToPath(possibles[j],2);
+                    return;
+                }
+            }
+            pathPop(2);
+        }
+    }
+    if(fflag1 && fflag2){
+        clearInterval(intervalFlag);
+    }
+}
+
+
+
+refreshSearches();
+//
+
+
+
+
+</script>
+</body>
+
+</html>
