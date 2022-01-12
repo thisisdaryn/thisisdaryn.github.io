@@ -238,7 +238,7 @@ library(nycflights13)
 flights &lt;- flights %&gt;% mutate(cancelled = is.na(arr_delay) &amp; is.na(dep_delay),
 Day = ISOdate(year, month, day))
 flight_report &lt;- flights |&gt;
-group_by(Day, origin) %&gt;% summarise(Cancelled = mean(cancelled)*100)
+group_by(Day, origin) |&gt; summarise(Cancelled = mean(cancelled)*100)
 ggplot(flight_report, aes(x = Day, y = Cancelled)) +
 geom_line() +
 facet_wrap(~origin, ncol = 1) +
