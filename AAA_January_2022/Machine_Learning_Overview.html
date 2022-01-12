@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Machine Learning Overview</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="thisisdaryn at gmail dot com" />
+    <link rel="stylesheet" href="dr-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Machine Learning Overview
+## Daryn Ramsden
+### thisisdaryn at gmail dot com
+### last updated: 2020-01-24
+
+---
+
+
+
+
+
+
+## Does Machine Learning even exist?
+
+&lt;blockquote class="twitter-tweet" data-lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;
+There is no such thing as machine learning.
+
+There are:
+- CART decision trees
+- regression models w/ link function
+- generalized additive models
+- random forests
+- gradient-boosted machines w/ tree/linear booster
+- neural networks with various architectures
+- K-means clustering
+&lt;a href="https://twitter.com/kdpsinghlab/status/1266970556861239298"&gt;May 31, 2020&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+
+
+---
+## Machine Learning: what is it?
+
+Wikipedia definition: &lt;b&gt;Machine learning (ML) is the study of computer algorithms that improve automatically through experience.&lt;/b&gt;
+
+My thoughts: 
+  * you are asking a computer to find patterns in data
+
+  * the specific type of pattern (or representation of the pattern) corresponds to a particular ML method or technique
+  
+
+
+
+
+
+---
+## Supervised vs Unsupervised
+
+Do you have a set of data to learn from that has the answers?
+
+  - Yes: supervised learning
+  
+  - No: unsupervised learning
+
+
+---
+## Supervised: Regression vs Classification
+
+
+  * Regression: trying to predict an outcome that is a continuous variable e.g. 
+    * the price that an item will sell for or 
+    
+    * the MPG rating of a car 
+    
+    * the number of people that will use a service or facility
+    
+  * Classification: trying to predict which category a subject falls in, e.g.:
+    
+    * will specified individuals vote in an election? (yes/no)
+    
+    * Which product will a customer choose?
+    
+    * Should an email be classified as spam? Alternatively, which folder should it be classified in?
+
+---
+## Supervised Learning: key point
+
+Key pair of ideas to keep in mind.
+
+  * Each observation can either be used for exploration of confirmation but not both
+  
+  * You can use an observation as many times as you like for exploration, but you can only use it once for confirmation. As soon as you use an observation twice, you've switched from confirmation to exploration. 
+  
+  
+.footnote[
+The two key points on this slide are taken verbatim from my physical copy of [R for Data Science](https://r4ds.had.co.nz/)
+]
+  
+
+
+---
+## Split your data before you begin
+
+
+Heuristic proposed in [R for Data Science](https://r4ds.had.co.nz/):
+  
+  * 60% &lt;i&gt;training&lt;/i&gt; set: you can do anything you like with this data
+  
+  * 20% a &lt;i&gt;query&lt;/i&gt; set: Use this to compare models but never as part of an automated process.
+  
+  * 20% &lt;i&gt;test&lt;/i&gt; set: only use this to test your final model  
+  
+  
+
+
+
+
+
+
+---
+## Model fitting
+
+Model fitting is a tiered activity 
+  
+  1. Identification of a model type/family. e Ordinary Least Squares (OLS) or CART Decision Tree
+  
+  2. Choosing a model from the model family that is best for your situation/data. Examples:
+    * for OLS, find the intercept and other model coefficients
+    
+    * for CART, identifying the variables and cut points to branch on  
+  
+--
+
+  3. You may choose to fit model from multiple model families and compare their performance
+
+
+---
+## A little terminology
+
+  * I may use any of the following terms to reference the value you want to predict
+    * y
+    * outcome
+    * output
+    
+  * I may use any of the following terms to reference the values that you are using to make the prediction
+    * x 
+    * input 
+    * feature
+    * predictor
+
+  
+
+---
+## Extra: Ensemble methods
+
+**Ensemble methods** involve the use of multiple models.
+
+
+  * Training a model on slightly different data sets results in different models
+  
+  * Sometimes you train multiple models on different variations of the training data
+    * for regression problems you might take the average predictions
+    
+    * for classification problems you might take the most common prediction
+    
+
+  
+
+  *
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
