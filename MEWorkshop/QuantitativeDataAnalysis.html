@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data for Action: Data Analysis, Dissemination and Use</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Daryn Ramsden" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Data for Action: Data Analysis, Dissemination and Use
+]
+.subtitle[
+## Using Statistics in Quantitative Data Analysis
+]
+.author[
+### Daryn Ramsden
+]
+.institute[
+### CARPHA
+]
+.date[
+### 2022-09-05 @ Kingston Jamaica
+]
+
+---
+
+
+
+
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(carpha.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+
+
+
+
+---
+class: inverse, center, middle
+
+# A brief discussion of software/tools
+
+---
+## What tools do we use to analyze data?
+
+  - Proprietary statistical software packages
+--
+
+   
+   - SPSS
+    
+--
+
+    - Stata
+--
+
+    - SAS 
+--
+
+  - Open Source programming languages and tools:
+
+--
+    
+    - R
+    
+--
+   
+    - Python
+
+
+--
+
+  - Microsoft Excel (Ubiquitous)
+
+
+
+
+
+---
+## Some background terminalogy
+
+- **subject**: the unit of interest. Can be individuals, households, businesses, health facilities etc 
+
+- **variable**: measurable characteristics of the subjects
+
+- **population**: all subjects of interest
+
+- **sample**: a subset of the population of interest
+
+- **population parameter**: a descriptive measure based on the population
+
+- **sample statistic**: a measure based on a sample 
+
+
+---
+## Types of quantitative data
+
+Quantitative data can be classified as either *continuous* or *discrete* 
+
+  - **Continuous**: can be any value between the minimum and maximum on a measurement scale e.g. age, height, weight, income
+  
+  - **Discrete**: can only be one of a limited number of values/categories
+  
+    - **Categorical/Nominal**: discrete variables with no ordering e.g. Gender, Marital Status, Region
+    
+    - **Ordinal**: discrete variables with ordering e.g. Small/Medium/Large, Excellent/Very Good/Good/Fair/Poor
+    
+
+
+
+
+---
+class: inverse, center, middle
+
+# Descriptive Statistics
+
+
+---
+## Measures of central tendency 
+
+Commonly used measures of central tendency:
+
+1. Mean (aka average): sum of all values divided by the number of values
+
+2. Median: the middle value. (Or the mean of the two middle values if you have an even number of values)
+
+3. Mode (or modes): most common values in the data
+
+
+
+---
+## Measures of dispersion
+
+
+Commonly used measures of dispersion of data:
+
+1. standard deviation/variance: particularly with assumptions of normality
+
+2. Range: maximum - minimum
+
+3. Interquartile range: 25th percentile - 75th percentile
+
+Anything else?
+
+
+
+---
+## Aggregation and cross-tabulation
+
+
+* Contingency Tables/Cross Tabulations: Matrix format showing counts of different categorical variables
+
+* Pivot Tables: Tables showing summary statistics for sub-groups within data set
+
+
+
+
+---
+class: inverse, center, middle
+
+# Common graph types
+
+
+---
+## Some frequently used chart types
+
+1. Bar charts: to show quantities of categorical variables
+
+2. Histograms: to show distributions of continuous variables
+
+3. Box plots: to show distributions of continuous variables (esp across multiple groups)
+
+4. Scatter plots: to show covariation between continuous variables
+
+---
+## Bar Charts 
+
+Bar charts show totals associated with various levels of categorical variables
+
+![A bar chart](images/barchart.png)
+---
+## Histograms
+
+Histograms show the distribution of a single continuous variable
+
+![A histogram](images/histogram.png)
+
+---
+## Multiple histograms
+
+Multiple histograms can be used to compare the distribution of a single continuous variable across different levels of a categorical variable 
+
+![A histogram](images/multHists.png)
+
+---
+## Box plots
+
+Box plots give information about the distribution of continuous variables:
+
+1. Median value: the line in the interior of the box
+
+2. 25th and 75th percentile: illustrated by the ends of the box
+
+3. The range and outliers. (Details of outlier determination may vary)
+
+
+---
+## Box Plot Displayed 
+
+![A box plot](images/box3.png)
+
+---
+## Multiple box plots
+
+Using multiple box plots can be an effective way of comparing the distribution of a continuous variable across multiple levels of a categorical variable
+
+
+![Multiple box plots](images/multboxes.png)
+
+---
+## Scatter plots 
+
+Scatter plots show covariation between continuous variables
+
+![Example datasets with different correlations](images/scatterplot.png)
+
+
+---
+class: inverse, center, middle
+
+
+# Inferential Statistics 
+
+
+
+---
+## What are we trying to infer in Inferential Statistics?
+
+
+--
+
+In Inferential Statistics, we are trying to infer some truth about the population via sample data
+
+--
+
+
+#### Two uses of Statistical Inference:
+
+1. **Estimation**: Using sample to data to get an estimate of an unknown population parameter
+
+2. **Hypothesis testing**: Making a decision to support or reject a specific hypothesis about a population parameter
+
+
+
+---
+## Some terminology
+
+
+  * X: a predictor or independent variable 
+  
+  
+  * Y: a response or dependent variable
+
+
+---
+## Correlation Analysis
+
+The term **correlation** can get used in 2 subtly different ways:
+
+1. a statistical relationship between two variables 
+
+2. A coefficient that quantifies the directionality and strength of the relationship 
+
+Often when we speak of a correlation, we are referring to a correlation coefficient: most often the Pearson correlation coefficient.
+
+---
+## Properties of correlation coefficient
+
+Some key characteristics of correlation coefficients
+
+1. A value between -1 and 1
+
+2. Values close to 1 (or -1) represent strong associations
+
+3. Values close to 0 represent weak associations
+
+4. positive coefficients indicate direct/positive relationships i.e. increases in one of the variables are associated with increases in the other variable
+
+5. negative coefficients indicate inverse/negative relationships i.e. increases in one of the variables are associated with decreases in the other variable (and vice versa)
+
+Note: Correlation coefficients are symmetric i.e. the correlation of X with Y is the same as the correlation of Y with X
+
+
+
+
+
+---
+## Some examples 
+
+![Example datasets with different correlations](images/CorrelationPlot.png)
+---
+## Computing a correlation coefficient in SPSS
+
+Steps:
+1. Load data
+2. Follow the menues: Analyze -&gt; Correlate -&gt; Bivariate
+
+
+---
+## Simple Linear Regression
+
+In simple linear regression, we seek a mathematical relationship between two variables of the form
+
+$$ Y = \alpha + \beta X$$
+Unlike with correlations, it makes a difference which variable you choose to be X and which to be Y
+
+---
+## Doing a Simple Linear Regression in SPSS
+
+Steps in SPSS to do a linear regression
+1. Load the data
+2. Follow menus Analyze -&gt; Regression -&gt; Linear
+
+
+---
+## Interpreting Linear Regression coefficients 
+
+![SPSS Linear Regression Output](images/LinearregressionOutput.png)
+--
+
+In this example question:
+
+
+1. An individual who does zero hours of exercise will be estimated/predicted to have a systolic blood pressure of 159.914 
+
+2. Each additional hour of exercise per week is associated with a decrease of 6.379 in blood pressure
+
+
+
+
+---
+class: inverse, center, middle
+
+# A note about Hypothesis Testing
+
+
+
+---
+## General Framework for Hypothesis testing
+
+A general framework for hypothesis testing:
+
+1. Articulate a null (and alternative) hypothesis
+
+2. Select a level of significance (Conventionally, 0.05 in scientific literature, Your mileage may vary)
+
+3. Select test statistic to be used (appropriate to the problem)
+
+4. Articulate decision rule i.e. what values of the test statistic would lead you to reject the null hypothesis
+
+5. Draw a conclusion about null hypothesis
+
+A note: conventionally, the null hypothesis is the negative of what you would like to establish. So, if you wanted to see if a particular treatment had an effect, you would start with a null hypothesis that the treatment had no effect. 
+
+
+---
+class: inverse, center, middle
+
+# Group comparisons
+
+
+---
+## Comparing means between 2 independent groups
+
+Given sample data from two different populations, do we have evidence that the averages in the two populations are different?
+
+The most commonly used test for these situations is the 2-sample t-test. This is a fairly robust test: it does not require assumptions about equality of variances of the sample populations. However, it is ideally used with an assumption of normality.
+
+(In real life, you should verify the best test for your situation, considering alternatives such as the Wilcoxon 2-sample test.)
+
+
+---
+## Doing a 2-sample t-test in SPSS
+
+Steps for doing a 2-sample t-test:
+
+1. Load data
+2. Follow the menus: Analyze -&gt; Compare Means -&gt; Independent Samples T-Test
+
+
+
+---
+## How do we interpret results of 2-sample t-test?
+
+![SPSS 2 Sample t-test](images/ttest_2sample.png)
+
+
+
+
+---
+## Comparing means of paired groups
+
+In some circumstances, the subjects in the two groups are not independent and specifically there may be a pairing between observations in the groups
+
+Steps for doing a paired t-test:
+
+1. Load data
+2. Follow the menus: Analyze -&gt; Compare Means -&gt; Paired Samples T-Test
+
+
+---
+## Doing an example of a paired samples t-test
+
+![SPSS 2 Samples paired t-test](output/Prepostttest.png)
+
+---
+## Comparing means of more than 2 groups?
+
+What if we want to compare means of more than 2 groups?
+
+ * Common test is ANOVA, a generalisation of the 2-sample t-test
+
+
+Do we have an example?
+
+
+---
+## More types of tests
+
+Note: 
+  
+  * the slides that follow present commonly-used statistical tests for different problem types.
+  
+  * these were collated in the e-book, _Biostatistics for Biomedical Research_ by Frank E Harrell Jr and James C Slaughter
+  
+  * You can visit the e-book at **[https://hbiostat.org/doc/bbr.pdf](https://hbiostat.org/doc/bbr.pdf)**. (The book also provides recommended tests for each situation that may not be the most frequent test.)
+  
+  
+
+
+
+---
+## Tests for comparing two groups 
+
+
+Type of response | Most frequent test
+--------|---------
+binary | `\(\chi^2\)`, Fisher's exact test
+ordinal | Wilcoxon 2-sample  test
+continuous | 2-sample t-test
+time to event | log-rank test
+
+
+---
+## Tests for analyzing paired responses 
+
+
+Type of response | Most frequent test
+--------|---------
+binary | McNemar
+continuous | paired t-test
+
+
+---
+## Tests for comparing more than 2 groups 
+
+
+Type of response | Most frequent test
+--------|---------
+binary | `\(\chi^2\)`, Fisher's exact test
+ordinal | Kruskal-Wallis
+continuous | ANOVA
+time to event | log-rank test
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
