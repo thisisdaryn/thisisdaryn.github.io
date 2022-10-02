@@ -27,9 +27,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
   + Download RStudio Desktop from RStudio
     
-    * Windows [https://download1.rstudio.org/desktop/windows/RStudio-2022.02.3-492.exe](https://download1.rstudio.org/desktop/windows/RStudio-2022.02.3-492.exe)
+    * Windows [https://download1.rstudio.org/desktop/windows/RStudio-2022.07.2-576.exe](https://download1.rstudio.org/desktop/windows/RStudio-2022.07.2-576.exe)
     
-    * Mac [https://download1.rstudio.org/desktop/macos/RStudio-2022.02.3-492.dmg](https://download1.rstudio.org/desktop/macos/RStudio-2022.02.3-492.dmg)
+    * Mac [https://download1.rstudio.org/desktop/macos/RStudio-2022.07.2-576.dmg](https://download1.rstudio.org/desktop/macos/RStudio-2022.07.2-576.dmg)
     
     * Linux https://www.rstudio.com/products/rstudio/download/#download
 
