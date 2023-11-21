@@ -15,21 +15,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
   + Download R @ The R Project’s Home Page
 
-    * Windows: [https://cran.r-project.org/bin/windows/base/R-4.3.0-win.exe](https://cran.r-project.org/bin/windows/base/R-4.3.0-win.exe)
+    * Windows: [https://cran.r-project.org/bin/windows/base/R-4.3.2-win.exe](https://cran.r-project.org/bin/windows/base/R-4.3.2-win.exe)
     
     * Mac (ARM: mac models manufactured since November 2020):
-        [https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.3.0-arm64.pkg](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.3.0-arm64.pkg)
+        [https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.3.2-arm64.pkg](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.3.2-arm64.pkg)
     
     * Mac (Intel: models manufactured prior to November 2020)
-        [https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.3.0-x86_64.pkg](https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.3.0-x86_64.pkg)
+        [https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.3.2-x86_64.pkg](https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.3.2-x86_64.pkg)
     
     * Linux https://cloud.r-project.org/bin/linux/
 
   + Download RStudio Desktop from RStudio
     
-    * Windows [https://download1.rstudio.org/electron/windows/RStudio-2023.03.0-386.exe](https://download1.rstudio.org/electron/windows/RStudio-2023.03.0-386.exe)
+    * Windows [https://download1.rstudio.org/electron/windows/RStudio-2023.09.1-494.exe](https://download1.rstudio.org/electron/windows/RStudio-2023.09.1-494.exe)
     
-    * Mac [https://download1.rstudio.org/electron/macos/RStudio-2023.03.0-386.dmg](https://download1.rstudio.org/electron/macos/RStudio-2023.03.0-386.dmg)
+    * Mac [https://download1.rstudio.org/electron/macos/RStudio-2023.09.1-494.dmg](https://download1.rstudio.org/electron/macos/RStudio-2023.09.1-494.dmg)
     
     * Linux https://www.rstudio.com/products/rstudio/download/#download
 
