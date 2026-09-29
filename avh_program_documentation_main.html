@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-09-29">
+
+<title>AVH: Acute Viral Hepatitis Case Reporting (in DHIS2)</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="avh_program_documentation_main_files/libs/clipboard/clipboard.min.js"></script>
+<script src="avh_program_documentation_main_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="avh_program_documentation_main_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="avh_program_documentation_main_files/libs/quarto-html/popper.min.js"></script>
+<script src="avh_program_documentation_main_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="avh_program_documentation_main_files/libs/quarto-html/anchor.min.js"></script>
+<link href="avh_program_documentation_main_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="avh_program_documentation_main_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="avh_program_documentation_main_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="avh_program_documentation_main_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="avh_program_documentation_main_files/libs/bootstrap/bootstrap-67270d1595a62d14f123c043d4fb2f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="avh_program_documentation_main_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="avh_program_documentation_main_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#source-documents" id="toc-source-documents" class="nav-link" data-scroll-target="#source-documents"><span class="header-section-number">1.1</span> Source documents</a></li>
+  <li><a href="#the-hepatitis-viruses" id="toc-the-hepatitis-viruses" class="nav-link" data-scroll-target="#the-hepatitis-viruses"><span class="header-section-number">1.2</span> The hepatitis viruses</a></li>
+  </ul></li>
+  <li><a href="#installing-the-event-program" id="toc-installing-the-event-program" class="nav-link" data-scroll-target="#installing-the-event-program"><span class="header-section-number">2</span> Installing the Event Program</a></li>
+  <li><a href="#avh-technical-details" id="toc-avh-technical-details" class="nav-link" data-scroll-target="#avh-technical-details"><span class="header-section-number">3</span> AVH Technical details</a>
+  <ul class="collapse">
+  <li><a href="#sec-dataelements" id="toc-sec-dataelements" class="nav-link" data-scroll-target="#sec-dataelements"><span class="header-section-number">3.1</span> Data Elements</a></li>
+  <li><a href="#sec-optionsets" id="toc-sec-optionsets" class="nav-link" data-scroll-target="#sec-optionsets"><span class="header-section-number">3.2</span> Option Sets</a></li>
+  <li><a href="#users-groups-and-user-roles" id="toc-users-groups-and-user-roles" class="nav-link" data-scroll-target="#users-groups-and-user-roles"><span class="header-section-number">3.3</span> Users Groups and User Roles</a>
+  <ul class="collapse">
+  <li><a href="#user-groups" id="toc-user-groups" class="nav-link" data-scroll-target="#user-groups"><span class="header-section-number">3.3.1</span> User Groups</a></li>
+  <li><a href="#user-roles" id="toc-user-roles" class="nav-link" data-scroll-target="#user-roles"><span class="header-section-number">3.3.2</span> User Roles</a></li>
+  </ul></li>
+  <li><a href="#program-rules" id="toc-program-rules" class="nav-link" data-scroll-target="#program-rules"><span class="header-section-number">3.4</span> Program Rules</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4</span> References</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="avh_program_documentation_main.md"><i class="bi bi-file-code"></i>Github (GFM)</a></li></ul></div></nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">AVH: Acute Viral Hepatitis Case Reporting (in DHIS2)</h1>
+<p class="subtitle lead">DHIS2 Event Program Documentation</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 29, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This DHIS2 event program aims to support case reporting and surveillance of acute viral hepatitis.</p>
+<p>It is designed to cover the full life cycle of a case from initial notification through to final classification, supporting data entry at each stage: clinical assessment, specimen collection, exposure and risk-factor investigation, hospitalization and outcome, and disease-specific final classification.</p>
+<p>It is intended to be compliant with all available WHO surveillance standards for viral hepatitis and to facilitate reporting compliant with the reporting requirements for each hepatitis type.</p>
+<section id="background" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
+<p>Five known hepatitis viruses - A, B, C, D, and E (HAV, HBV, HCV, HDV and HEV) are collectively responsible for an estimated 1.46 million deaths per year globally <span class="citation" data-cites="who2016technicalhep">(<a href="#ref-who2016technicalhep" role="doc-biblioref">World Health Organization 2016</a>)</span>. The acute illnesses caused by these viruses are clinically indistinguishable at the point of first contact.</p>
+<section id="source-documents" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="source-documents"><span class="header-section-number">1.1</span> Source documents</h2>
+<p>This document and the AVH Event program itself are based on several source documents. (See references section for more detailed information.)</p>
+<p><span class="citation" data-cites="who2016technicalhep">(<a href="#ref-who2016technicalhep" role="doc-biblioref">World Health Organization 2016</a>)</span> is the main guiding document for surveillance of viral hepatitis. <span class="citation" data-cites="who2018VPDHepA">(<a href="#ref-who2018VPDHepA" role="doc-biblioref">World Health Organization 2018a</a>)</span> and <span class="citation" data-cites="who2018VPDHepB">(<a href="#ref-who2018VPDHepB" role="doc-biblioref">World Health Organization 2018b</a>)</span> are surveillance standards for Hepatitis A and Hepatitis B respectively (and can be considered to be summaries of relevant information from <span class="citation" data-cites="who2016technicalhep">(<a href="#ref-who2016technicalhep" role="doc-biblioref">World Health Organization 2016</a>)</span>).</p>
+<p>The data capture form provided by the event program is largely intended to replicate the template reporting form provided in <span class="citation" data-cites="who2019SOPHep">(<a href="#ref-who2019SOPHep" role="doc-biblioref">World Health Organization 2019</a>)</span>.</p>
+<p>Some language used in this document and in the event program is taken verbatim from these source documents.</p>
+</section>
+<section id="the-hepatitis-viruses" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="the-hepatitis-viruses"><span class="header-section-number">1.2</span> The hepatitis viruses</h2>
+<p><strong>Hepatitis A (HAV)</strong> is transmitted through the fecal-oral route, including through personal contact, water, and food. A serological assay (IgM anti-HAV) is available to diagnose recent infection. There is a vaccine available. WHO standards allow for case confirmation via laboratory confirmation or an epidemiological link to a laboratory confirmed case.</p>
+<p><strong>Hepatitis B (HBV)</strong> is transmitted through exposure to blood and body fluids, including perinatal, percutaneous and sexual. Hepatitis B infections among children often lead to chronic disease. Acute Hepatitis B among adults is usually self-limiting. A serological assay (IgM anti-HBc) is available to diagnose recent infection. There is a vaccine available and recommended for all newborns. WHO standards allow only for case classification via laboratory confirmation.</p>
+<p><strong>Hepatitis C (HCV)</strong> is mostly transmitted via exposure to infected blood. Chronic infections can lead to hepatocellular carcinoma (HCC) and cirrhosis. New HCV infections uncommonly cause acute hepatitis. Serological assays for HCV (total anti-HCV) does not distinguish between new, chronic, and resolved. Distinguishing resolved infection from chronic infection requires either HCV core antigen testing or nucleic acid testing (NAT) to detect HCV RNA. No vaccine is available yet. WHO standards allow only for case classification via laboratory confirmation.</p>
+<p><strong>Hepatitis D (HDV)</strong> is a bloodborne, incomplete virus that needs HBV to replicate. Infection can be prevented through Hepatitis B vaccination. (This event program offers no components specific to Hepatitis D currently.)</p>
+<p><strong>Hepatitis E (HEV)</strong> is transmitted through the fecal-oral route, mostly through fecally contaminated water. Hepatitis E often occurs as large waterborne outbreaks. Person-to-person transmission is uncommon. A serological test (IgM anti-HEV) is available to diagnose recent infection. The WHO has not recommended a vaccine for widespread use. WHO standards allow for case confirmation via laboratory confirmation or an epidemiological link to a laboratory confirmed case.</p>
+</section>
+</section>
+<section id="installing-the-event-program" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Installing the Event Program</h1>
+<p>Successful installation of the AVH event program should involve the following steps:</p>
+<ol type="1">
+<li>Importing the event program metadata (<code>AVH_metadata_dependencies_complete_program.json</code>) via the <code>Import/Export</code> app</li>
+<li>Making the event program available for data entry at specified organisation units (using the <code>Maintenance</code> or <code>Metadata Management</code> apps)</li>
+<li>Creating users if necessary</li>
+<li>Adding admin users to the <code>AVH Level 1</code> user group</li>
+<li>Adding data entry users to the <code>AVH Level 2</code> user group</li>
+<li>Assigning the <code>AVH Capture User</code> (or a comparable role) to data entry users if necessary</li>
+</ol>
+</section>
+<section id="avh-technical-details" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> AVH Technical details</h1>
+<section id="sec-dataelements" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-dataelements"><span class="header-section-number">3.1</span> Data Elements</h2>
+<p>The program contains <strong>97 data elements</strong> organised into <strong>12 sections</strong>. The table below lists all fields in section order with relevant details.</p>
+<p>Value types are: <code>DATE</code>, <code>TEXT</code> (free text or option set), <code>BOOLEAN</code> (Yes/No checkbox), <code>INTEGER_ZERO_OR_POSITIVE</code> (non-negative whole number), <code>COORDINATE</code> (latitude/longitude), <code>MULTI_TEXT</code> (multi-select option set).</p>
+<div class="cell">
+<div id="tbl-data-elements" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-elements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: All AVH event program data elements by section
+</figcaption>
+<div aria-describedby="tbl-data-elements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Form name</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">code</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">id</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">valueType</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Option Set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" data-grouplength="14">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Patient Information</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Unique Identifier</td>
+<td style="text-align: left;">AVH_RECORDID</td>
+<td style="text-align: left;">W2pkAFEn3z5</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">First Name</td>
+<td style="text-align: left;">AVH_FIRSTNAME</td>
+<td style="text-align: left;">BS9UYJQTFjm</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Last Name</td>
+<td style="text-align: left;">AVH_LASTNAME</td>
+<td style="text-align: left;">dLEG62Hkd9G</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Birth</td>
+<td style="text-align: left;">AVH_DOB</td>
+<td style="text-align: left;">KpLMcNfAQLK</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Age in Years</td>
+<td style="text-align: left;">AVH_AGEYEARS</td>
+<td style="text-align: left;">iQPtDu7W7ea</td>
+<td style="text-align: left;">INTEGER_ZERO_OR_POSITIVE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Age in Months</td>
+<td style="text-align: left;">AVH_AGEMONTHS</td>
+<td style="text-align: left;">w4e4pxskC1I</td>
+<td style="text-align: left;">INTEGER</td>
+<td style="text-align: left;">AVH - Age in Months</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Sex</td>
+<td style="text-align: left;">AVH_SEX</td>
+<td style="text-align: left;">Qg84iqh4gVJ</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Sex</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Phone Number</td>
+<td style="text-align: left;">AVH_PHONE</td>
+<td style="text-align: left;">qGFq562dfOB</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Address 1</td>
+<td style="text-align: left;">AVH_ADDRESS1</td>
+<td style="text-align: left;">JTBJahe84S5</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Address 2</td>
+<td style="text-align: left;">AVH_ADDRESS2</td>
+<td style="text-align: left;">tx57Y3c5wnR</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Address 3</td>
+<td style="text-align: left;">AVH_ADDRESS3</td>
+<td style="text-align: left;">j77p3kZZl4A</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Address 4</td>
+<td style="text-align: left;">AVH_ADDRESS4</td>
+<td style="text-align: left;">VZprkYSgy3c</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Location</td>
+<td style="text-align: left;">AVH_LOCATION</td>
+<td style="text-align: left;">oobQmzvr3e9</td>
+<td style="text-align: left;">COORDINATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Visit</td>
+<td style="text-align: left;">AVH_DATEOFVISIT</td>
+<td style="text-align: left;">bh4qlL9qcgM</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even" data-grouplength="11">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Clinical Presentation</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Onset</td>
+<td style="text-align: left;">AVH_DATEONSET</td>
+<td style="text-align: left;">RU8VVQmxBe8</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Fever</td>
+<td style="text-align: left;">AVH_SXFEVER</td>
+<td style="text-align: left;">GtQAuzSsJim</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Malaise</td>
+<td style="text-align: left;">AVH_SXMALAISE</td>
+<td style="text-align: left;">zJ1atsnBYLM</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Fatigue</td>
+<td style="text-align: left;">AVH_SXFATIGUE</td>
+<td style="text-align: left;">YVkQfsGQONv</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Anorexia</td>
+<td style="text-align: left;">AVH_SXANOREXIA</td>
+<td style="text-align: left;">bcpEN2XeDA4</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Nausea</td>
+<td style="text-align: left;">AVH_SXNAUSEA</td>
+<td style="text-align: left;">Sa5W3X4gXBo</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Jaundice</td>
+<td style="text-align: left;">AVH_SXJAUNDICE</td>
+<td style="text-align: left;">hDiZDQHJMu8</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Dark Urine</td>
+<td style="text-align: left;">AVH_SXDARKURINE</td>
+<td style="text-align: left;">JC5kV3ECqWp</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Right Upper Quadrant Tenderness</td>
+<td style="text-align: left;">AVH_SXRUQPAIN</td>
+<td style="text-align: left;">Tsprvu5Ifij</td>
+<td style="text-align: left;">BOOLEAN</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Encephalopathy</td>
+<td style="text-align: left;">AVH_ENCEPHALOPATHY</td>
+<td style="text-align: left;">DAdn1Ay5XL8</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Encephalopathy Grade</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Acute Liver Failure?</td>
+<td style="text-align: left;">AVH_ACUTELIVERFAIL</td>
+<td style="text-align: left;">tWy2591AIVV</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even" data-grouplength="5">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Hospitalization and Outcome</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hospitalized?</td>
+<td style="text-align: left;">AVH_HOSPITALIZED</td>
+<td style="text-align: left;">wAvuQg2kvAS</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Hospitalization</td>
+<td style="text-align: left;">AVH_HOSPDATE</td>
+<td style="text-align: left;">uquhXz3G0aQ</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Discharge Date</td>
+<td style="text-align: left;">AVH_DISCHARGEDATE</td>
+<td style="text-align: left;">CWdnrJi7sC4</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Outcome</td>
+<td style="text-align: left;">AVH_OUTCOME</td>
+<td style="text-align: left;">JaJAfo16hD8</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Outcome</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Death</td>
+<td style="text-align: left;">AVH_DATEDEATH</td>
+<td style="text-align: left;">A1EEpDJjym6</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even" data-grouplength="17">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Laboratory and Biomarkers</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Specimen Collected?</td>
+<td style="text-align: left;">AVH_SPECIMEN</td>
+<td style="text-align: left;">iNIb6zLKQbf</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Specimen Type</td>
+<td style="text-align: left;">AVH_SPECTYPE</td>
+<td style="text-align: left;">DuvW4yrW81A</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Specimen Type</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Specimen Collection</td>
+<td style="text-align: left;">AVH_DATESPEC</td>
+<td style="text-align: left;">PeX9PcWb8pm</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date Specimen Sent to Laboratory</td>
+<td style="text-align: left;">AVH_DATESPECSENT</td>
+<td style="text-align: left;">DSqXxkMM9VT</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date Specimen Received at Laboratory</td>
+<td style="text-align: left;">AVH_DATESPECRECV</td>
+<td style="text-align: left;">KR69yz8TmeL</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">ALT Result (IU/L)</td>
+<td style="text-align: left;">AVH_ALTRESULT</td>
+<td style="text-align: left;">ZhYKYcwIBQx</td>
+<td style="text-align: left;">INTEGER_ZERO_OR_POSITIVE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Anti-HAV IgM Result</td>
+<td style="text-align: left;">AVH_ANTIHAV_IGM</td>
+<td style="text-align: left;">xO51DTjBlUH</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">IgM Anti-HBc Result</td>
+<td style="text-align: left;">AVH_ANTIHBC_IGM</td>
+<td style="text-align: left;">ULru2p17fr4</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Total Anti-HBc Result</td>
+<td style="text-align: left;">AVH_ANTIHBC_TOTAL</td>
+<td style="text-align: left;">ulFnwZqvr4M</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">HBsAg Result</td>
+<td style="text-align: left;">AVH_HBSAG</td>
+<td style="text-align: left;">AFJWpSEPTFC</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Anti-HCV Result</td>
+<td style="text-align: left;">AVH_ANTIHCV</td>
+<td style="text-align: left;">xEJHwBVJvwS</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">HCV RNA Result</td>
+<td style="text-align: left;">AVH_HCVRNA</td>
+<td style="text-align: left;">I8WSlmnVErU</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">HDV Testing Result</td>
+<td style="text-align: left;">AVH_HDVRESULT</td>
+<td style="text-align: left;">ltaTIircdJs</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Anti-HEV IgM Result</td>
+<td style="text-align: left;">AVH_ANTIHEV_IGM</td>
+<td style="text-align: left;">sEECvl9dq83</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Lab Result</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">HBV Genotype (if performed)</td>
+<td style="text-align: left;">AVH_HBVGENOTYPE</td>
+<td style="text-align: left;">jjZK8tfphJW</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Result</td>
+<td style="text-align: left;">AVH_DATERESULT</td>
+<td style="text-align: left;">Ct3LBtKNdN9</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Other Laboratory Findings / Notes</td>
+<td style="text-align: left;">AVH_OTHERHEP</td>
+<td style="text-align: left;">plJekaACSME</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even" data-grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Case Linkage and Source of Infection</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Contact with a Laboratory-Confirmed Case of Viral Hepatitis?</td>
+<td style="text-align: left;">AVH_CONTACTCASE</td>
+<td style="text-align: left;">CR74KPONu3O</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Associated Case ID</td>
+<td style="text-align: left;">AVH_ASSOCCASEID</td>
+<td style="text-align: left;">dwGetDCcdx1</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Source of Infection</td>
+<td style="text-align: left;">AVH_SOURCE</td>
+<td style="text-align: left;">LJ9YV5cC6ZK</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Source of Infection</td>
+</tr>
+<tr class="even" data-grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Reporting</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Reporting</td>
+<td style="text-align: left;">AVH_DATEREPORT</td>
+<td style="text-align: left;">bu7g1TPvYji</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Reporting Facility</td>
+<td style="text-align: left;">AVH_REPFACILITY</td>
+<td style="text-align: left;">CNa5fbqn1jJ</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Notification to Public Health</td>
+<td style="text-align: left;">AVH_DATENOTIF</td>
+<td style="text-align: left;">pAOYNDeh15F</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Date of Investigation</td>
+<td style="text-align: left;">AVH_DATEINVESTIG</td>
+<td style="text-align: left;">aNwpKAlQQfH</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd" data-grouplength="5">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Case Classification</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Final Case Classification</td>
+<td style="text-align: left;">AVH_FINALCLASS</td>
+<td style="text-align: left;">TCCHHNkxx6s</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Final Case Classification</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis A - Final Case Classification</td>
+<td style="text-align: left;">AVH_HEPA_FINALCLASS</td>
+<td style="text-align: left;">evgJRysqU2Q</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH Hepatitis A/E - Case Classification</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis B - Final Case Classification</td>
+<td style="text-align: left;">AVH_HEPB_FINALCLASS</td>
+<td style="text-align: left;">R6HfPQBGxbx</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH Hepatitis B/C - Case Classification</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis C - Final Case Classification</td>
+<td style="text-align: left;">AVH_HEPC_FINALCLASS</td>
+<td style="text-align: left;">kl1SXNZ5kUC</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH Hepatitis B/C - Case Classification</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis E - Final Case Classification</td>
+<td style="text-align: left;">AVH_HEPE_FINALCLASS</td>
+<td style="text-align: left;">GHA9k0mZMi3</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH Hepatitis A/E - Case Classification</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Prior Diagnosis and Chronic Conditions</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Previously Identified with Chronic HBV Infection?</td>
+<td style="text-align: left;">AVH_PRIORHBV</td>
+<td style="text-align: left;">BhIoPj6r0je</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Previously Identified with Chronic HCV Infection?</td>
+<td style="text-align: left;">AVH_PRIORHCV</td>
+<td style="text-align: left;">hDStSz8rGIF</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Previous History of Other Chronic Liver Disease?</td>
+<td style="text-align: left;">AVH_PRIORCLD</td>
+<td style="text-align: left;">fo9R13KL8bW</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd" data-grouplength="14">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Vaccination History</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Vaccinated against Hepatitis A?</td>
+<td style="text-align: left;">AVH_VACC_HEPA_GIVEN</td>
+<td style="text-align: left;">LLQF3jCIEwv</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Number of Hepatitis A Vaccine Doses Received</td>
+<td style="text-align: left;">AVH_VACC_HEPA_DOSES</td>
+<td style="text-align: left;">Kyo2XAcuVET</td>
+<td style="text-align: left;">INTEGER_ZERO_OR_POSITIVE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis A Vaccine - Date of Dose 1</td>
+<td style="text-align: left;">AVH_VACC_HEPA_DATE1</td>
+<td style="text-align: left;">iG9Lv3g32Cg</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis A Vaccine - Date of Dose 2</td>
+<td style="text-align: left;">AVH_VACC_HEPA_DATE2</td>
+<td style="text-align: left;">EYqvNSzPf2v</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Vaccinated against Hepatitis B?</td>
+<td style="text-align: left;">AVH_VACC_HEPB_GIVEN</td>
+<td style="text-align: left;">IcNepOR6soV</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Number of Hepatitis B Vaccine Doses Received</td>
+<td style="text-align: left;">AVH_VACC_HEPB_DOSES</td>
+<td style="text-align: left;">t5bcuYdswxB</td>
+<td style="text-align: left;">INTEGER_ZERO_OR_POSITIVE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis B Vaccine - Received Birth Dose?</td>
+<td style="text-align: left;">AVH_VACC_HEPB_BIRTHDOSE</td>
+<td style="text-align: left;">N3yNRpF6Ljo</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis B Vaccine - Date of Dose 1</td>
+<td style="text-align: left;">AVH_VACC_HEPB_DATE1</td>
+<td style="text-align: left;">sRIkeC8wLtO</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis B Vaccine - Date of Dose 2</td>
+<td style="text-align: left;">AVH_VACC_HEPB_DATE2</td>
+<td style="text-align: left;">pyKwKsSsb1Q</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Hepatitis B Vaccine - Date of Dose 3</td>
+<td style="text-align: left;">AVH_VACC_HEPB_DATE3</td>
+<td style="text-align: left;">VF155sXZoMZ</td>
+<td style="text-align: left;">DATE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Vaccinated with Combined Hepatitis A and B Vaccine?</td>
+<td style="text-align: left;">AVH_VACC_HEPAB_GIVEN</td>
+<td style="text-align: left;">R1iOg5OPctY</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Number of Combined Hepatitis A and B Vaccine Doses Received</td>
+<td style="text-align: left;">AVH_VACC_HEPAB_DOSES</td>
+<td style="text-align: left;">AlmiYI4xHG6</td>
+<td style="text-align: left;">INTEGER_ZERO_OR_POSITIVE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Vaccinated against Hepatitis E?</td>
+<td style="text-align: left;">AVH_VACC_HEPE_GIVEN</td>
+<td style="text-align: left;">V3vZhD9ejW9</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Number of Hepatitis E Vaccine Doses Received</td>
+<td style="text-align: left;">AVH_VACC_HEPE_DOSES</td>
+<td style="text-align: left;">fYzaqIhDxRV</td>
+<td style="text-align: left;">INTEGER_ZERO_OR_POSITIVE</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even" data-grouplength="4">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Patient Risk Characteristics</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Health-care Worker Exposed to Blood through Patient Care?</td>
+<td style="text-align: left;">AVH_RISK_HCW</td>
+<td style="text-align: left;">eO0D6StPAhi</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Man Who Has Sex with Other Men?</td>
+<td style="text-align: left;">AVH_RISK_MSM</td>
+<td style="text-align: left;">yDxQ8VS8IAL</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Undergoes Haemodialysis?</td>
+<td style="text-align: left;">AVH_RISK_HAEMODIALYSIS</td>
+<td style="text-align: left;">rcSxnCC8p2x</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Injecting Drug Use?</td>
+<td style="text-align: left;">AVH_RISK_IDU</td>
+<td style="text-align: left;">h820DfQnPOM</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd" data-grouplength="7">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Exposure History — 2 to 6 Weeks Before Onset</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Involved in a Reported, Identified Outbreak?</td>
+<td style="text-align: left;">AVH_EXP_OUTBREAK</td>
+<td style="text-align: left;">Y5Mar2jiIqZ</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Contact with Patient(s) with the Same Symptoms?</td>
+<td style="text-align: left;">AVH_EXP_CONTACTSYMPTOMS</td>
+<td style="text-align: left;">LublqdiVAHh</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Ate Raw, Uncooked Shellfish (e.g. Oysters)?</td>
+<td style="text-align: left;">AVH_EXP_SHELLFISH</td>
+<td style="text-align: left;">o8NcUY63QHt</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Ate Raw, Uncooked Pork, Boar Meat or Venison?</td>
+<td style="text-align: left;">AVH_EXP_PORK</td>
+<td style="text-align: left;">FT6Ce5fuMje</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Drank Water from a Well or Other Unsafe Source?</td>
+<td style="text-align: left;">AVH_EXP_WATER</td>
+<td style="text-align: left;">sDGMBgYSh2P</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Child or Staff Member in a Day-care Centre?</td>
+<td style="text-align: left;">AVH_EXP_DAYCARE</td>
+<td style="text-align: left;">Av0DzAUguBu</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Travelled to an Area Highly Endemic for Hepatitis A / Hepatitis E?</td>
+<td style="text-align: left;">AVH_EXP_TRAVEL</td>
+<td style="text-align: left;">ffBgVVxZiJd</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd" data-grouplength="10">
+<td colspan="5" style="border-bottom: 1px solid"><strong>Exposure History — 1 to 6 Months Before Onset</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Received Injections Given for Therapeutic Purposes?</td>
+<td style="text-align: left;">AVH_EXP_INJECTIONS</td>
+<td style="text-align: left;">gKGnjQEo2gw</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Admitted to Hospital?</td>
+<td style="text-align: left;">AVH_EXP_HOSPITALADM</td>
+<td style="text-align: left;">X0NNRPJbM7Q</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Underwent a Surgical Procedure?</td>
+<td style="text-align: left;">AVH_EXP_SURGERY</td>
+<td style="text-align: left;">al3jKQzejVO</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Received a Blood Transfusion?</td>
+<td style="text-align: left;">AVH_EXP_TRANSFUSION</td>
+<td style="text-align: left;">tUuX8KMf4dj</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Received Dental Care?</td>
+<td style="text-align: left;">AVH_EXP_DENTAL</td>
+<td style="text-align: left;">MCArnWGhwBh</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Underwent Endoscopy?</td>
+<td style="text-align: left;">AVH_EXP_ENDOSCOPY</td>
+<td style="text-align: left;">Mdant8nXiWq</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Underwent Tattooing or Body Piercing?</td>
+<td style="text-align: left;">AVH_EXP_TATTOO</td>
+<td style="text-align: left;">ToGJ1QZwez3</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Underwent Shaving by a Barber?</td>
+<td style="text-align: left;">AVH_EXP_BARBER</td>
+<td style="text-align: left;">KzTOAshzb9u</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Unprotected Sex with an Occasional Partner?</td>
+<td style="text-align: left;">AVH_EXP_SEX</td>
+<td style="text-align: left;">gpBLzHfz3tV</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Household Contact with Someone with Hepatitis B / C?</td>
+<td style="text-align: left;">AVH_EXP_HOUSEHOLD</td>
+<td style="text-align: left;">m5XwwU90P0j</td>
+<td style="text-align: left;">TEXT</td>
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-optionsets" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-optionsets"><span class="header-section-number">3.2</span> Option Sets</h2>
+<p>The program uses <strong>11 option sets</strong> which are described below.</p>
+<p>DHIS2 admins may choose to edit the metadata to have pre-existing/other option sets at their discretion.</p>
+<div class="cell">
+<div id="tbl-option-sets" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-option-sets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Option sets used by the AVH event program
+</figcaption>
+<div aria-describedby="tbl-option-sets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Option set</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">id</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">options</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AVH - Age in Months</td>
+<td style="text-align: left;">GMbJmTPSIAo</td>
+<td style="text-align: left;">0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AVH - Encephalopathy Grade</td>
+<td style="text-align: left;">CLrZ3aWZkSB</td>
+<td style="text-align: left;">No encephalopathy, Grade I, Grade II, Grade III, Grade IV</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AVH - Final Case Classification</td>
+<td style="text-align: left;">w2wMqZcUDIh</td>
+<td style="text-align: left;">Hepatitis A — Laboratory-confirmed, Hepatitis A — Epidemiologically linked, Hepatitis B — Laboratory-confirmed, Hepatitis C — Laboratory-confirmed, Hepatitis E — Laboratory-confirmed, Hepatitis E — Epidemiologically linked, Non-viral cause identified, Unknown / undetermined</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AVH - Lab Result</td>
+<td style="text-align: left;">vT4kOPP8lv8</td>
+<td style="text-align: left;">Positive, Negative, Indeterminate or Equivocal, Not done, Pending, Unknown</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AVH - Outcome</td>
+<td style="text-align: left;">ztnzxkdtA3H</td>
+<td style="text-align: left;">Alive — Discharged, Alive — Transferred, Died (institutional), Died (community), Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AVH - Sex</td>
+<td style="text-align: left;">jroZR2T9JiK</td>
+<td style="text-align: left;">Male, Female</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AVH - Source of Infection</td>
+<td style="text-align: left;">p4l2G02E7CA</td>
+<td style="text-align: left;">Endemic — local transmission with no imported link, Imported — infection acquired in another country, Import-related — locally acquired from an imported case, Unknown — source not identified</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AVH - Specimen Type</td>
+<td style="text-align: left;">vrjn9Wvgfyg</td>
+<td style="text-align: left;">Serum, Whole blood, Plasma, Other</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AVH - Yes / No / Unknown</td>
+<td style="text-align: left;">hR50RixhlE7</td>
+<td style="text-align: left;">Yes, No, Unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AVH Hepatitis A/E - Case Classification</td>
+<td style="text-align: left;">LCvADiBniCG</td>
+<td style="text-align: left;">Laboratory-confirmed, Epidemiologically linked, Discarded</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AVH Hepatitis B/C - Case Classification</td>
+<td style="text-align: left;">RbkKR94kMQI</td>
+<td style="text-align: left;">Laboratory-confirmed, Discarded</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="users-groups-and-user-roles" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="users-groups-and-user-roles"><span class="header-section-number">3.3</span> Users Groups and User Roles</h2>
+<section id="user-groups" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="user-groups"><span class="header-section-number">3.3.1</span> User Groups</h3>
+<p>The event program metadata creates <strong>2 User groups</strong>.</p>
+<div class="cell">
+<div id="tbl-user-groups" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-user-groups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Option sets used by the AVH event program
+</figcaption>
+<div aria-describedby="tbl-user-groups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">User group</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">id</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AVH Level 1</td>
+<td style="text-align: left;">YRf53KKIFEi</td>
+<td style="text-align: left;">Acute Viral Hepatitis surveillance — Admin users.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AVH Level 2</td>
+<td style="text-align: left;">ZPuPYP20gP1</td>
+<td style="text-align: left;">Acute Viral Hepatitis surveillance — Data entry personnel.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-user-groups-privileges" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-user-groups-privileges-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Metadata and Data privileges of user groups
+</figcaption>
+<div aria-describedby="tbl-user-groups-privileges-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Objects</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">AVH Level 1</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">AVH Level 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Data Elements</td>
+<td style="text-align: left;">Metadata read+write</td>
+<td style="text-align: left;">Metadata read only</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Option sets</td>
+<td style="text-align: left;">Metadata read+write</td>
+<td style="text-align: left;">Metadata read only</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Program</td>
+<td style="text-align: left;">Metadata read+write, Data read+write</td>
+<td style="text-align: left;">Metadata read only, Data read+write</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Program stage</td>
+<td style="text-align: left;">Metadata read+write, Data read+write</td>
+<td style="text-align: left;">Metadata read only, Data read+write</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="user-roles" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="user-roles"><span class="header-section-number">3.3.2</span> User Roles</h3>
+<p>The program metadata creates <strong>1 User role</strong>.</p>
+<p><code>AVH Capture User</code> user role provides users access to the <code>Browser Cache Cleaner</code>, <code>Capture</code>, and <code>Dashboard apps</code>. If the event program is being installed to an instance of DHIS2 that already has a role of comparable functionality, administrators can choose to use the pre-existing user role for accounts being used to carry out data entry.</p>
+</section>
+</section>
+<section id="program-rules" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="program-rules"><span class="header-section-number">3.4</span> Program Rules</h2>
+<p>The event program metadata includes <strong>38 Program Rules</strong>. These rules collectively serve to streamline data capture, enforce consistency between related data inputs, and to ensure that mandatory data fields are captured before an event is marked as <code>Complete</code>.</p>
+<p>The table below gives descriptions of each of the Program Rules.</p>
+<div class="cell">
+<div id="tbl-program-rules" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-program-rules-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: AVH Program Rules
+</figcaption>
+<div aria-describedby="tbl-program-rules-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Rule</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Always hide AVH_HEPA_FINALCLASS</td>
+<td style="text-align: left;">Hides Hepatitis A final classification. This value is set by a program rule based on the overall final case classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Always hide AVH_HEPB_FINALCLASS</td>
+<td style="text-align: left;">Hides Hepatitis B final classification. This value is set by a program rule based on the overall final case classification.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Always hide AVH_HEPC_FINALCLASS</td>
+<td style="text-align: left;">Hides Hepatitis C final classification. This value is set by a program rule based on the overall final case classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Always hide AVH_HEPE_FINALCLASS</td>
+<td style="text-align: left;">Hides Hepatitis E final classification. This value is set by a program rule based on the overall final case classification.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Assign Event Date to Date of Visit and Hide Field</td>
+<td style="text-align: left;">Hides the Date of Visit field and sets its value to the event date. This avoids duplication in the data entry form while allowing the Date of Visit field to be used in downstream queries and visualizations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Classification: Hepatitis A — Epidemiologically linked</td>
+<td style="text-align: left;">If the final case classification is Hepatitis A - Epidemiologically linked then: 1) Set Hep A case classification to EpiLinked 2) Set Hep B, Hep C, and Hep E case classifications to Discarded</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Classification: Hepatitis A — Laboratory-confirmed</td>
+<td style="text-align: left;">If the final case classification is Hep A - Lab confirmed then: 1) Set Hep A case classification to Lab confirmed 2) Set Hep B, Hep C, and Hep E case classifications to Discarded</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Classification: Hepatitis B — Laboratory-confirmed</td>
+<td style="text-align: left;">If the final case classification is Hepatitis B - Lab-confirmed then: 1) Set Hep B case classification to Lab confirmed 2) Set Hep A, Hep C, and Hep E case classifications to Discarded</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Classification: Hepatitis C — Laboratory-confirmed</td>
+<td style="text-align: left;">If the final case classification is Hepatitis C - Lab-confirmed then: 1) Set Hep C case classification to Lab confirmed 2) Set Hep A, Hep B, and Hep E case classifications to Discarded</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Classification: Hepatitis E — Epidemiologically linked</td>
+<td style="text-align: left;">If the final case classification is Hep E - Epidemiologically linked then: 1) Set Hep E case classification to EpiLinked 2) Set Hep A, Hep B, and Hep C case classifcations to Discarded</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Classification: Hepatitis E — Laboratory-confirmed</td>
+<td style="text-align: left;">If the final case classification is Hep E - Lab confirmed then: 1) Set Hep E case classification to Lab confirmed 2) Set Hep A, Hep B, and Hep C case classifications to Discarded</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Classification: Non-viral — set ABCE to Discarded</td>
+<td style="text-align: left;">If the final overall case classication is Nonviral then set Hep A, Hep B, Hep C, and Hep E classifications to Discarded</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Completion: Anti-HAV IgM required for Hepatitis A lab-confirmed classification</td>
+<td style="text-align: left;">Ensuring that the test result is recorded for a Hep A lab-confirmed classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Completion: Anti-HEV IgM required for Hepatitis E lab-confirmed classification</td>
+<td style="text-align: left;">Ensuring that the test result is recorded for a Hep E lab-confirmed classification.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Completion: At least one age field required</td>
+<td style="text-align: left;">Ensuring that at least one of the fields in the form that allows for determining patient's age is completed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Completion: Date of Onset Required</td>
+<td style="text-align: left;">Ensuring that a date of symptom onset is recorded.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Completion: Final Case Classification Required</td>
+<td style="text-align: left;">Case cannot be marked as complete without a final case classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Completion: HCV RNA required for Hepatitis C lab-confirmed classification</td>
+<td style="text-align: left;">Ensuring that the test result is recorded for a Hep C lab-confirmed classification.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Completion: IgM anti-HBc required for Hepatitis B lab-confirmed classification</td>
+<td style="text-align: left;">Ensuring that the test result is recorded for a Hep B lab-confirmed classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Completion: Sex Required</td>
+<td style="text-align: left;">Ensuring that the patient's sex is recorded.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Completion: Specimen Collected is required</td>
+<td style="text-align: left;">Ensuring that specimen collection (Yes/No/Unknown) is documented.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Completion: Unique Identifier Required</td>
+<td style="text-align: left;">Ensuring that a unique patient ID is entered.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Error: Contact with confirmed case required for epi-linked classification</td>
+<td style="text-align: left;">Ensuring that contact with a confirmed case is recorded consistent with epi-linked case classification (Hep A or Hep E).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Error: Specimen required for lab-confirmed classification</td>
+<td style="text-align: left;">Ensuring that a collected specimen is recorded consistent with a lab-confirmed case classification.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Error: Onset date after visit date</td>
+<td style="text-align: left;">Ensuring that the date of symptom onset is not later than the date of the visit.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reminder: Record All Laboratory Tests Performed</td>
+<td style="text-align: left;">Show reminder to enter all available test results.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Note: Final Case Classification Requirements</td>
+<td style="text-align: left;">Show reminder of final case classification criteria.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hide Age in Months when DOB entered or Age Years &gt; 0</td>
+<td style="text-align: left;">Hides the Age in Months field if DOB or Age in Years &gt;= 1 are recorded.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide Associated Case ID when No Contact with Case</td>
+<td style="text-align: left;">Hide field for associated case ID when there's no contact with a confirmed case.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hide Combined Hepatitis A+B Vaccination Details when Not Vaccinated</td>
+<td style="text-align: left;">Hide field for details when the patient was not vaccinated with Hep A+B vaccine.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide Hepatitis A Vaccination Details when Not Vaccinated</td>
+<td style="text-align: left;">Hide fields for details when the patient was not vaccinated with Hep A vaccine.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hide Hepatitis B Vaccination Details when Not Vaccinated</td>
+<td style="text-align: left;">Hide fields for details when the patient was not vaccinated with Hep B vaccine.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide Hepatitis E Vaccination Details when Not Vaccinated</td>
+<td style="text-align: left;">Hide field for details when the patient was not vaccinated with Hep E vaccine.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hide Laboratory Fields when No Specimen Collected</td>
+<td style="text-align: left;">Hide fields for laboratory tests when no collected specimen is recorded.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide Date of Death when Outcome is not Death</td>
+<td style="text-align: left;">Hide date of death field when the outcome is not death.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hide Hospitalization and Discharge Dates when Not Hospitalized</td>
+<td style="text-align: left;">Hide fields for details of hospitalization when patient was not hospitalized.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hide HBV Genotype unless HBsAg Positive</td>
+<td style="text-align: left;">Hide field for HBV Genotype unless HBsAg test result is Positive.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hide HCV RNA unless Anti-HCV Positive</td>
+<td style="text-align: left;">Hide field: AVH - HCV RNA Result</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="references" class="level1 unnumbered" data-number="4">
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">4 References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-who2016technicalhep" class="csl-entry" role="listitem">
+World Health Organization. 2016. <em>Technical Considerations and Case Definitions to Improve Surveillance for Viral Hepatitis: Technical Report</em>. World Health Organization.
+</div>
+<div id="ref-who2018VPDHepA" class="csl-entry" role="listitem">
+World Health Organization. 2018a. <em>Hepatitis a: Vaccine Preventable Diseases Surveillance Standards.</em> World Health Organization.
+</div>
+<div id="ref-who2018VPDHepB" class="csl-entry" role="listitem">
+World Health Organization. 2018b. <em>Hepatitis a: Vaccine Preventable Diseases Surveillance Standards.</em> World Health Organization.
+</div>
+<div id="ref-who2019SOPHep" class="csl-entry" role="listitem">
+World Health Organization. 2019. <em>Web Annex 1. Standard Operating Procedures (SOPs) for Enhanced Reporting of Cases of Acute Hepatitis. In: Consolidated Strategic Information Guidelines for Viral Hepatitis Planning and Tracking Progress Towards Elimination.</em> World Health Organization.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
